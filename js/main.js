@@ -29,14 +29,84 @@ $(document).ready(function() {
     $('.table-responsive, .report_sheet').hide();
     $('.inner_icon_box').hide();
     $('.inner_rep_cat span').toggleClass('rotate_item_full');
+    $('.inner_rep_cat').css('background', '#335D27', '!important');
+    $('.inner_rep_gro, .inner_rep_ico, .inner_rep_det').css('background', '#63ba49', '!important');
+
+    $('.inner_rep_cat').css('border-bottom', '3px solid #335D27', '!important');
+    $('.inner_rep_gro, .inner_rep_ico, .inner_rep_det').css('border-bottom', '3px solid #478635', '!important');
   });
 
   // detail view button
-  $('.inner_rep_det').on('click', function(){
+  $('.inner_rep_det, .merch_dpt, .operations_dpt').on('click', function(){
     $('.cats').hide();
     $('.inner_icon_box, .report_sheet').hide();
     $('.table-responsive').show();
     $('.inner_rep_det span').toggleClass('rotate_item_full');
+    $('.inner_rep_det').css('background', '#335D27', '!important');
+    $('.inner_rep_cat, .inner_rep_ico, .inner_rep_gro').css('background', '#63ba49', '!important');
+
+    $('.inner_rep_det').css('border-bottom', '3px solid #335D27', '!important');
+    $('.inner_rep_cat, .inner_rep_ico, .inner_rep_gro').css('border-bottom', '3px solid #478635', '!important');
+  });
+
+  //merchandising department button
+  $('.merch_dpt').on('click', function(){
+    $('tbody tr').show();
+    $('.active_report').show();
+    var merchItems = "Merchandising";
+    var listCount = $('#reports_table tr').length;
+    for(var i = 2; i < listCount + 1; i++ ){
+      var checkThis = $('tbody tr:nth(' + i + ') td:nth(1)').text();
+      var rowContaines = checkThis.indexOf(merchItems) > -1;
+      if (rowContaines !== true) {
+        $('tbody tr:nth(' + i + ')').hide();
+      }
+    }
+    var item = $('.item_title');
+    var itemCount = item.length;
+    var row_count = $('.report_row').length;
+    for (var i = 1; i < row_count; i++) {
+      for (var j = 1; j < itemCount; j++) {
+        var itemText = $('.active_report_' + i + ':nth-child(' + j + ')').text();
+        console.log(itemText);
+        var itemTextFinal = itemText;
+        var rowContaines = itemTextFinal.indexOf(merchItems) > -1;
+        if (rowContaines !== true) {
+          $('.active_report_' + i + ':nth-child(' + j + ')').hide();
+        }
+        else {}
+      }
+    }
+  });
+
+  //operations button
+  $('.operations_dpt').on('click', function(){
+    $('tbody tr').show();
+    $('.active_report').show();
+    var opItems = "Operations";
+    var listCount = $('#reports_table tr').length;
+    for(var i = 2; i < listCount + 1; i++ ){
+      var checkThis = $('tbody tr:nth(' + i + ') td:nth(1)').text();
+      var rowContaines = checkThis.indexOf(opItems) > -1;
+      if (rowContaines !== true) {
+        $('tbody tr:nth(' + i + ')').hide();
+      }
+    }
+    var item = $('.item_title');
+    var itemCount = item.length;
+    var row_count = $('.report_row').length;
+    for (var i = 1; i < row_count; i++) {
+      for (var j = 1; j < itemCount; j++) {
+        var itemText = $('.active_report_' + i + ':nth-child(' + j + ')').text();
+        console.log(itemText);
+        var itemTextFinal = itemText;
+        var rowContaines = itemTextFinal.indexOf(opItems) > -1;
+        if (rowContaines !== true) {
+          $('.active_report_' + i + ':nth-child(' + j + ')').hide();
+        }
+        else {}
+      }
+    }
   });
 
   // icon view button
@@ -45,6 +115,11 @@ $(document).ready(function() {
     $('.table-responsive, .report_sheet').hide();
     $('.inner_icon_box').show();
     $('.inner_rep_ico span').toggleClass('rotate_item_full');
+    $('.inner_rep_ico').css('background', '#335D27', '!important');
+    $('.inner_rep_cat, .inner_rep_gro, .inner_rep_det').css('background', '#63ba49', '!important');
+
+    $('.inner_rep_ico').css('border-bottom', '3px solid #335D27', '!important');
+    $('.inner_rep_cat, .inner_rep_gro, .inner_rep_det').css('border-bottom', '3px solid #478635', '!important');
   });
 
   // group view button - sorts by report name
@@ -53,6 +128,11 @@ $(document).ready(function() {
     $('.cats').hide();
     $('.inner_icon_box, .report_sheet').hide();
     $('.table-responsive').show();
+    $('.inner_rep_gro').css('background', '#335D27', '!important');
+    $('.inner_rep_cat, .inner_rep_det, .inner_rep_ico').css('background', '#63ba49', '!important');
+
+    $('.inner_rep_gro').css('border-bottom', '3px solid #335D27', '!important');
+    $('.inner_rep_cat, .inner_rep_det, .inner_rep_ico').css('border-bottom', '3px solid #478635', '!important');
   });
 
   //report button - open report
@@ -121,6 +201,7 @@ $(document).ready(function() {
   //search input - submit
   var search;
   $('.search_input_submit').on('click', function() {
+      $('tbody tr').show();
     $('#search_input').blur();
     $('.reset_search').show();
     $('.active_report').show();
@@ -129,32 +210,31 @@ $(document).ready(function() {
     $('.search_input').removeClass('search_open').focus().val('');
     $('.search_input_submit').removeClass('search_sub_open');
     $('.overlay_2').fadeOut();
+
+    //icon view
     var item = $('.item_title');
     var itemCount = item.length;
     var row_count = $('.report_row').length;
     for (var i = 1; i < row_count; i++) {
       for (var j = 1; j < itemCount; j++) {
-
         var itemText = $('.active_report_' + i + ':nth-child(' + j + ')').text();
         console.log(itemText);
-        // var itemType = $('.active_report_' + i +':nth-child(' + j + ') .item_title').attr('data-type');
-        // console.log(itemType);
-        //
-        // if(typeof variable_here === 'undefined'){
-        //     break;
-        // }
-        // var itemTypeFinal = itemType.toLowerCase();
         var itemTextFinal = itemText.toLowerCase();
         var rowContaines = itemTextFinal.indexOf(searchFinal) > -1;
-        // var rowContainesType = itemTypeFinal.indexOf(searchFinal) > -1;
         if (rowContaines !== true) {
           $('.active_report_' + i + ':nth-child(' + j + ')').hide();
         }
-        // else if(rowContainesType !== true){
-        //   $('.active_report_' + i +':nth-child(' + j + ')').hide();
-        //
-        // }
         else {}
+      }
+    }
+
+    //table view detail view
+    var listCount = $('#reports_table tr').length;
+    for(var i = 2; i < listCount + 1; i++ ){
+      var checkThis = $('tbody tr:nth(' + i + ') td:nth(1)').text();
+      var rowContaines = checkThis.indexOf(searchFinal) > -1;
+      if (rowContaines !== true) {
+        $('tbody tr:nth(' + i + ')').hide();
       }
     }
     return false;
@@ -176,23 +256,11 @@ $(document).ready(function() {
       for (var j = 1; j < itemCount; j++) {
         var itemText = $('.active_report_' + i + ':nth-child(' + j + ')').text();
         console.log(itemText);
-        // var itemType = $('.active_report_' + i +':nth-child(' + j + ') .item_title').attr('data-type');
-        // console.log(itemType);
-        //
-        // if(typeof variable_here === 'undefined'){
-        //     break;
-        // }
-        // var itemTypeFinal = itemType.toLowerCase();
         var itemTextFinal = itemText.toLowerCase();
         var rowContaines = itemTextFinal.indexOf(searchFinal) > -1;
-        // var rowContainesType = itemTypeFinal.indexOf(searchFinal) > -1;
         if (rowContaines !== true) {
           $('.active_report_' + i + ':nth-child(' + j + ')').hide();
         }
-        // else if(rowContainesType !== true){
-        //   $('.active_report_' + i +':nth-child(' + j + ')').hide();
-        //
-        // }
         else {}
       }
     }
@@ -203,8 +271,10 @@ $(document).ready(function() {
   $('.reset_search').on('click', function() {
     $('.active_report').show();
     $('.reset_search').hide();
+      $('tbody tr').show();
   });
 
+  // menu button toggle drop down items
   $('.menu_button').on('click', function() {
     $('.sub_1').slideUp();
     $('.menu_options li span').removeClass('rotate_item');
@@ -218,6 +288,7 @@ $(document).ready(function() {
     $('.social_box').removeClass('active_menu');
   });
 
+  //mobile menu button drop down items
   $('.mob_menu_button').on('click', function() {
     $('.mob_menu_contents').slideToggle();
     $('.overlay_3').toggle();
@@ -227,23 +298,27 @@ $(document).ready(function() {
     $('.menu_close').toggleClass('menu_close_open');
   });
 
+  //sub menu button
   $('.sub_1_link').on('click', function() {
     $('.sub_1').slideToggle();
     $('.menu_options li span').toggleClass('rotate_item');
     $('.mob_menu_options li span').toggleClass('rotate_item');
   });
 
+  //close sub menu drop down when mouse leaves the menu
   $('nav').on('mouseleave', function() {
     $('.sub_1').slideUp();
     $('.menu_options li span').removeClass('rotate_item');
     $('.mob_menu_options li span').removeClass('rotate_item');
   });
 
+  //highlight active departments
   $('.active_dept').on('mouseout', function() {
     $('.active_dept .item_img').removeClass('img_shrink');
     $('.active_dept .item_title').removeClass('title_grow');
   });
 
+  //links box/button drop down links on click
   $('.social_box').on('click', function() {
     $('.social_contents').slideToggle(100);
     $('.social_box span').toggleClass('rotate_item');
@@ -257,17 +332,10 @@ $(document).ready(function() {
     $('.menu_close').removeClass('menu_close_open');
   });
 
+  //hide links drop down
   $('.social_contents span').on('click', function() {
-
     $('.social_contents').slideUp(100);
   });
-
-
-
-
-
-
-
 
 
   // sp services begin (get list)
@@ -312,7 +380,6 @@ $(document).ready(function() {
   }
 
   function displayList(name, department, report_type, listItemId, report_type) {
-
     //get attachments
     var list = "MyReports";
     var method = "GetAttachmentCollection";
@@ -331,9 +398,9 @@ $(document).ready(function() {
       }
     });
 
-// https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png
+    //build table- detail view
+    // https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png
     $('.table-responsive tbody').append('<tr><td style="text-align:center;"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="csv" /></td><td class="report_btn" id="' + attachmentFileUrls + '">' + name + '</td><td>' + report_type + '</td><td class="share_btn">Share</td></tr>');
-
 
     $(document).ready(function()
         {
@@ -341,12 +408,11 @@ $(document).ready(function() {
         }
     );
 
-
+    //build grid - icon view
     var row_1_count = $('.' + department + '_report_row_1 .report_1').length;
     var row_2_count = $('.' + department + '_report_row_2 .report_2').length;
     var row_3_count = $('.' + department + '_report_row_3 .report_3').length;
     var row_4_count = $('.' + department + '_report_row_4 .report_4').length;
-
     if (row_1_count < 4) {
       $('.' + department + '_report_row_1').append('<div class="col-sm-6 col-md-3 main_select active_report active_report_1 report_1"><a href="' + attachmentFileUrls + '" target="blank"><div class=""><div class="item_title" data-type="' + report_type + '">' + name + '</div></div></a></div>');
     } else if (row_2_count < 4) {
@@ -358,13 +424,4 @@ $(document).ready(function() {
     }
   }
   // sp services end
-
-
-
 });
-
-
-
-// $('input, select, textarea').on('focus blur', function(event) {
-//   $('meta[name=viewport]').attr('content', 'width=device-width,initial-scale=1,maximum-scale=' + (event.type == 'blur' ? 10 : 1));
-// });
