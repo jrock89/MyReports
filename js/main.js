@@ -37,7 +37,7 @@ $(document).ready(function() {
   });
 
   // detail view button
-  $('.inner_rep_det, .merch_dpt, .operations_dpt').on('click', function(){
+  $('.inner_rep_det, .submit_dps').on('click', function(){
     $('.cats').hide();
     $('.inner_icon_box, .report_sheet').hide();
     $('.table-responsive').show();
@@ -51,62 +51,88 @@ $(document).ready(function() {
 
   //merchandising department button
   $('.merch_dpt').on('click', function(){
+    $('.merch_dpt .item_title').toggleClass('selected_item');
+    $('.operations_dpt .item_title').removeClass('selected_item');
     $('tbody tr').show();
     $('.active_report').show();
-    var merchItems = "Merchandising";
-    var listCount = $('#reports_table tr').length;
-    for(var i = 2; i < listCount + 1; i++ ){
-      var checkThis = $('tbody tr:nth(' + i + ') td:nth(1)').text();
-      var rowContaines = checkThis.indexOf(merchItems) > -1;
-      if (rowContaines !== true) {
-        $('tbody tr:nth(' + i + ')').hide();
-      }
-    }
-    var item = $('.item_title');
-    var itemCount = item.length;
-    var row_count = $('.report_row').length;
-    for (var i = 1; i < row_count; i++) {
-      for (var j = 1; j < itemCount; j++) {
-        var itemText = $('.active_report_' + i + ':nth-child(' + j + ')').text();
-        console.log(itemText);
-        var itemTextFinal = itemText;
-        var rowContaines = itemTextFinal.indexOf(merchItems) > -1;
+
+    if($('.merch_dpt .item_title').hasClass('selected_item') === false)
+    {
+      $('tbody tr').show();
+      $('.active_report').show();
+    }else {
+      var merchItems = "Merchandising";
+      var listCount = $('#reports_table tr').length;
+      for(var i = 2; i < listCount + 1; i++ ){
+        var checkThis = $('tbody tr:nth(' + i + ') td:nth(1)').text();
+        var rowContaines = checkThis.indexOf(merchItems) > -1;
         if (rowContaines !== true) {
-          $('.active_report_' + i + ':nth-child(' + j + ')').hide();
+          $('tbody tr:nth(' + i + ')').hide();
         }
-        else {}
+      }
+      var item = $('.item_title');
+      var itemCount = item.length;
+      var row_count = $('.report_row').length;
+      for (var i = 1; i < row_count; i++) {
+        for (var j = 1; j < itemCount; j++) {
+          var itemText = $('.active_report_' + i + ':nth-child(' + j + ')').text();
+          console.log(itemText);
+          var itemTextFinal = itemText;
+          var rowContaines = itemTextFinal.indexOf(merchItems) > -1;
+          if (rowContaines !== true) {
+            $('.active_report_' + i + ':nth-child(' + j + ')').hide();
+          }
+          else {}
+        }
       }
     }
+
+
   });
 
   //operations button
   $('.operations_dpt').on('click', function(){
+    $('.operations_dpt .item_title').toggleClass('selected_item');
+    $('.merch_dpt .item_title').removeClass('selected_item');
+
     $('tbody tr').show();
     $('.active_report').show();
-    var opItems = "Operations";
-    var listCount = $('#reports_table tr').length;
-    for(var i = 2; i < listCount + 1; i++ ){
-      var checkThis = $('tbody tr:nth(' + i + ') td:nth(1)').text();
-      var rowContaines = checkThis.indexOf(opItems) > -1;
-      if (rowContaines !== true) {
-        $('tbody tr:nth(' + i + ')').hide();
-      }
-    }
-    var item = $('.item_title');
-    var itemCount = item.length;
-    var row_count = $('.report_row').length;
-    for (var i = 1; i < row_count; i++) {
-      for (var j = 1; j < itemCount; j++) {
-        var itemText = $('.active_report_' + i + ':nth-child(' + j + ')').text();
-        console.log(itemText);
-        var itemTextFinal = itemText;
-        var rowContaines = itemTextFinal.indexOf(opItems) > -1;
+
+    if($('.operations_dpt .item_title').hasClass('selected_item') === false)
+    {
+      $('tbody tr').show();
+      $('.active_report').show();
+    }else {
+      var opItems = "Operations";
+      var listCount = $('#reports_table tr').length;
+      for(var i = 2; i < listCount + 1; i++ ){
+        var checkThis = $('tbody tr:nth(' + i + ') td:nth(1)').text();
+        var rowContaines = checkThis.indexOf(opItems) > -1;
         if (rowContaines !== true) {
-          $('.active_report_' + i + ':nth-child(' + j + ')').hide();
+          $('tbody tr:nth(' + i + ')').hide();
         }
-        else {}
+      }
+      var item = $('.item_title');
+      var itemCount = item.length;
+      var row_count = $('.report_row').length;
+      for (var i = 1; i < row_count; i++) {
+        for (var j = 1; j < itemCount; j++) {
+          var itemText = $('.active_report_' + i + ':nth-child(' + j + ')').text();
+          console.log(itemText);
+          var itemTextFinal = itemText;
+          var rowContaines = itemTextFinal.indexOf(opItems) > -1;
+          if (rowContaines !== true) {
+            $('.active_report_' + i + ':nth-child(' + j + ')').hide();
+          }
+          else {}
+        }
       }
     }
+  });
+
+
+  $('.inner_rep_req').on('click', function(){
+    $('.inner_rep_req span').toggleClass('rotate_item_full');
   });
 
   // icon view button
@@ -124,6 +150,7 @@ $(document).ready(function() {
 
   // group view button - sorts by report name
   $('.inner_rep_gro').on('click', function(){
+    $('.inner_rep_gro span').toggleClass('rotate_item_full');
     $("#report_btn_sort").click();
     $('.cats').hide();
     $('.inner_icon_box, .report_sheet').hide();
