@@ -22,7 +22,7 @@ $(document).ready(function() {
 
   $('.inner_rep_cat').on('click', function(){
     $('.cats').toggle();
-    $('.table-responsive').hide();
+    $('.table-responsive, .report_sheet').hide();
       $('.inner_icon_box').hide();
     $('.inner_rep_cat span').toggleClass('rotate_item_full');
 
@@ -31,7 +31,7 @@ $(document).ready(function() {
 
   $('.inner_rep_det').on('click', function(){
     $('.cats').hide();
-      $('.inner_icon_box').hide();
+      $('.inner_icon_box, .report_sheet').hide();
     $('.table-responsive').toggle();
     $('.inner_rep_det span').toggleClass('rotate_item_full');
 
@@ -42,11 +42,22 @@ $(document).ready(function() {
 
   $('.inner_rep_ico').on('click', function(){
     $('.cats').hide();
-    $('.table-responsive').hide();
+    $('.table-responsive, .report_sheet').hide();
     $('.inner_icon_box').toggle();
     $('.inner_rep_ico span').toggleClass('rotate_item_full');
 
   });
+
+
+
+$('.inner_rep_gro').on('click', function(){
+  $("#report_btn_sort").click();
+  $('.cats').hide();
+    $('.inner_icon_box, .report_sheet').hide();
+  $('.table-responsive').show();
+});
+
+
 
 
   $(document).on('click', '.share_btn', function(){
@@ -66,8 +77,8 @@ $(document).ready(function() {
     }
   });
   $('.search, .overlay_2, .share_box span').on('click', function() {
-    $('.search_input').removeClass('search_open').focus().val('');
-    $('.search_input_submit').removeClass('search_sub_open');
+    $('.search_input').toggleClass('search_open').focus().val('');
+    $('.search_input_submit').toggleClass('search_sub_open');
     $('.overlay_2').toggle();
     $('.share_box').hide();
   });
@@ -236,9 +247,19 @@ $(document).on('click', '.report_btn', function(){
       type:'get',
       // dataType:'jsonp',
       success:function(data){
-          alert(data);
+          // alert(data);
+          $('.report_sheet').html(data);
       }
   })
+
+
+  $('.cats').hide();
+  $('.table-responsive').hide();
+  $('.inner_icon_box').hide();
+
+
+  $('.report_sheet').show();
+
 
 });
 
@@ -306,8 +327,16 @@ $(document).on('click', '.report_btn', function(){
       }
     });
 
+// https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png
+    $('.table-responsive tbody').append('<tr><td style="text-align:center;"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="" /></td><td class="report_btn" id="' + attachmentFileUrls + '">' + name + '</td><td>' + report_type + '</td><td class="share_btn">Share</td></tr>');
 
-    $('.table-responsive tbody').append('<tr><td><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/brandgreen.png" alt="" /></td><td class="report_btn" id="' + attachmentFileUrls + '">' + name + '</td><td>' + report_type + '</td><td class="share_btn">Share</td></tr>');
+
+    $(document).ready(function()
+        {
+            $("#reports_table").tablesorter();
+        }
+    );
+
 
     var row_1_count = $('.' + department + '_report_row_1 .report_1').length;
     var row_2_count = $('.' + department + '_report_row_2 .report_2').length;

@@ -145,7 +145,7 @@ h2{
 }
 .search_input{
   position: fixed;
-  top: 0;
+  top: 64px;
   width: 0;
   background: #fff;
   left:-100px;
@@ -160,7 +160,7 @@ h2{
 }
 .search_input_submit{
   position: fixed;
-  top: 0;
+  top: 64px;
   background: #63ba49;
   width: auto;
   left:-100px;
@@ -579,7 +579,7 @@ margin: 0 !important;
 }
 
 td img{
-  width: 50px;
+  width: 40px;
   height: auto;
 }
 
@@ -590,6 +590,16 @@ td img{
   background: rgba(255,255,255,0.7);
 padding: 20px 10px 10px 10px;
 margin-top: -10px;
+display: none;
+}
+
+.report_sheet{
+  /*display: none;*/
+  margin-bottom: 20px;
+  background: rgba(255,255,255,0.7);
+padding: 30px 20px 20px 20px;
+margin-top: -10px;
+color: #000;
 display: none;
 }
 
