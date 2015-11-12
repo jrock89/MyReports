@@ -3,10 +3,12 @@
 
 $(document).ready(function() {
 
+  // window ready hide loader
   $(window).load(function() {
     $('.loader').hide();
   });
 
+  // grab todays date
   var today = new Date();
   var dd = today.getDate();
   var mm = today.getMonth() + 1;
@@ -18,56 +20,68 @@ $(document).ready(function() {
     mm = '0' + mm
   }
   today = mm + '/' + dd + '/' + yyyy;
+  //build title with todays date
   $('title').text("My Reports | " + today);
 
+  // enterprice report catalog button
   $('.inner_rep_cat').on('click', function(){
-    $('.cats').toggle();
+    $('.cats').show();
     $('.table-responsive, .report_sheet').hide();
-      $('.inner_icon_box').hide();
+    $('.inner_icon_box').hide();
     $('.inner_rep_cat span').toggleClass('rotate_item_full');
-
   });
 
-
+  // detail view button
   $('.inner_rep_det').on('click', function(){
     $('.cats').hide();
-      $('.inner_icon_box, .report_sheet').hide();
-    $('.table-responsive').toggle();
+    $('.inner_icon_box, .report_sheet').hide();
+    $('.table-responsive').show();
     $('.inner_rep_det span').toggleClass('rotate_item_full');
-
   });
 
-
-
-
+  // icon view button
   $('.inner_rep_ico').on('click', function(){
     $('.cats').hide();
     $('.table-responsive, .report_sheet').hide();
-    $('.inner_icon_box').toggle();
+    $('.inner_icon_box').show();
     $('.inner_rep_ico span').toggleClass('rotate_item_full');
-
   });
 
-
-
-$('.inner_rep_gro').on('click', function(){
-  $("#report_btn_sort").click();
-  $('.cats').hide();
+  // group view button - sorts by report name
+  $('.inner_rep_gro').on('click', function(){
+    $("#report_btn_sort").click();
+    $('.cats').hide();
     $('.inner_icon_box, .report_sheet').hide();
-  $('.table-responsive').show();
-});
-
-
-
-
-  $(document).on('click', '.share_btn', function(){
-    $('.overlay_2, .share_box').toggle();
+    $('.table-responsive').show();
   });
 
+  //report button - open report
+  $(document).on('click', '.report_btn', function(){
+    theCSV = $(this).attr('id');
+    console.log(theCSV);
+    // window.location.href = theCSV;
+    $.ajax({
+        url: theCSV,
+        type:'get',
+        success:function(data){
+            $('.report_sheet').html(data);
+        }
+    })
+    $('.cats').hide();
+    $('.table-responsive').hide();
+    $('.inner_icon_box').hide();
+    $('.report_sheet').show();
+  });
+
+  // force form tags into sharepoint
   $('.input_goes_here').append('<form  onkeypress="return event.keyCode != 13"><input  class="search_input" style="" id="search_input" name="name" type="text" placeholder="Search" class="form-control"><div class="search_input_submit">Submit</div></form>');
+
+  // attempt to prevent form submision to refresh page
   $('form').submit(function() {
     return false;
   });
+
+  //'Enter' key when in the search input fires search off
   $("#search_input").keyup(function(e) {
     if (event.keyCode == 13) {
       $('#search_input').blur();
@@ -76,14 +90,35 @@ $('.inner_rep_gro').on('click', function(){
       return false;
     }
   });
-  $('.search, .overlay_2, .share_box span').on('click', function() {
+
+  //search toggle
+  $('.search').on('click', function() {
     $('.search_input').toggleClass('search_open').focus().val('');
     $('.search_input_submit').toggleClass('search_sub_open');
     $('.overlay_2').toggle();
     $('.share_box').hide();
   });
 
-  //search input
+  //search and share hide - click faded overlay
+  $('.overlay_2').on('click', function() {
+    $('.search_input').removeClass('search_open').focus().val('');
+    $('.search_input_submit').removeClass('search_sub_open');
+    $('.overlay_2').hide();
+    $('.share_box').hide();
+  });
+
+  // share button - open share options
+  $(document).on('click', '.share_btn', function(){
+    $('.overlay_2, .share_box').toggle();
+  });
+
+  //close share box
+  $('.share_box span').on('click', function() {
+    $('.overlay_2').hide();
+    $('.share_box').hide();
+  });
+
+  //search input - submit
   var search;
   $('.search_input_submit').on('click', function() {
     $('#search_input').blur();
@@ -97,9 +132,7 @@ $('.inner_rep_gro').on('click', function(){
     var item = $('.item_title');
     var itemCount = item.length;
     var row_count = $('.report_row').length;
-
     for (var i = 1; i < row_count; i++) {
-
       for (var j = 1; j < itemCount; j++) {
 
         var itemText = $('.active_report_' + i + ':nth-child(' + j + ')').text();
@@ -126,7 +159,6 @@ $('.inner_rep_gro').on('click', function(){
     }
     return false;
   });
-
 
   //mobile search input
   var search;
@@ -137,15 +169,11 @@ $('.inner_rep_gro').on('click', function(){
     search = $('.mob_search_input').val();
     searchFinal = search.toLowerCase();
     $('.mob_search_input').removeClass('search_open').focus().val('');
-
     var item = $('.item_title');
     var itemCount = item.length;
     var row_count = $('.report_row').length;
-
     for (var i = 1; i < row_count; i++) {
-
       for (var j = 1; j < itemCount; j++) {
-
         var itemText = $('.active_report_' + i + ':nth-child(' + j + ')').text();
         console.log(itemText);
         // var itemType = $('.active_report_' + i +':nth-child(' + j + ') .item_title').attr('data-type');
@@ -171,6 +199,7 @@ $('.inner_rep_gro').on('click', function(){
     return false;
   });
 
+  // reset search
   $('.reset_search').on('click', function() {
     $('.active_report').show();
     $('.reset_search').hide();
@@ -236,32 +265,7 @@ $('.inner_rep_gro').on('click', function(){
 
 
 
-$(document).on('click', '.report_btn', function(){
-  theCSV = $(this).attr('id');
-  console.log(theCSV);
-  // window.location.href = theCSV;
 
-
-  $.ajax({
-      url: theCSV,
-      type:'get',
-      // dataType:'jsonp',
-      success:function(data){
-          // alert(data);
-          $('.report_sheet').html(data);
-      }
-  })
-
-
-  $('.cats').hide();
-  $('.table-responsive').hide();
-  $('.inner_icon_box').hide();
-
-
-  $('.report_sheet').show();
-
-
-});
 
 
 
@@ -328,7 +332,7 @@ $(document).on('click', '.report_btn', function(){
     });
 
 // https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png
-    $('.table-responsive tbody').append('<tr><td style="text-align:center;"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="" /></td><td class="report_btn" id="' + attachmentFileUrls + '">' + name + '</td><td>' + report_type + '</td><td class="share_btn">Share</td></tr>');
+    $('.table-responsive tbody').append('<tr><td style="text-align:center;"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="csv" /></td><td class="report_btn" id="' + attachmentFileUrls + '">' + name + '</td><td>' + report_type + '</td><td class="share_btn">Share</td></tr>');
 
 
     $(document).ready(function()
