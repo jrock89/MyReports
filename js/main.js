@@ -135,6 +135,20 @@ $(document).ready(function() {
     $('.inner_rep_req span').toggleClass('rotate_item_full');
   });
 
+
+
+
+  $('.cats').hide();
+  $('.table-responsive, .report_sheet').hide();
+  $('.inner_icon_box').show();
+  $('.inner_rep_ico span').toggleClass('rotate_item_full');
+  $('.inner_rep_ico').css('background', '#335D27', '!important');
+  $('.inner_rep_cat, .inner_rep_gro, .inner_rep_det').css('background', '#63ba49', '!important');
+
+  $('.inner_rep_ico').css('border-bottom', '3px solid #335D27', '!important');
+  $('.inner_rep_cat, .inner_rep_gro, .inner_rep_det').css('border-bottom', '3px solid #478635', '!important');
+
+
   // icon view button
   $('.inner_rep_ico').on('click', function(){
     $('.cats').hide();
@@ -304,16 +318,21 @@ $(document).ready(function() {
   // menu button toggle drop down items
   $('.menu_button').on('click', function() {
     $('.sub_1').slideUp();
+    $('.menu_button span').toggleClass('rotate_item');
     $('.menu_options li span').removeClass('rotate_item');
     $('.mob_menu_options li span').removeClass('rotate_item');
     $('.menu_options').slideToggle();
     $('.menu_button').toggleClass('active_menu');
-    $('.menu_active').toggle();
-    $('.menu_close').toggleClass('menu_close_open');
+    // $('.menu_active').toggle();
+    // $('.menu_close').toggleClass('menu_close_open');
     $('.social_contents').slideUp(100);
     $('.social_box span').removeClass('rotate_item');
     $('.social_box').removeClass('active_menu');
   });
+
+  // $('.show_bar').on('click', function(){
+  //   $('.rep_cat').toggle();
+  // });
 
   //mobile menu button drop down items
   $('.mob_menu_button').on('click', function() {
@@ -347,11 +366,12 @@ $(document).ready(function() {
 
   //links box/button drop down links on click
   $('.social_box').on('click', function() {
+
     $('.social_contents').slideToggle(100);
     $('.social_box span').toggleClass('rotate_item');
     $('.social_box').toggleClass('active_menu');
     $('.sub_1').slideUp();
-    $('.menu_options li span').removeClass('rotate_item');
+    $('.menu_options li span, .menu_button span').removeClass('rotate_item');
     $('.mob_menu_options li span').removeClass('rotate_item');
     $('.menu_options').slideUp();
     $('.menu_button').removeClass('active_menu');
@@ -447,37 +467,22 @@ $(document).ready(function() {
     }
 
 
-    var row_1_count = $('.' + department + '_report_row_1 .report_1').length;
-    var row_2_count = $('.' + department + '_report_row_2 .report_2').length;
-    var row_3_count = $('.' + department + '_report_row_3 .report_3').length;
-    var row_4_count = $('.' + department + '_report_row_4 .report_4').length;
     if(lastThree === "csv")
     {
       //build grid - icon view
 
-      if (row_1_count < 4) {
-        $('.' + department + '_report_row_1').append('<div class="col-sm-6 col-md-3 main_select active_report active_report_1 report_1"><a href="' + attachmentFileUrls + '" target="blank"><div class=""><div class="item_title" data-type="' + report_type + '"><div><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="csv" /></div><br>' + name + '</div></div></a></div>');
-      } else if (row_2_count < 4) {
-        $('.' + department + '_report_row_2').append('<div class="col-sm-6 col-md-3 main_select active_report active_report_2 report_2"><a href="' + attachmentFileUrls + '" target="blank"><div class=""><div class="item_title" data-type="' + report_type + '"><div><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="csv" /></div><br>' + name + '</div></div></a></div>');
-      } else if (row_3_count < 4) {
-        $('.' + department + '_report_row_2').append('<div class="col-sm-6 col-md-3 main_select active_report active_report_3 report_2"><a href="' + attachmentFileUrls + '" target="blank"><div class=""><div class="item_title" data-type="' + report_type + '"><div><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="csv" /></div><br>' + name + '</div></div></a></div>');
-      } else if (row_3_count < 4) {
-        $('.' + department + '_report_row_3').append('<div class="col-sm-6 col-md-3 main_select active_report active_report_4 report_2"><a href="' + attachmentFileUrls + '" target="blank"><div class=""><div class="item_title" data-type="' + report_type + '"><div><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="csv" /></div><br>' + name + '</div></div></a></div>');
-      }
+
+        $('.' + department + '_report_row_1').append('<div class="main_select active_report active_report_1 report_1"><a href="' + attachmentFileUrls + '" target="blank"><div class=""><div class="item_title" data-type="' + report_type + '"><p class="report_name">' + name + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="csv" /></div><div><p class="report_desc">' + report_type + '</p></div><div class="reports_share"><div>Open</div></div><div class="reports_share"><div><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div></div></div></a></div>');
+
     }
     else if(lastThree === "pdf")
     {
       //build grid - icon view
+// col-sm-6 col-md-3
 
-      if (row_1_count < 4) {
-        $('.' + department + '_report_row_1').append('<div class="col-sm-6 col-md-3 main_select active_report active_report_1 report_1"><a href="' + attachmentFileUrls + '" target="blank"><div class=""><div class="item_title" data-type="' + report_type + '"><div><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></div><br>' + name + '</div></div></a></div>');
-      } else if (row_2_count < 4) {
-        $('.' + department + '_report_row_2').append('<div class="col-sm-6 col-md-3 main_select active_report active_report_2 report_2"><a href="' + attachmentFileUrls + '" target="blank"><div class=""><div class="item_title" data-type="' + report_type + '"><div><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></div><br>' + name + '</div></div></a></div>');
-      } else if (row_3_count < 4) {
-        $('.' + department + '_report_row_2').append('<div class="col-sm-6 col-md-3 main_select active_report active_report_3 report_2"><a href="' + attachmentFileUrls + '" target="blank"><div class=""><div class="item_title" data-type="' + report_type + '"><div><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></div><br>' + name + '</div></div></a></div>');
-      } else if (row_3_count < 4) {
-        $('.' + department + '_report_row_3').append('<div class="col-sm-6 col-md-3 main_select active_report active_report_4 report_2"><a href="' + attachmentFileUrls + '" target="blank"><div class=""><div class="item_title" data-type="' + report_type + '"><div><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></div><br>' + name + '</div></div></a></div>');
-      }
+
+        $('.' + department + '_report_row_1').append('<div class="main_select active_report active_report_1 report_1"><a href="' + attachmentFileUrls + '" target="blank"><div class=""><div class="item_title" data-type="' + report_type + '"><p class="report_name">' + name + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></div><div><p class="report_desc">' + report_type + '</p></div><div class="reports_share"><div>Open</div></div><div class="reports_share"><div><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div></div></div></a></div>');
+
     }
 
 
