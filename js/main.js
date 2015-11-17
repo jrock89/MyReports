@@ -400,7 +400,11 @@ $(document).ready(function() {
     $('.social_contents').slideUp(100);
   });
 
-
+  $('.my_reports_button').on('click', function(){
+    $('.icon_box_box').slideDown();
+    $('.inner_icon_box, .table-responsive tbody').empty();
+    GetReports();
+  });
   // sp services begin (get list)
   //get reports list callback
   GetReports();
