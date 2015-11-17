@@ -386,7 +386,7 @@ h2 {
   height: auto;
   width: 30%;
 }
-.overlay, .overlay_2 {
+.overlay, .overlay_2, .overlay_share {
   z-index: 1;
   color: #fff;
   background: #fff;
@@ -406,30 +406,72 @@ h2 {
   z-index: 3;
   display: none;
 }
+.overlay_share {
+  opacity: 0.8;
+  top: 0;
+  background: #000;
+  z-index: 5;
+  display: none;
+}
+
+.share_input{
+  padding:20px;
+  border: none;
+  border-top: 3px solid #AFAFAF;
+  color:#343434;
+  width: 100%;
+}
+.share_info{
+  color:#343434;
+  font-size: 21px;
+  margin-bottom: 20px;
+}
+.share_input_submit{
+  padding: 20px;
+  background: #343434;
+  width: 140px;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 20px;
+  border-bottom: 3px solid black;
+}
+.share_input_submit:hover{
+  opacity: 0.7;
+}
+.share_box_inner, .request_box_inner{
+  display: none;
+  padding: 20px;
+    background: #D9D9D9;
+    margin: 40px;
+    border-bottom: 3px solid #AFAFAF;
+}
+
 .share_box .jumbotron{
   padding: 20px 20px !important;
-    text-align: center;
     color: #251F21;
     background: tran;
     margin: 40px;
+    padding: 20px;
 }
 .share_box h2{
   padding: 0 !important;
 margin: 0 !important;
 color: #251F21 !important;
+text-align: center;
 }
 .share_box {
-  z-index: 4;
-  color: #fff;
-  background: #f2f2f2;
-  border-bottom: 3px solid #A2A2A2 !important;
-  display: none;
-  min-height: 50vh;
-  overflow: auto;
-  position: relative;
-  width: 100%;
-  margin-top: 10vh;
-  margin-left: 0 !important;
+  z-index: 6;
+      color: #fff;
+      background: #fff;
+      border-bottom: 3px solid #A2A2A2 !important;
+      display: none;
+      height: auto;
+      overflow: auto;
+      position: fixed;
+      width: 80%;
+      left: 10%;
+      margin-top: 10vh;
+      margin-left: 0 !important;
 }
 .share_box span {
   position: absolute;
@@ -462,6 +504,14 @@ color: #251F21 !important;
   opacity: 0.8;
   display: none;
 }
+
+.unreachable{
+  opacity: 0.7;
+  cursor: default !important;
+}
+
+
+
 .main_wrapper {
   z-index: 2;
   color: #fff;
@@ -494,19 +544,19 @@ color: #251F21 !important;
   display: inline-block;
   width: 100%;
 }
-.reports_share, .reports_open{
+.reports_share, .reports_open, .reports_request{
   padding: 0 10px 10px 10px;
 /*text-align: left;*/
 font-size: 18px;
 }
-.reports_share div, .reports_open div{
+.reports_share div, .reports_open div, .reports_request div{
   border-bottom: 2px solid #000;
     padding: 10px;
     color: #f2f2f2;
     background: #251F21;
     border-radius: 5px
 }
-.reports_share div:hover, .reports_open div:hover{
+.reports_share div:hover, .reports_open div:hover, .reports_request div:hover{
 
     background: #63ba49;
 }

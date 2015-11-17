@@ -230,17 +230,29 @@ $(document).ready(function() {
 
   //share report button
   $(document).on('click', '.reports_share', function(){
+    $('.request_box_inner').hide();
     var shareTitle = $(this).closest('.item_title').find('.report_name').text();
     $('.share_title').text(shareTitle);
-    $('.overlay_2').fadeIn();
-    $('.share_box').fadeIn();
+    $('.overlay_share').fadeIn();
+    $('.share_box, .share_box_inner').fadeIn();
+    $('.share_box_inner').html('<div class="row"><div class="col-md-6 share_info">Enter the email address of the user you wish to share this report with, then hit submit.</div><div class="col-md-6"><form  onkeypress="return event.keyCode != 13"><input  class="share_input" style="" id="share_input" name="emailname" type="email" placeholder="Email Address" class="form-control"><div class="share_input_submit">Submit</div></form></div></div>');
   });
 
+  //share report button
+  $(document).on('click', '.reports_request', function(){
+    $('.share_box_inner').hide();
+    var shareTitle = $(this).closest('.item_title').find('.report_name').text();
+    $('.share_title').text(shareTitle);
+    $('.overlay_share').fadeIn();
+    $('.share_box, .request_box_inner').fadeIn();
+  });
+
+
   //search and share hide - click faded overlay
-  $('.overlay_2').on('click', function() {
+  $('.overlay_2, .overlay_share').on('click', function() {
     $('.search_input').removeClass('search_open').focus().val('');
     $('.search_input_submit').removeClass('search_sub_open');
-    $('.overlay_2').hide();
+    $('.overlay_2, .overlay_share').hide();
     $('.share_box').hide();
   });
 
@@ -251,7 +263,7 @@ $(document).ready(function() {
 
   //close share box
   $('.share_box span').on('click', function() {
-    $('.overlay_2').hide();
+    $('.overlay_share, .overlay_2').hide();
     $('.share_box').hide();
   });
 
@@ -632,7 +644,7 @@ $('.active_dept_link').on('click', function(){
             //build grid - icon view
 
 
-              $('.report_row').append('<div class="main_select active_report active_report_1 report_1"><div class=""><div class="item_title" data-type="' + department + '"><p class="report_name">' + name + '</p><p class="report_dep">' + department + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="csv" /></div><div><p class="report_desc">' + report_type + '</p></div></a><div class="reports_share"><div><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Request Access</div></div></div></div></div>');
+              $('.report_row').append('<div class="main_select active_report active_report_1 report_1"><div class=""><div class="item_title" data-type="' + department + '"><p class="report_name">' + name + '</p><p class="report_dep">' + department + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="csv" /></div><div><p class="report_desc">' + report_type + '</p></div></a><div class="reports_request"><div><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Request Access</div></div></div></div></div>');
 
           }
           else if(lastThree === "pdf")
@@ -641,7 +653,7 @@ $('.active_dept_link').on('click', function(){
         // col-sm-6 col-md-3
 
 
-              $('.report_row').append('<div class="main_select active_report active_report_1 report_1"><div class=""><div class="item_title" data-type="' + department + '"><p class="report_name">' + name + '</p><p class="report_dep">' + department + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></div><div><p class="report_desc">' + report_type + '</p></div></a><div class="reports_share"><div><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Request Access</div></div></div></div></div>');
+              $('.report_row').append('<div class="main_select active_report active_report_1 report_1"><div class=""><div class="item_title" data-type="' + department + '"><p class="report_name">' + name + '</p><p class="report_dep">' + department + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></div><div><p class="report_desc">' + report_type + '</p></div></a><div class="reports_request"><div><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Request Access</div></div></div></div></div>');
 
           }
 
