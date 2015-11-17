@@ -28,6 +28,10 @@ Date: 10/28/2015
     <div class="row share_box">
       <div class="col-xs-12">
         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+
+        <div class="jumbotron">
+          <h2 class="share_title"></h2>
+        </div>
       </div>
     </div>
 
@@ -40,7 +44,7 @@ Date: 10/28/2015
     <!-- main left nav bar -->
     <nav>
       <!-- go home button -->
-      <a href="https://thegolubcorporation.sharepoint.com/sites/MYReports/SitePages/MyReportsHome.aspx"><div class="brand_box">
+      <a href="https://thegolubcorporation.sharepoint.com/sites/MYReports/SitePages/MyReportsDev.aspx"><div class="brand_box">
         My Reports
       </div></a>
 
@@ -58,22 +62,13 @@ Date: 10/28/2015
 
       <!-- menu options -->
       <ul class="menu_options">
-        <!-- <li class="sub_1_link menu_item">Report Catalog  <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></li>
-        <ul class="sub_menu sub_1">
-          <li class="dept_link">Human Resources</li>
-          <li class="dept_link">Operations</li>
-          <li class="active_dept_link">Merchandising</li>
-          <li class="dept_link">Finance</li>
-          <li class="dept_link">Executive</li>
-          <li class="dept_link">Payroll</li>
-        </ul>
-        <li class="menu_item">Recently Viewed</li> -->
-        <li class="dept_link">Human Resources</li>
-        <li class="dept_link">Operations</li>
-        <li class="active_dept_link">Merchandising</li>
-        <li class="dept_link">Finance</li>
-        <li class="dept_link">Executive</li>
-        <li class="dept_link">Payroll</li>
+
+        <li class="active_dept_link human">Human Resources</li>
+        <li class="active_dept_link operations">Operations</li>
+        <li class="active_dept_link merchandising">Merchandising</li>
+        <li class="active_dept_link finance">Finance</li>
+        <li class="active_dept_link executive">Executive</li>
+        <li class="active_dept_link payroll">Payroll</li>
       </ul>
 
       <!-- Links toggle button -->
@@ -144,10 +139,6 @@ Date: 10/28/2015
       <!-- title information box -->
       <div class="row">
         <div class="col-sm-12 gen_info">
-          <!-- <div class="menu_toggle">
-              <span class="rotate_item span glyphicon glyphicon-align-justify" aria-hidden="true"></span>
-          </div> -->
-
           <div class="">
             <h2>My Reports</h2>
             <h3><span>General Information About This Web Page</span></h3>
@@ -155,7 +146,7 @@ Date: 10/28/2015
         </div>
       </div>
 
-      <!-- choose dept -->
+      <!-- choose dept / top bar -->
       <div class="row">
         <div class="col-xs-12">
           <div class="icon_box_nav_bar">
@@ -220,7 +211,7 @@ Date: 10/28/2015
       </div>
 
       <!-- enterprice report catalog -->
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-sm-12">
           <div class="cats">
             <div class="row">
@@ -291,9 +282,9 @@ Date: 10/28/2015
 
           </div>
         </div>
-      </div>
+      </div> -->
 
-      <!-- detail view of reports -->
+      <!-- detail view of reports / List View -->
       <div class="row">
         <div class="col-xs-12">
           <div class="table-responsive">
@@ -302,6 +293,7 @@ Date: 10/28/2015
                 <tr>
                   <th style="text-align:center;">Thumbnail</th>
                   <th id="report_btn_sort">Report</th>
+                  <th>Department</th>
                   <th>Description</th>
                   <th>Sharing Status</th>
                 </tr>
@@ -331,25 +323,13 @@ Date: 10/28/2015
           <div class="inner_icon_box report_row">
 
 
-
-            <!-- <div class="row report_row">
-            </div> -->
-<!--
-            <div class="row Stores_report_row_1 report_row">
-            </div> -->
-
           </div>
 
         </div>
 
-
-
-
-
-
       </div>
 
-
+      <!-- reset search button -->
       <div class="reset_search" style="cursor:pointer;border-radius:3px;background:#63ba49;padding:10px;color:#fff;position:fixed;z-index:99;bottom:5px;right:5px;font-size:16px;">Reset List</div>
 
       <!-- PAGE CONTENT END -->
