@@ -532,6 +532,10 @@ opacity: 0.8;
   cursor: pointer;
   text-decoration: none;
   color: #fff;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 .main_select div {
   /*background: rgba(37, 31, 33, 0.8);*/
@@ -580,7 +584,7 @@ opacity: 0.8;
   transition: all 0.2s ease-in-out;
 }
 .dept_link {
-  opacity: 0.4;
+  /*opacity: 0.4;*/
   cursor: default !important;
 }
 .active_dept_link {
@@ -660,30 +664,30 @@ td img {
 
 @media (max-width: 1200px) {
   .inner_icon_box {
-  -moz-column-count:    4;
-  -webkit-column-count: 4;
-  column-count:         4;
+  -moz-column-count:    4 !important;
+  -webkit-column-count: 4 !important;
+  column-count:         4 !important;
   }
 }
 @media (max-width: 1000px) {
   .inner_icon_box {
-  -moz-column-count:    3;
-  -webkit-column-count: 3;
-  column-count:         3;
+  -moz-column-count:    3 !important;
+  -webkit-column-count: 3 !important;
+  column-count:         3 !important;
   }
 }
 @media (max-width: 800px) {
   .inner_icon_box {
-  -moz-column-count:    2;
-  -webkit-column-count: 2;
-  column-count:         2;
+  -moz-column-count:    2 !important;
+  -webkit-column-count: 2 !important;
+  column-count:         2 !important;
   }
 }
 @media (max-width: 400px) {
   .inner_icon_box {
-  -moz-column-count:    1;
-  -webkit-column-count: 1;
-  column-count:         1;
+  -moz-column-count:    1 !important;
+  -webkit-column-count: 1 !important;
+  column-count:         1 !important;
   }
 }
 
@@ -741,7 +745,7 @@ td img {
   cursor: pointer;
   z-index: 2;
   position: relative;
-  padding: 20px 20px;
+  padding: 20px 1px !important;
   background: rgb(46, 36, 38) !important;
 
   border: 1px solid #0A0A0A;
@@ -866,7 +870,6 @@ td {
 
 .selected_item{
   background: #335D27 !important;
-  border-bottom: 3px solid #335D27 !important;
 }
 
 

@@ -51,12 +51,12 @@ $(document).ready(function() {
 
   //merchandising department button
   $('.merch_dpt').on('click', function(){
-    $('.merch_dpt .item_title').toggleClass('selected_item');
-    $('.operations_dpt .item_title').removeClass('selected_item');
+    $('.merch_dpt').toggleClass('selected_item');
+    $('.operations_dpt').removeClass('selected_item');
     $('tbody tr').show();
     $('.active_report').show();
 
-    if($('.merch_dpt .item_title').hasClass('selected_item') === false)
+    if($('.merch_dpt').hasClass('selected_item') === false)
     {
       $('tbody tr').show();
       $('.active_report').show();
@@ -70,35 +70,39 @@ $(document).ready(function() {
           $('tbody tr:nth(' + i + ')').hide();
         }
       }
-      var item = $('.item_title');
-      var itemCount = item.length;
-      var row_count = $('.report_row').length;
-      for (var i = 1; i < row_count; i++) {
-        for (var j = 1; j < itemCount; j++) {
-          var itemText = $('.active_report_' + i + ':nth-child(' + j + ')').text();
+
+      var item = $('.active_report');
+      var itemCount = item.length + 1;
+      console.log(itemCount);
+
+        for (var i = 1; i < itemCount; i++) {
+          var itemText = $('.active_report:nth-child(' + i + ')').text();
           console.log(itemText);
           var itemTextFinal = itemText;
           var rowContaines = itemTextFinal.indexOf(merchItems) > -1;
           if (rowContaines !== true) {
-            $('.active_report_' + i + ':nth-child(' + j + ')').hide();
+            $('.active_report:nth-child(' + i + ')').hide();
           }
           else {}
         }
-      }
-    }
 
+    }
+     // 
+    //  var merchSize = $('.active_report:visible').size();
+     //
+    //  $('.inner_icon_box').css('column-count', merchSize);
 
   });
 
   //operations button
   $('.operations_dpt').on('click', function(){
-    $('.operations_dpt .item_title').toggleClass('selected_item');
-    $('.merch_dpt .item_title').removeClass('selected_item');
+    $('.operations_dpt').toggleClass('selected_item');
+    $('.merch_dpt').removeClass('selected_item');
 
     $('tbody tr').show();
     $('.active_report').show();
 
-    if($('.operations_dpt .item_title').hasClass('selected_item') === false)
+    if($('.operations_dpt').hasClass('selected_item') === false)
     {
       $('tbody tr').show();
       $('.active_report').show();
@@ -112,21 +116,25 @@ $(document).ready(function() {
           $('tbody tr:nth(' + i + ')').hide();
         }
       }
-      var item = $('.item_title');
-      var itemCount = item.length;
-      var row_count = $('.report_row').length;
-      for (var i = 1; i < row_count; i++) {
-        for (var j = 1; j < itemCount; j++) {
-          var itemText = $('.active_report_' + i + ':nth-child(' + j + ')').text();
+
+
+      var item = $('.active_report');
+      var itemCount = item.length + 1;
+      console.log(itemCount);
+
+        for (var i = 1; i < itemCount; i++) {
+          var itemText = $('.active_report:nth-child(' + i + ')').text();
           console.log(itemText);
           var itemTextFinal = itemText;
           var rowContaines = itemTextFinal.indexOf(opItems) > -1;
           if (rowContaines !== true) {
-            $('.active_report_' + i + ':nth-child(' + j + ')').hide();
+            $('.active_report:nth-child(' + i + ')').hide();
           }
           else {}
         }
-      }
+
+
+
     }
   });
 
@@ -472,7 +480,7 @@ $(document).ready(function() {
       //build grid - icon view
 
 
-        $('.' + department + '_report_row_1').append('<div class="main_select active_report active_report_1 report_1"><a href="' + attachmentFileUrls + '" target="blank"><div class=""><div class="item_title" data-type="' + report_type + '"><p class="report_name">' + name + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="csv" /></div><div><p class="report_desc">' + report_type + '</p></div><div class="reports_share"><div>Open</div></div><div class="reports_share"><div><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div></div></div></a></div>');
+        $('.report_row').append('<div class="main_select active_report active_report_1 report_1"><a href="' + attachmentFileUrls + '" target="blank"><div class=""><div class="item_title" data-type="' + report_type + '"><p class="report_name">' + name + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="csv" /></div><div><p class="report_desc">' + report_type + '</p></div><div class="reports_share"><div>Open</div></div><div class="reports_share"><div><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div></div></div></a></div>');
 
     }
     else if(lastThree === "pdf")
@@ -481,7 +489,7 @@ $(document).ready(function() {
 // col-sm-6 col-md-3
 
 
-        $('.' + department + '_report_row_1').append('<div class="main_select active_report active_report_1 report_1"><a href="' + attachmentFileUrls + '" target="blank"><div class=""><div class="item_title" data-type="' + report_type + '"><p class="report_name">' + name + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></div><div><p class="report_desc">' + report_type + '</p></div><div class="reports_share"><div>Open</div></div><div class="reports_share"><div><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div></div></div></a></div>');
+        $('.report_row').append('<div class="main_select active_report active_report_1 report_1"><a href="' + attachmentFileUrls + '" target="blank"><div class=""><div class="item_title" data-type="' + report_type + '"><p class="report_name">' + name + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></div><div><p class="report_desc">' + report_type + '</p></div><div class="reports_share"><div>Open</div></div><div class="reports_share"><div><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div></div></div></a></div>');
 
     }
 
