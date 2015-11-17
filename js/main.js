@@ -173,7 +173,7 @@ $(document).ready(function() {
   // group view button - sorts by report name
   $('.inner_rep_gro').on('click', function(){
     $('.inner_rep_gro span').toggleClass('rotate_item_full');
-    $("#report_btn_sort").click();
+    // $("#report_btn_sort").click();
     $('.cats').hide();
     $('.inner_icon_box, .report_sheet').hide();
     $('.table-responsive').show();
@@ -527,6 +527,7 @@ $(document).ready(function() {
 
 
 $('.active_dept_link').on('click', function(){
+  $('.icon_box_box').slideUp();
   $(this).removeClass('active_dept_link');
   var thisDepartment = $(this).attr('class');
 

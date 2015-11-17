@@ -140,7 +140,7 @@ h2 {
 }
 .search_input {
   position: fixed;
-  top: 64px;
+  top: 196px;
   width: 0;
   background: #fff;
   left: -100px;
@@ -155,7 +155,7 @@ h2 {
 }
 .search_input_submit {
   position: fixed;
-  top: 64px;
+  top: 196px;
   background: #63ba49;
   width: auto;
   left: -100px;
@@ -384,7 +384,7 @@ h2 {
 }
 .loader img {
   height: auto;
-  width: 40%;
+  width: 30%;
 }
 .overlay, .overlay_2 {
   z-index: 1;
