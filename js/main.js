@@ -59,6 +59,7 @@ $(document).ready(function() {
   //merchandising department button
   $('.merch_dpt').on('click', function(){
     $('.icon_box_nav_bar').slideToggle();
+    $('.mobile_icon_nav_bar span').removeClass('rotate_item');
     $('.merch_dpt').toggleClass('selected_item');
     $('.operations_dpt').removeClass('selected_item');
     $('tbody tr').show();
@@ -105,6 +106,7 @@ $(document).ready(function() {
   //operations button
   $('.operations_dpt').on('click', function(){
     $('.icon_box_nav_bar').slideToggle();
+    $('.mobile_icon_nav_bar span').removeClass('rotate_item');
     $('.operations_dpt').toggleClass('selected_item');
     $('.merch_dpt').removeClass('selected_item');
 
@@ -195,24 +197,27 @@ $(document).ready(function() {
 
   //report button - open report
   $(document).on('click', '.report_btn', function(){
-    theCSV = $(this).attr('id');
-    console.log(theCSV);
-    // window.location.href = theCSV;
-    $.ajax({
-        url: theCSV,
-        type:'get',
-        success:function(data){
-            $('.report_sheet').html(data);
-        }
-    })
-    $('.cats').hide();
-    $('.table-responsive').hide();
-    $('.inner_icon_box').hide();
-    $('.report_sheet').show();
+    theDocument = $(this).attr('id');
+    console.log(theDocument);
+    // window.location.href = theDocument;
+    window.open(theDocument, '_blank');
+    // $.ajax({
+    //     url: theCSV,
+    //     type:'get',
+    //     success:function(data){
+    //         $('.report_sheet').html(data);
+    //     }
+    // })
+    // $('.cats').hide();
+    // $('.table-responsive').hide();
+    // $('.inner_icon_box').hide();
+    // $('.report_sheet').show();
   });
 
   // force form tags into sharepoint
   $('.input_goes_here').append('<form  onkeypress="return event.keyCode != 13"><input  class="search_input" style="" id="search_input" name="name" type="text" placeholder="Search" class="form-control"><div class="search_input_submit">Submit</div></form>');
+
+  $('.search_button_two').append('<form  onkeypress="return event.keyCode != 13"><input  class="search_input_two" style="" id="search_input_two" name="name" type="text" placeholder="Search" class="form-control"><div class="search_input_submit_two"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></div></form>');
 
   // attempt to prevent form submision to refresh page
   $('form').submit(function() {
@@ -248,12 +253,16 @@ $(document).ready(function() {
   });
 
   //share report button
-  $(document).on('click', '.reports_request', function(){
+  $(document).on('click', '.request_access', function(){
     $('.share_box_inner').hide();
     var shareTitle = $(this).closest('.item_title').find('.report_name').text();
     $('.share_title').text(shareTitle);
-    $('.overlay_share').fadeIn();
-    $('.share_box, .request_box_inner').fadeIn();
+    // $('.overlay_share').fadeIn();
+    // $('.share_box, .request_box_inner').fadeIn();
+    console.log('test');
+    $(this).prev().show();
+    $(this).hide();
+
   });
 
 
@@ -319,6 +328,72 @@ $(document).ready(function() {
     }
     return false;
   });
+
+
+
+  //search input - submit MOBILE SUBMIT
+  var search;
+  $('.search_input_submit_two').on('click', function() {
+    $('tbody tr').show();
+    $('#search_input_two').blur();
+    $('.reset_search').show();
+    $('.active_report').show();
+    search = $('.search_input_two').val();
+    searchFinal = search.toLowerCase();
+    $('.search_input_two').focus().val('');
+    // $('.search_input_submit_two').removeClass('search_sub_open');
+
+
+    //icon view
+    var item = $('.item_title');
+    var itemCount = item.length;
+    console.log(itemCount);
+    // var row_count = $('.report_row').length;
+
+      for (var i = 1; i < itemCount + 1; i++) {
+        var itemText = $('.active_report_1:nth-child(' + i + ')').text();
+        console.log(itemText);
+        var itemTextFinal = itemText.toLowerCase();
+        var rowContaines = itemTextFinal.indexOf(searchFinal) > -1;
+        if (rowContaines !== true) {
+          $('.active_report_1:nth-child(' + i + ')').hide();
+        }
+        else {}
+      }
+
+
+    //table view detail view
+    var listCount = $('#reports_table tr').length;
+    for(var i = 2; i < listCount + 1; i++ ){
+      var checkThis = $('tbody tr:nth(' + i + ') td:nth(1)').text();
+      var checkThisFinal = checkThis.toLowerCase();
+      var rowContaines = checkThisFinal.indexOf(searchFinal) > -1;
+      if (rowContaines !== true) {
+        $('tbody tr:nth(' + i + ')').hide();
+      }
+    }
+
+
+
+
+
+
+
+    $('nav').removeClass('open_nav');
+    $('.menu_options').slideUp();
+    $('.menu_active').show();
+    $('.menu_close').removeClass('menu_close_open');
+
+
+    $('.menu_button span').removeClass('rotate_item');
+    $('.menu_button').removeClass('active_menu');
+    $('.social_contents').slideUp(100);
+    $('.social_box span').removeClass('rotate_item');
+    $('.social_box').removeClass('active_menu');
+    return false;
+  });
+
+
 
   //mobile search input
   var search;
@@ -427,6 +502,7 @@ $(document).ready(function() {
   $('.my_reports_button').on('click', function(){
 
     $('.my_reports_button').text('Loading...');
+    $('.gen_info h2').text('My Reports');
     $('.icon_box_box').slideDown(100);
     $('.inner_icon_box, .table-responsive tbody').empty();
     $('.merch_dpt, .operations_dpt').removeClass('selected_item');
@@ -534,15 +610,19 @@ $(document).ready(function() {
 
     }
 
-
-
     $(document).ready(function()
         {
             $("#reports_table").tablesorter();
             $('.my_reports_button').text('My Reports');
             $('nav').removeClass('open_nav');
+            $('.menu_options').slideUp();
             $('.menu_active').show();
             $('.menu_close').removeClass('menu_close_open');
+            $('.menu_button span').removeClass('rotate_item');
+            $('.menu_button').removeClass('active_menu');
+            $('.social_contents').slideUp(100);
+            $('.social_box span').removeClass('rotate_item');
+            $('.social_box').removeClass('active_menu');
         }
     );
 
@@ -552,9 +632,12 @@ $(document).ready(function() {
 
   //Reports catalog build
   $('.active_dept_link').on('click', function(){
+
     $('.icon_box_box').slideUp(100);
     $(this).removeClass('active_dept_link');
     var thisDepartment = $(this).attr('class');
+    var newTitle = thisDepartment.charAt(0).toUpperCase() + thisDepartment.slice(1);
+    $('.gen_info h2').text(newTitle);
     $('.' + thisDepartment).text('Loading...');
     $('.inner_icon_box, .table-responsive tbody').empty();
 
@@ -634,12 +717,12 @@ $(document).ready(function() {
             if(lastThree === "csv")
             {
               //build grid - icon view
-                $('.report_row').append('<div class="main_select active_report active_report_1 report_1"><div class=""><div class="item_title" data-type="' + department + '"><p class="report_name">' + name + '</p><p class="report_dep">' + department + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="csv" /></div><div><p class="report_desc">' + report_type + '</p></div></a><div class="reports_request"><div><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Request Access</div></div></div></div></div>');
+                $('.report_row').append('<div class="main_select active_report active_report_1 report_1"><div class=""><div class="item_title" data-type="' + department + '"><p class="report_name">' + name + '</p><p class="report_dep">' + department + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="csv" /></div><div><p class="report_desc">' + report_type + '</p></div></a><div class="reports_request"><div class="request_wrap"><div class="request_sent">Request Sent!</div><div class="request_access"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Request Access</div></div></div></div></div></div>');
             }
             else if(lastThree === "pdf")
             {
               //build grid - icon view
-                $('.report_row').append('<div class="main_select active_report active_report_1 report_1"><div class=""><div class="item_title" data-type="' + department + '"><p class="report_name">' + name + '</p><p class="report_dep">' + department + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></div><div><p class="report_desc">' + report_type + '</p></div></a><div class="reports_request"><div><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Request Access</div></div></div></div></div>');
+                $('.report_row').append('<div class="main_select active_report active_report_1 report_1"><div class=""><div class="item_title" data-type="' + department + '"><p class="report_name">' + name + '</p><p class="report_dep">' + department + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></div><div><p class="report_desc">' + report_type + '</p></div></a><div class="reports_request"><div class="request_wrap"><div class="request_sent">Request Sent!</div><div class="request_access"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Request Access</div></div></div></div></div></div>');
             }
             $(document).ready(function()
             {
@@ -650,6 +733,13 @@ $(document).ready(function() {
                 $('.menu_options').slideUp();
                 $('.menu_active').show();
                 $('.menu_close').removeClass('menu_close_open');
+
+
+                $('.menu_button span').removeClass('rotate_item');
+                $('.menu_button').removeClass('active_menu');
+                $('.social_contents').slideUp(100);
+                $('.social_box span').removeClass('rotate_item');
+                $('.social_box').removeClass('active_menu');
             }
             );
         }
