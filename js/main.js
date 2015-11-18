@@ -270,7 +270,7 @@ $(document).ready(function() {
   //search input - submit
   var search;
   $('.search_input_submit').on('click', function() {
-      $('tbody tr').show();
+    $('tbody tr').show();
     $('#search_input').blur();
     $('.reset_search').show();
     $('.active_report').show();
@@ -283,25 +283,27 @@ $(document).ready(function() {
     //icon view
     var item = $('.item_title');
     var itemCount = item.length;
-    var row_count = $('.report_row').length;
-    for (var i = 1; i < row_count; i++) {
-      for (var j = 1; j < itemCount; j++) {
-        var itemText = $('.active_report_' + i + ':nth-child(' + j + ')').text();
+    console.log(itemCount);
+    // var row_count = $('.report_row').length;
+
+      for (var i = 1; i < itemCount + 1; i++) {
+        var itemText = $('.active_report_1:nth-child(' + i + ')').text();
         console.log(itemText);
         var itemTextFinal = itemText.toLowerCase();
         var rowContaines = itemTextFinal.indexOf(searchFinal) > -1;
         if (rowContaines !== true) {
-          $('.active_report_' + i + ':nth-child(' + j + ')').hide();
+          $('.active_report_1:nth-child(' + i + ')').hide();
         }
         else {}
       }
-    }
+
 
     //table view detail view
     var listCount = $('#reports_table tr').length;
     for(var i = 2; i < listCount + 1; i++ ){
       var checkThis = $('tbody tr:nth(' + i + ') td:nth(1)').text();
-      var rowContaines = checkThis.indexOf(searchFinal) > -1;
+      var checkThisFinal = checkThis.toLowerCase();
+      var rowContaines = checkThisFinal.indexOf(searchFinal) > -1;
       if (rowContaines !== true) {
         $('tbody tr:nth(' + i + ')').hide();
       }
@@ -413,9 +415,13 @@ $(document).ready(function() {
   });
 
   $('.my_reports_button').on('click', function(){
-    $('.icon_box_box').slideDown();
+    $('.my_reports_button').text('Loading...');
+    $('.icon_box_box').slideDown(100);
     $('.inner_icon_box, .table-responsive tbody').empty();
-    GetReports();
+    $('.merch_dpt, .operations_dpt').removeClass('selected_item');
+    setTimeout(function(){
+      GetReports();
+    }, 150);
   });
   // sp services begin (get list)
   //get reports list callback
@@ -522,6 +528,7 @@ $(document).ready(function() {
     $(document).ready(function()
         {
             $("#reports_table").tablesorter();
+            $('.my_reports_button').text('My Reports');
         }
     );
 
@@ -529,159 +536,108 @@ $(document).ready(function() {
   }
   // sp services end
 
+  //Reports catalog build
+  $('.active_dept_link').on('click', function(){
+    $('.icon_box_box').slideUp(100);
+    $(this).removeClass('active_dept_link');
+    var thisDepartment = $(this).attr('class');
+    $('.' + thisDepartment).text('Loading...');
+    $('.inner_icon_box, .table-responsive tbody').empty();
 
-
-
-
-
-
-
-
-
-
-
-
-
-$('.active_dept_link').on('click', function(){
-  $('.icon_box_box').slideUp();
-  $(this).removeClass('active_dept_link');
-  var thisDepartment = $(this).attr('class');
-
-  $('.inner_icon_box, .table-responsive tbody').empty();
-
-  GetReportsUnfiltered();
-  function GetReportsUnfiltered() {
-    var list = "MyReports";
-    var method = "GetListItems";
-    var query;
-    var fieldsToRead = "<ViewFields>" +
-      "<FieldRef Name='Name' />" +
-      "<FieldRef Name='Department' />" +
-      "<FieldRef Name='ReportType' />" +
-      "<FieldRef Name='Created' />" +
-      "<FieldRef Name='PublishedDate' />" +
-      "<FieldRef Name='Version' />" +
-      "</ViewFields>";
-    $().SPServices({
-      operation: method,
-      async: false,
-      listName: list,
-      CAMLViewFields: fieldsToRead,
-      CAMLQuery: query,
-      completefunc: function(xData, Status) {
-        $(xData.responseXML).SPFilterNode("z:row").each(function() {
-
-          var name = ($(this).attr("ows_Title")); //name
-          var department = ($(this).attr("ows_department")); //department
-          var report_type = ($(this).attr("ows_ReportType")); //report type
-          var created = ($(this).attr("ows_Created")); //created
-          var pub_date = ($(this).attr("ows_PublishDate")); //pub date
-          var modified = ($(this).attr("ows_Modified")); //modified
-          var created_by = ($(this).attr("ows_Author")); //created by
-          var modified_by = ($(this).attr("ows_Editor")); //modified by
-          var listItemId = ($(this).attr("ows_listItemId")); //listItemId
-
-          displayListUnfiltered(name, department, report_type, listItemId, report_type);
+    setTimeout(function(){
+      GetReportsUnfiltered();
+      function GetReportsUnfiltered() {
+        var list = "MyReports";
+        var method = "GetListItems";
+        var query;
+        var fieldsToRead = "<ViewFields>" +
+          "<FieldRef Name='Name' />" +
+          "<FieldRef Name='Department' />" +
+          "<FieldRef Name='ReportType' />" +
+          "<FieldRef Name='Created' />" +
+          "<FieldRef Name='PublishedDate' />" +
+          "<FieldRef Name='Version' />" +
+          "</ViewFields>";
+        $().SPServices({
+          operation: method,
+          async: false,
+          listName: list,
+          CAMLViewFields: fieldsToRead,
+          CAMLQuery: query,
+          completefunc: function(xData, Status) {
+            $(xData.responseXML).SPFilterNode("z:row").each(function() {
+              var name = ($(this).attr("ows_Title")); //name
+              var department = ($(this).attr("ows_department")); //department
+              var report_type = ($(this).attr("ows_ReportType")); //report type
+              var created = ($(this).attr("ows_Created")); //created
+              var pub_date = ($(this).attr("ows_PublishDate")); //pub date
+              var modified = ($(this).attr("ows_Modified")); //modified
+              var created_by = ($(this).attr("ows_Author")); //created by
+              var modified_by = ($(this).attr("ows_Editor")); //modified by
+              var listItemId = ($(this).attr("ows_listItemId")); //listItemId
+              displayListUnfiltered(name, department, report_type, listItemId, report_type);
+            });
+          }
         });
       }
-    });
-  }
 
-
-
-
-
-
-
-  function displayListUnfiltered(name, department, report_type, listItemId, report_type) {
-
-
-    //get attachments
-    var list = "MyReports";
-    var method = "GetAttachmentCollection";
-    var attachmentFileUrls = [];
-    $().SPServices({
-      operation: method,
-      async: false,
-      listName: list,
-      ID: listItemId,
-      completefunc: function(xData, Status) {
-        $(xData.responseXML).find("Attachment").each(function() {
-          var url = $(this).text();
-          attachmentFileUrls.push(url);
-          console.log(attachmentFileUrls);
+      function displayListUnfiltered(name, department, report_type, listItemId, report_type) {
+        //get attachments
+        var list = "MyReports";
+        var method = "GetAttachmentCollection";
+        var attachmentFileUrls = [];
+        $().SPServices({
+          operation: method,
+          async: false,
+          listName: list,
+          ID: listItemId,
+          completefunc: function(xData, Status) {
+            $(xData.responseXML).find("Attachment").each(function() {
+              var url = $(this).text();
+              attachmentFileUrls.push(url);
+              console.log(attachmentFileUrls);
+            });
+          }
         });
-      }
-    });
 
-    //build table- detail view
-    // https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png
-    var checkThisDept = department.toLowerCase();
-
-    if(checkThisDept === thisDepartment)
-    {
-
-
-          var str = attachmentFileUrls[0];
-          var lastThree = str.substr(str.length - 3);
-          lastThree = lastThree.toLowerCase();
-          // alert(lastThree);
-
-          if(lastThree === "csv")
-          {
-            $('.table-responsive tbody').append('<tr><td style="text-align:center;"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="csv" /></td><td class="report_btn" id="">' + name + '</td><td class="list_department">' + department + '</td><td>' + report_type + '</td><td class="share_btn">Request Access</td></tr>');
-
-          }
-          else if(lastThree === "pdf")
-          {
-            $('.table-responsive tbody').append('<tr><td style="text-align:center;"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></td><td class="report_btn" id="">' + name + '</td><td class="list_department">' + department + '</td><td>' + report_type + '</td><td class="share_btn">Request Access</td></tr>');
-
-          }
-
-
-          if(lastThree === "csv")
-          {
-            //build grid - icon view
-
-
-              $('.report_row').append('<div class="main_select active_report active_report_1 report_1"><div class=""><div class="item_title" data-type="' + department + '"><p class="report_name">' + name + '</p><p class="report_dep">' + department + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="csv" /></div><div><p class="report_desc">' + report_type + '</p></div></a><div class="reports_request"><div><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Request Access</div></div></div></div></div>');
-
-          }
-          else if(lastThree === "pdf")
-          {
-            //build grid - icon view
-        // col-sm-6 col-md-3
-
-
-              $('.report_row').append('<div class="main_select active_report active_report_1 report_1"><div class=""><div class="item_title" data-type="' + department + '"><p class="report_name">' + name + '</p><p class="report_dep">' + department + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></div><div><p class="report_desc">' + report_type + '</p></div></a><div class="reports_request"><div><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Request Access</div></div></div></div></div>');
-
-          }
-
-
-
-          $(document).ready(function()
-              {
-                  $("#reports_table").tablesorter();
-              }
-          );
-
-
+        //build table- detail view
+        // https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png
+        var checkThisDept = department.toLowerCase();
+        if(checkThisDept === thisDepartment)
+        {
+            var str = attachmentFileUrls[0];
+            var lastThree = str.substr(str.length - 3);
+            lastThree = lastThree.toLowerCase();
+            // alert(lastThree);
+            if(lastThree === "csv")
+            {
+              $('.table-responsive tbody').append('<tr><td style="text-align:center;"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="csv" /></td><td class="report_btn" id="">' + name + '</td><td class="list_department">' + department + '</td><td>' + report_type + '</td><td class="share_btn">Request Access</td></tr>');
+            }
+            else if(lastThree === "pdf")
+            {
+              $('.table-responsive tbody').append('<tr><td style="text-align:center;"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></td><td class="report_btn" id="">' + name + '</td><td class="list_department">' + department + '</td><td>' + report_type + '</td><td class="share_btn">Request Access</td></tr>');
+            }
+            if(lastThree === "csv")
+            {
+              //build grid - icon view
+                $('.report_row').append('<div class="main_select active_report active_report_1 report_1"><div class=""><div class="item_title" data-type="' + department + '"><p class="report_name">' + name + '</p><p class="report_dep">' + department + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="csv" /></div><div><p class="report_desc">' + report_type + '</p></div></a><div class="reports_request"><div><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Request Access</div></div></div></div></div>');
+            }
+            else if(lastThree === "pdf")
+            {
+              //build grid - icon view
+                $('.report_row').append('<div class="main_select active_report active_report_1 report_1"><div class=""><div class="item_title" data-type="' + department + '"><p class="report_name">' + name + '</p><p class="report_dep">' + department + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></div><div><p class="report_desc">' + report_type + '</p></div></a><div class="reports_request"><div><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Request Access</div></div></div></div></div>');
+            }
+            $(document).ready(function()
+            {
+                $("#reports_table").tablesorter();
+                var newTitle = thisDepartment.charAt(0).toUpperCase() + thisDepartment.slice(1);
+                $('.' + thisDepartment).text(newTitle);
+            }
+            );
         }
-
-
-    }
-
-
-
-});
-
-
-
-
-
-
-
-
+      }
+    }, 150);
+  });
 
 
 });
