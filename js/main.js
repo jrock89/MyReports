@@ -49,8 +49,16 @@ $(document).ready(function() {
     $('.inner_rep_cat, .inner_rep_ico, .inner_rep_gro').css('border-bottom', '3px solid #478635', '!important');
   });
 
+
+  $('.mobile_icon_nav_bar').on('click', function(){
+    $('.icon_box_nav_bar').slideToggle();
+    $('.mobile_icon_nav_bar span').toggleClass('rotate_item');
+  });
+
+
   //merchandising department button
   $('.merch_dpt').on('click', function(){
+    $('.icon_box_nav_bar').slideToggle();
     $('.merch_dpt').toggleClass('selected_item');
     $('.operations_dpt').removeClass('selected_item');
     $('tbody tr').show();
@@ -96,6 +104,7 @@ $(document).ready(function() {
 
   //operations button
   $('.operations_dpt').on('click', function(){
+    $('.icon_box_nav_bar').slideToggle();
     $('.operations_dpt').toggleClass('selected_item');
     $('.merch_dpt').removeClass('selected_item');
 
@@ -366,10 +375,11 @@ $(document).ready(function() {
 
   //mobile menu button drop down items
   $('.mob_menu_button').on('click', function() {
-    $('.mob_menu_contents').slideToggle();
-    $('.overlay_3').toggle();
-    $('.mob_menu_options li span').removeClass('rotate_item');
-    $('.sub_1').slideUp();
+    $('nav').toggleClass('open_nav');
+    // $('.mob_menu_contents').slideToggle();
+    // $('.overlay_3').toggle();
+    // $('.mob_menu_options li span').removeClass('rotate_item');
+    // $('.sub_1').slideUp();
     $('.menu_active').toggle();
     $('.menu_close').toggleClass('menu_close_open');
   });
@@ -415,6 +425,7 @@ $(document).ready(function() {
   });
 
   $('.my_reports_button').on('click', function(){
+
     $('.my_reports_button').text('Loading...');
     $('.icon_box_box').slideDown(100);
     $('.inner_icon_box, .table-responsive tbody').empty();
@@ -529,6 +540,9 @@ $(document).ready(function() {
         {
             $("#reports_table").tablesorter();
             $('.my_reports_button').text('My Reports');
+            $('nav').removeClass('open_nav');
+            $('.menu_active').show();
+            $('.menu_close').removeClass('menu_close_open');
         }
     );
 
@@ -632,6 +646,10 @@ $(document).ready(function() {
                 $("#reports_table").tablesorter();
                 var newTitle = thisDepartment.charAt(0).toUpperCase() + thisDepartment.slice(1);
                 $('.' + thisDepartment).text(newTitle);
+                $('nav').removeClass('open_nav');
+                $('.menu_options').slideUp();
+                $('.menu_active').show();
+                $('.menu_close').removeClass('menu_close_open');
             }
             );
         }
