@@ -289,13 +289,6 @@ h2 {
   transition: all 0.4s ease-in-out;
 }
 
-.show_bar {
-  height: 100px;
-  width: 180px;
-  overflow: hidden;
-  position: absolute;
-  bottom: 0;
-}
 
 .social_contents {
   height: auto;
@@ -868,13 +861,13 @@ td img {
   height: auto !important;
 }
 
-@media (max-width: 1200px) {
+/*@media (max-width: 1200px) {
   .inner_icon_box {
   -moz-column-count:    4 !important;
   -webkit-column-count: 4 !important;
   column-count:         4 !important;
   }
-}
+}*/
 @media (max-width: 1000px) {
   .inner_icon_box {
   -moz-column-count:    3 !important;
