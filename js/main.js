@@ -53,17 +53,24 @@ $(document).ready(function() {
   $('.mobile_icon_nav_bar').on('click', function(){
     $('.icon_box_nav_bar').slideToggle();
     $('.mobile_icon_nav_bar span').toggleClass('rotate_item');
+      $('.accounting_list').slideUp();
   });
 
 
   //merchandising department button
-  $('.merch_dpt').on('click', function(){
-    $('.icon_box_nav_bar').slideToggle();
-    $('.mobile_icon_nav_bar span').removeClass('rotate_item');
-    $('.merch_dpt').toggleClass('selected_item');
-    $('.operations_dpt').removeClass('selected_item');
+  $(document).on('click', '.merchandising_dept', function(){
+    if(window.innerWidth < 721)
+    {
+      $('.icon_box_nav_bar').slideToggle();
+      $('.mobile_icon_nav_bar span').removeClass('rotate_item');
+    }
+
+
+
+    $('.merchandising_dept').toggleClass('selected_item');
+    $('.operations_dept').removeClass('selected_item');
     $('tbody tr, .active_report').show();
-    if($('.merch_dpt').hasClass('selected_item') === false)
+    if($('.merchandising_dept').hasClass('selected_item') === false)
     {
       $('tbody tr, .active_report').show();
     }else {
@@ -142,17 +149,25 @@ $(document).ready(function() {
 
   }
 
+
+
+
   //operations button
-  $('.operations_dpt').on('click', function(){
-    $('.icon_box_nav_bar').slideToggle();
-    $('.mobile_icon_nav_bar span').removeClass('rotate_item');
-    $('.operations_dpt').toggleClass('selected_item');
-    $('.merch_dpt').removeClass('selected_item');
+  $(document).on('click', '.operations_dept', function(){
+
+    if(window.innerWidth < 721)
+    {
+      $('.icon_box_nav_bar').slideToggle();
+      $('.mobile_icon_nav_bar span').removeClass('rotate_item');
+    }
+
+    $('.operations_dept').toggleClass('selected_item');
+    $('.merchandising_dept').removeClass('selected_item');
 
     $('tbody tr').show();
     $('.active_report').show();
 
-    if($('.operations_dpt').hasClass('selected_item') === false)
+    if($('.operations_dept').hasClass('selected_item') === false)
     {
       $('tbody tr').show();
       $('.active_report').show();
@@ -208,6 +223,16 @@ $(document).ready(function() {
   $('.inner_rep_ico').css('border-bottom', '3px solid #335D27', '!important');
   $('.inner_rep_cat, .inner_rep_gro, .inner_rep_det').css('border-bottom', '3px solid #478635', '!important');
 
+
+
+
+  $(document).on('click', '.accounting_dept', function(){
+    $('.accounting_list').slideToggle();
+  });
+
+  $(document).on('mouseleave', '.accounting_dept', function(){
+    $('.accounting_list').slideUp();
+  });
 
   // icon view button
   $('.inner_rep_ico').on('click', function(){
@@ -544,12 +569,67 @@ $(document).ready(function() {
     $('.gen_info h2').text('My Reports');
     $('.icon_box_box').slideDown(100);
     $('.inner_icon_box, .table-responsive tbody').empty();
-    $('.merch_dpt, .operations_dpt').removeClass('selected_item');
+    $('.merchandising_dept, .operations_dept').removeClass('selected_item');
     setTimeout(function(){
       GetReports();
     }, 150);
   });
   // sp services begin (get list)
+
+
+
+
+  //get reports function / sp services call
+  GetDepartments();
+  function GetDepartments() {
+    var list = "Departments";
+    var method = "GetListItems";
+    var query;
+    var fieldsToRead = "<ViewFields>" +
+      "<FieldRef Name='Title' />" +
+      "</ViewFields>";
+    $().SPServices({
+      operation: method,
+      async: false,
+      listName: list,
+      CAMLViewFields: fieldsToRead,
+      CAMLQuery: query,
+      completefunc: function(xData, Status) {
+        var numOfDepartments = 0;
+
+        $(xData.responseXML).SPFilterNode("z:row").each(function() {
+
+          var title = ($(this).attr("ows_Title")); //name
+
+          numOfDepartments ++;
+          console.log(title + ' ' + numOfDepartments);
+          lowercaseTitle = title.toLowerCase();
+          lowercaseTitle = lowercaseTitle.replace(/\s/g, '');
+
+
+          $('.icon_box_nav_bar .row').append('<div class="cat_choice ' + lowercaseTitle + '_dept">' + title + '</div>');
+          $('.menu_options').append('<li class="active_dept_link ' + lowercaseTitle + '">' + title + '</li>');
+        });
+
+        var departmentCount = numOfDepartments;
+        if(numOfDepartments % 6 === 0 || numOfDepartments % 3 === 0){
+          $('.cat_choice').addClass('col-sm-4');
+          $('.cat_choice').addClass('col-lg-2');
+        }
+        else{
+          $('.cat_choice').addClass('col-sm-4');
+        }
+      }
+    });
+
+
+
+
+    $('.accounting_dept').append("<div class='accounting_list'><ul><li>AP</li><li>AR</li><li>AR & Reclaim</li><li>Benefits</li><li>DSD</li><li>Expenses</li>  <li>General Ledger</li><li>General Liability</li><li>HR</li><li>Inventory</li><li>Ledger</li><li>Payroll</li><li>Store Audit</li><li>Store Operations</li><li>TAB Room</li><li>Tax Department</li><li>Treasury</li><li>Vender Allowance</li><li>Warehouse</li><li>Worker's Comp</li></ul></div>");
+  }
+
+
+
   //get reports list callback
   GetReports();
   //get reports function / sp services call
