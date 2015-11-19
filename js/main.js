@@ -58,27 +58,106 @@ $(document).ready(function() {
 
 
   //merchandising department button
-  $(document).on('click', '.merchandising_dept', function(){
+  // $(document).on('click', '.merchandising_dept', function(){
+  //   if(window.innerWidth < 721)
+  //   {
+  //     $('.icon_box_nav_bar').slideToggle();
+  //     $('.mobile_icon_nav_bar span').removeClass('rotate_item');
+  //   }
+  //
+  //
+  //
+  //   $('.merchandising_dept').toggleClass('selected_item');
+  //   $('.operations_dept').removeClass('selected_item');
+  //   $('tbody tr, .active_report').show();
+  //   if($('.merchandising_dept').hasClass('selected_item') === false)
+  //   {
+  //     $('tbody tr, .active_report').show();
+  //   }else {
+  //     var merchItems = "Merchandising";
+  //     var listCount = $('#reports_table tr').length;
+  //     for(var i = 2; i < listCount + 1; i++ ){
+  //       var checkThis = $('tbody tr:nth(' + i + ') td:nth(1)').text();
+  //       var rowContaines = checkThis.indexOf(merchItems) > -1;
+  //       if (rowContaines !== true) {
+  //         $('tbody tr:nth(' + i + ')').hide();
+  //       }
+  //     }
+  //     var item = $('.active_report');
+  //     var itemCount = item.length + 1;
+  //     console.log(itemCount);
+  //       for (var i = 1; i < itemCount; i++) {
+  //         var itemText = $('.active_report:nth-child(' + i + ')').text();
+  //         console.log(itemText);
+  //         var itemTextFinal = itemText;
+  //         var rowContaines = itemTextFinal.indexOf(merchItems) > -1;
+  //         if (rowContaines !== true) {
+  //           $('.active_report:nth-child(' + i + ')').hide();
+  //         }
+  //         else {}
+  //       }
+  //   }
+  //    //
+  //   //  var merchSize = $('.active_report:visible').size();
+  //
+  //
+  //   countDisplayedReports();
+  //
+  // });
+  //
+
+
+
+
+
+
+
+
+
+
+  $(document).on('click', '.accounting_dept', function(){
+    $('.accounting_list').slideToggle();
+  });
+
+  $(document).on('mouseleave', '.accounting_dept', function(){
+    $('.accounting_list').slideUp();
+  });
+
+
+
+  $(document).on('click', '.all_dept', function(){
+    $('.cat_choice').removeClass('selected_item');
+    $('.all_dept').addClass('selected_item');
+    $('tbody tr, .active_report').show();
+  });
+
+
+  //merchandising department button
+  $(document).on('click', '.cat_choice', function(){
+    var theDept = $(this).text();
+    theDeptClass = theDept.replace(/\s/g, '');
+    var theDeptLower = theDeptClass.toLowerCase();
+
     if(window.innerWidth < 721)
     {
       $('.icon_box_nav_bar').slideToggle();
       $('.mobile_icon_nav_bar span').removeClass('rotate_item');
     }
 
+    $('.all_dept').removeClass('selected_item');
+    $('.cat_choice').removeClass('selected_item');
+    $('.' + theDeptLower + '_dept').toggleClass('selected_item');
 
-
-    $('.merchandising_dept').toggleClass('selected_item');
-    $('.operations_dept').removeClass('selected_item');
     $('tbody tr, .active_report').show();
-    if($('.merchandising_dept').hasClass('selected_item') === false)
+    if($('.' + theDeptLower + '_dept').hasClass('selected_item') === false)
     {
       $('tbody tr, .active_report').show();
     }else {
-      var merchItems = "Merchandising";
+      var theItems = theDept;
       var listCount = $('#reports_table tr').length;
       for(var i = 2; i < listCount + 1; i++ ){
         var checkThis = $('tbody tr:nth(' + i + ') td:nth(1)').text();
-        var rowContaines = checkThis.indexOf(merchItems) > -1;
+        var rowContaines = checkThis.indexOf(theItems) > -1;
         if (rowContaines !== true) {
           $('tbody tr:nth(' + i + ')').hide();
         }
@@ -90,7 +169,7 @@ $(document).ready(function() {
           var itemText = $('.active_report:nth-child(' + i + ')').text();
           console.log(itemText);
           var itemTextFinal = itemText;
-          var rowContaines = itemTextFinal.indexOf(merchItems) > -1;
+          var rowContaines = itemTextFinal.indexOf(theItems) > -1;
           if (rowContaines !== true) {
             $('.active_report:nth-child(' + i + ')').hide();
           }
@@ -104,6 +183,20 @@ $(document).ready(function() {
     countDisplayedReports();
 
   });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   function countDisplayedReports(){
@@ -153,57 +246,57 @@ $(document).ready(function() {
 
 
   //operations button
-  $(document).on('click', '.operations_dept', function(){
-
-    if(window.innerWidth < 721)
-    {
-      $('.icon_box_nav_bar').slideToggle();
-      $('.mobile_icon_nav_bar span').removeClass('rotate_item');
-    }
-
-    $('.operations_dept').toggleClass('selected_item');
-    $('.merchandising_dept').removeClass('selected_item');
-
-    $('tbody tr').show();
-    $('.active_report').show();
-
-    if($('.operations_dept').hasClass('selected_item') === false)
-    {
-      $('tbody tr').show();
-      $('.active_report').show();
-    }else {
-      var opItems = "Operations";
-      var listCount = $('#reports_table tr').length;
-      for(var i = 2; i < listCount + 1; i++ ){
-        var checkThis = $('tbody tr:nth(' + i + ') td:nth(2)').text();
-        var rowContaines = checkThis.indexOf(opItems) > -1;
-        if (rowContaines !== true) {
-          $('tbody tr:nth(' + i + ')').hide();
-        }
-      }
-
-
-      var item = $('.active_report');
-      var itemCount = item.length + 1;
-      console.log(itemCount);
-
-        for (var i = 1; i < itemCount; i++) {
-          var itemText = $('.active_report:nth-child(' + i + ') .report_dep').text();
-          console.log(itemText);
-          var itemTextFinal = itemText;
-          var rowContaines = itemTextFinal.indexOf(opItems) > -1;
-          if (rowContaines !== true) {
-            $('.active_report:nth-child(' + i + ')').hide();
-          }
-          else {}
-        }
-
-
-
-    }
-
-    countDisplayedReports();
-  });
+  // $(document).on('click', '.operations_dept', function(){
+  //
+  //   if(window.innerWidth < 721)
+  //   {
+  //     $('.icon_box_nav_bar').slideToggle();
+  //     $('.mobile_icon_nav_bar span').removeClass('rotate_item');
+  //   }
+  //
+  //   $('.operations_dept').toggleClass('selected_item');
+  //   $('.merchandising_dept').removeClass('selected_item');
+  //
+  //   $('tbody tr').show();
+  //   $('.active_report').show();
+  //
+  //   if($('.operations_dept').hasClass('selected_item') === false)
+  //   {
+  //     $('tbody tr').show();
+  //     $('.active_report').show();
+  //   }else {
+  //     var opItems = "Operations";
+  //     var listCount = $('#reports_table tr').length;
+  //     for(var i = 2; i < listCount + 1; i++ ){
+  //       var checkThis = $('tbody tr:nth(' + i + ') td:nth(2)').text();
+  //       var rowContaines = checkThis.indexOf(opItems) > -1;
+  //       if (rowContaines !== true) {
+  //         $('tbody tr:nth(' + i + ')').hide();
+  //       }
+  //     }
+  //
+  //
+  //     var item = $('.active_report');
+  //     var itemCount = item.length + 1;
+  //     console.log(itemCount);
+  //
+  //       for (var i = 1; i < itemCount; i++) {
+  //         var itemText = $('.active_report:nth-child(' + i + ') .report_dep').text();
+  //         console.log(itemText);
+  //         var itemTextFinal = itemText;
+  //         var rowContaines = itemTextFinal.indexOf(opItems) > -1;
+  //         if (rowContaines !== true) {
+  //           $('.active_report:nth-child(' + i + ')').hide();
+  //         }
+  //         else {}
+  //       }
+  //
+  //
+  //
+  //   }
+  //
+  //   countDisplayedReports();
+  // });
 
 
   $('.inner_rep_req').on('click', function(){
@@ -226,13 +319,7 @@ $(document).ready(function() {
 
 
 
-  $(document).on('click', '.accounting_dept', function(){
-    $('.accounting_list').slideToggle();
-  });
 
-  $(document).on('mouseleave', '.accounting_dept', function(){
-    $('.accounting_list').slideUp();
-  });
 
   // icon view button
   $('.inner_rep_ico').on('click', function(){
@@ -611,13 +698,18 @@ $(document).ready(function() {
           $('.menu_options').append('<li class="active_dept_link ' + lowercaseTitle + '">' + title + '</li>');
         });
 
+        $('.icon_box_nav_bar .row').append('<div class="all_dept">All</div>');
+
         var departmentCount = numOfDepartments;
         if(numOfDepartments % 6 === 0 || numOfDepartments % 3 === 0){
           $('.cat_choice').addClass('col-sm-4');
           $('.cat_choice').addClass('col-lg-2');
+          $('.all_dept').addClass('col-sm-4');
+          $('.all_dept').addClass('col-lg-2');
         }
         else{
           $('.cat_choice').addClass('col-sm-4');
+          $('.all_dept').addClass('col-sm-4');
         }
       }
     });
