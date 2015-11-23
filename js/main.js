@@ -693,6 +693,7 @@ $(document).ready(function() {
           lowercaseTitle = title.toLowerCase();
           lowercaseTitle = lowercaseTitle.replace(/\s/g, '');
 
+          // UNREACHABLE CLASS TO DIM OUT AN OPTION
 
           $('.icon_box_nav_bar .row').append('<div class="cat_choice ' + lowercaseTitle + '_dept">' + title + '</div>');
           $('.menu_options').append('<li class="active_dept_link ' + lowercaseTitle + '">' + title + '</li>');
@@ -912,6 +913,8 @@ $(document).ready(function() {
         //build table- detail view
         // https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png
         var checkThisDept = department.toLowerCase();
+        checkThisDept = checkThisDept.replace(/\s/g, '');
+        console.log(checkThisDept + ' ' + thisDepartment);
         if(checkThisDept === thisDepartment)
         {
             var str = attachmentFileUrls[0];
