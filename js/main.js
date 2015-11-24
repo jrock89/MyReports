@@ -46,7 +46,7 @@ $(document).ready(function() {
   });
 
   $(document).on('click', '.all_dept', function(){
-    $('.cat_choice').removeClass('selected_item');
+    $('.cat_choice, .type_choice, .all_list').removeClass('selected_item');
     $('.all_dept').addClass('selected_item');
     $('tbody tr, .active_report').show();
 
@@ -126,8 +126,8 @@ $(document).ready(function() {
   //merchandising department button
   $(document).on('click', '.all_list', function(){
     var theDept = $(this).attr('id');
-    // theDeptClass = theDept.replace(/\s/g, '');
-    // var theDeptLower = theDeptClass.toLowerCase();
+    theDeptClass = theDept.replace(/\s/g, '');
+    var theDeptLower = theDeptClass.toLowerCase();
 
     // console.log(theDept);
 
@@ -139,10 +139,10 @@ $(document).ready(function() {
 
     $('.all_dept').removeClass('selected_item');
     $('.all_list, .type_choice').removeClass('selected_item');
-    $('.' + theDept + '_all').toggleClass('selected_item');
+    $('.' + theDeptLower + '_all').toggleClass('selected_item');
 
     $('tbody tr, .active_report').show();
-    if($('.' + theDept + '_all').hasClass('selected_item') === false)
+    if($('.' + theDeptLower + '_all').hasClass('selected_item') === false)
     {
       $('tbody tr, .active_report').show();
     }else {
