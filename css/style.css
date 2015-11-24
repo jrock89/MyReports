@@ -995,10 +995,10 @@ td img {
   padding-right: 10px !important;
   padding-left: 10px !important;
 }
-.accounting_dept{
+.cat_choice{
   z-index: 99 !important;
 }
-.accounting_list{
+.the_list{
   background: #E6E6E6;
   max-height:500px;
   overflow-y: auto;
@@ -1011,7 +1011,7 @@ td img {
       border-radius: 0 0 6px 6px;
 
 }
-.accounting_list ul{
+.the_list ul{
   list-style: none;
 text-align: left;
 color: #251F21;
@@ -1019,11 +1019,11 @@ padding: 0;
 margin: 0;
 }
 
-.accounting_list ul li{
+.the_list ul li{
   padding: 20px;
   border-bottom: 2px solid #fff;
 }
-.accounting_list ul li:hover{
+.the_list ul li:hover{
   background: #fff;
 }
 
@@ -1157,6 +1157,7 @@ td {
 
 .selected_item{
   background: #335D27 !important;
+  color: #f2f2f2 !important;
 }
 
 
