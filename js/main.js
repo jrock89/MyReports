@@ -23,31 +23,11 @@ $(document).ready(function() {
   //build title with todays date
   $('title').text("My Reports | " + today);
 
-  // enterprice report catalog button
-  // $('.inner_rep_cat').on('click', function(){
-  //   $('.cats').show();
-  //   $('.table-responsive, .report_sheet').hide();
-  //   $('.inner_icon_box').hide();
-  //   $('.inner_rep_cat span').toggleClass('rotate_item_full');
-  //   $('.inner_rep_cat').css('background', '#335D27', '!important');
-  //   $('.inner_rep_gro, .inner_rep_ico, .inner_rep_det').css('background', '#63ba49', '!important');
-  //
-  //   $('.inner_rep_cat').css('border-bottom', '3px solid #335D27', '!important');
-  //   $('.inner_rep_gro, .inner_rep_ico, .inner_rep_det').css('border-bottom', '3px solid #478635', '!important');
-  // });
 
-  // detail view button
-  // $('.inner_rep_det, .submit_dps').on('click', function(){
-  //   $('.cats').hide();
-  //   $('.inner_icon_box, .report_sheet').hide();
-  //   $('.table-responsive').show();
-  //   $('.inner_rep_det span').toggleClass('rotate_item_full');
-  //   $('.inner_rep_det').css('background', '#335D27', '!important');
-  //   $('.inner_rep_cat, .inner_rep_ico, .inner_rep_gro').css('background', '#63ba49', '!important');
-  //
-  //   $('.inner_rep_det').css('border-bottom', '3px solid #335D27', '!important');
-  //   $('.inner_rep_cat, .inner_rep_ico, .inner_rep_gro').css('border-bottom', '3px solid #478635', '!important');
-  // });
+  $('.brand_link').on('mouseover', function(){
+    $('.brand_link').attr('src', 'https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/brand.gif');
+  });
+
 
   // chooose department button on mobile
   $('.mobile_icon_nav_bar').on('click', function(){
@@ -55,64 +35,6 @@ $(document).ready(function() {
     $('.mobile_icon_nav_bar span').toggleClass('rotate_item');
       $('.accounting_list').slideUp();
   });
-
-
-  //merchandising department button
-  // $(document).on('click', '.merchandising_dept', function(){
-  //   if(window.innerWidth < 721)
-  //   {
-  //     $('.icon_box_nav_bar').slideToggle();
-  //     $('.mobile_icon_nav_bar span').removeClass('rotate_item');
-  //   }
-  //
-  //
-  //
-  //   $('.merchandising_dept').toggleClass('selected_item');
-  //   $('.operations_dept').removeClass('selected_item');
-  //   $('tbody tr, .active_report').show();
-  //   if($('.merchandising_dept').hasClass('selected_item') === false)
-  //   {
-  //     $('tbody tr, .active_report').show();
-  //   }else {
-  //     var merchItems = "Merchandising";
-  //     var listCount = $('#reports_table tr').length;
-  //     for(var i = 2; i < listCount + 1; i++ ){
-  //       var checkThis = $('tbody tr:nth(' + i + ') td:nth(1)').text();
-  //       var rowContaines = checkThis.indexOf(merchItems) > -1;
-  //       if (rowContaines !== true) {
-  //         $('tbody tr:nth(' + i + ')').hide();
-  //       }
-  //     }
-  //     var item = $('.active_report');
-  //     var itemCount = item.length + 1;
-  //     console.log(itemCount);
-  //       for (var i = 1; i < itemCount; i++) {
-  //         var itemText = $('.active_report:nth-child(' + i + ')').text();
-  //         console.log(itemText);
-  //         var itemTextFinal = itemText;
-  //         var rowContaines = itemTextFinal.indexOf(merchItems) > -1;
-  //         if (rowContaines !== true) {
-  //           $('.active_report:nth-child(' + i + ')').hide();
-  //         }
-  //         else {}
-  //       }
-  //   }
-  //    //
-  //   //  var merchSize = $('.active_report:visible').size();
-  //
-  //
-  //   countDisplayedReports();
-  //
-  // });
-  //
-
-
-
-
-
-
-
-
 
 
   $(document).on('click', '.accounting_dept', function(){
@@ -123,14 +45,19 @@ $(document).ready(function() {
     $('.accounting_list').slideUp();
   });
 
-
-
   $(document).on('click', '.all_dept', function(){
     $('.cat_choice').removeClass('selected_item');
     $('.all_dept').addClass('selected_item');
     $('tbody tr, .active_report').show();
-  });
 
+    if(window.innerWidth < 721)
+    {
+      $('.icon_box_nav_bar').slideToggle();
+      $('.mobile_icon_nav_bar span').removeClass('rotate_item');
+    }
+
+    countDisplayedReports();
+  });
 
   //merchandising department button
   $(document).on('click', '.cat_choice', function(){
@@ -187,18 +114,6 @@ $(document).ready(function() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
   function countDisplayedReports(){
 
     //count number of visible reports
@@ -217,6 +132,8 @@ $(document).ready(function() {
         $('.inner_icon_box').css('-webkit-column-count', '3', '!important');
       }else if(reportsCount % 2 === 0){
         $('.inner_icon_box').css('-webkit-column-count', '2', '!important');
+      }else if(reportsCount % 1 === 0){
+        $('.inner_icon_box').css('-webkit-column-count', '1', '!important');
       }
 
     }else if(windowWidth < 1200){
@@ -229,11 +146,15 @@ $(document).ready(function() {
         $('.inner_icon_box').css('-webkit-column-count', '3', '!important');
       }else if(reportsCount % 2 === 0){
         $('.inner_icon_box').css('-webkit-column-count', '2', '!important');
+      }else if(reportsCount % 1 === 0){
+        $('.inner_icon_box').css('-webkit-column-count', '1', '!important');
       }
 
     }else if(windowWidth < 800){
       if(reportsCount % 2 === 0){
         $('.inner_icon_box').css('-webkit-column-count', '2', '!important');
+      }else if(reportsCount % 1 === 0){
+        $('.inner_icon_box').css('-webkit-column-count', '1', '!important');
       }
 
     }else{
@@ -244,59 +165,6 @@ $(document).ready(function() {
 
 
 
-
-  //operations button
-  // $(document).on('click', '.operations_dept', function(){
-  //
-  //   if(window.innerWidth < 721)
-  //   {
-  //     $('.icon_box_nav_bar').slideToggle();
-  //     $('.mobile_icon_nav_bar span').removeClass('rotate_item');
-  //   }
-  //
-  //   $('.operations_dept').toggleClass('selected_item');
-  //   $('.merchandising_dept').removeClass('selected_item');
-  //
-  //   $('tbody tr').show();
-  //   $('.active_report').show();
-  //
-  //   if($('.operations_dept').hasClass('selected_item') === false)
-  //   {
-  //     $('tbody tr').show();
-  //     $('.active_report').show();
-  //   }else {
-  //     var opItems = "Operations";
-  //     var listCount = $('#reports_table tr').length;
-  //     for(var i = 2; i < listCount + 1; i++ ){
-  //       var checkThis = $('tbody tr:nth(' + i + ') td:nth(2)').text();
-  //       var rowContaines = checkThis.indexOf(opItems) > -1;
-  //       if (rowContaines !== true) {
-  //         $('tbody tr:nth(' + i + ')').hide();
-  //       }
-  //     }
-  //
-  //
-  //     var item = $('.active_report');
-  //     var itemCount = item.length + 1;
-  //     console.log(itemCount);
-  //
-  //       for (var i = 1; i < itemCount; i++) {
-  //         var itemText = $('.active_report:nth-child(' + i + ') .report_dep').text();
-  //         console.log(itemText);
-  //         var itemTextFinal = itemText;
-  //         var rowContaines = itemTextFinal.indexOf(opItems) > -1;
-  //         if (rowContaines !== true) {
-  //           $('.active_report:nth-child(' + i + ')').hide();
-  //         }
-  //         else {}
-  //       }
-  //
-  //
-  //
-  //   }
-  //
-  //   countDisplayedReports();
-  // });
 
 
   $('.inner_rep_req').on('click', function(){
@@ -650,8 +518,8 @@ $(document).ready(function() {
     $('.social_contents').slideUp(100);
   });
 
-  $('.my_reports_button').on('click', function(){
-
+  $('.my_reports_button, .footer_my').on('click', function(){
+    $('.main_wrapper').scrollTop(0);
     $('.my_reports_button').text('Loading...');
     $('.gen_info h2').text('My Reports');
     $('.icon_box_box').slideDown(100);
@@ -697,9 +565,10 @@ $(document).ready(function() {
 
           $('.icon_box_nav_bar .row').append('<div class="cat_choice ' + lowercaseTitle + '_dept">' + title + '</div>');
           $('.menu_options').append('<li class="active_dept_link ' + lowercaseTitle + '">' + title + '</li>');
+          $('.footer_catalog').append('<p class="active_dept_link ' + lowercaseTitle + '">' + title + '</p>');
         });
 
-        $('.icon_box_nav_bar .row').append('<div class="all_dept">All</div>');
+        $('.icon_box_nav_bar .row').append('<div class="all_dept selected_item">All</div>');
 
         var departmentCount = numOfDepartments;
         if(numOfDepartments % 6 === 0 || numOfDepartments % 3 === 0){
@@ -845,7 +714,7 @@ $(document).ready(function() {
 
   //Reports catalog build
   $('.active_dept_link').on('click', function(){
-
+    $('.main_wrapper').scrollTop(0);
     $('.icon_box_box').slideUp(100);
     $(this).removeClass('active_dept_link');
     var thisDepartment = $(this).attr('class');
