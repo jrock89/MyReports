@@ -82,13 +82,13 @@ $(document).ready(function() {
       $('tbody tr, .active_report').show();
     }else {
       var theItems = theDept;
-      console.log(theItems);
+      // console.log(theItems);
       var listCount = $('#reports_table tr').length;
       for(var i = 2; i < listCount + 1; i++ ){
         var checkThis = $('tbody tr:nth(' + i + ') td:nth(3)').text();
-        console.log(checkThis);
+        // console.log(checkThis);
         var rowContaines = checkThis.indexOf(theItems) > -1;
-        console.log(rowContaines);
+        // console.log(rowContaines);
         if (rowContaines !== true) {
           $('tbody tr:nth(' + i + ')').hide();
         }
@@ -157,13 +157,13 @@ $(document).ready(function() {
       }
       var item = $('.active_report');
       var itemCount = item.length + 1;
-      console.log(itemCount);
+      // console.log(itemCount);
         for (var i = 1; i < itemCount; i++) {
           var itemText = $('.active_report:nth-child(' + i + ')').text();
           // console.log(itemText);
           var itemTextFinal = itemText;
-          console.log(itemTextFinal);
-          console.log(theItems);
+          // console.log(itemTextFinal);
+          // console.log(theItems);
           var rowContaines = itemTextFinal.indexOf(theItems) > -1;
           if (rowContaines !== true) {
             $('.active_report:nth-child(' + i + ')').hide();
@@ -186,7 +186,7 @@ $(document).ready(function() {
 
     //count number of visible reports
     var reportsCount = $('.active_report:visible').size();
-    console.log(reportsCount);
+    // console.log(reportsCount);
 
     var windowWidth = window.innerWidth;;
 
@@ -287,7 +287,7 @@ $(document).ready(function() {
   //report button - open report
   $(document).on('click', '.report_btn', function(){
     theDocument = $(this).attr('id');
-    console.log(theDocument);
+    // console.log(theDocument);
     // window.location.href = theDocument;
     window.open(theDocument, '_blank');
     // $.ajax({
@@ -331,15 +331,18 @@ $(document).ready(function() {
     $('.share_box').hide();
   });
 
-  //share report button
+  //share report button icon
   $(document).on('click', '.reports_share', function(){
     $('.request_box_inner').hide();
-    var shareTitle = $(this).closest('.item_title').find('.report_name').text();
+    var shareTitle = $(this).closest('.this_title_wrap').find('.this_title').text();
+
     $('.share_title').text(shareTitle);
     $('.overlay_share').fadeIn();
     $('.share_box, .share_box_inner').fadeIn();
     $('.share_box_inner').html('<div class="row"><div class="col-md-6 share_info">Enter the email address of the user you wish to share this report with, then hit submit.</div><div class="col-md-6"><form  onkeypress="return event.keyCode != 13"><input  class="share_input" style="" id="share_input" name="emailname" type="email" placeholder="Email Address" class="form-control"><div class="share_input_submit">Submit</div></form></div></div>');
   });
+
+
 
   //share report button
   $(document).on('click', '.request_access', function(){
@@ -348,9 +351,76 @@ $(document).ready(function() {
     // $('.share_title').text(shareTitle);
     // $('.overlay_share').fadeIn();
     // $('.share_box, .request_box_inner').fadeIn();
-    console.log('test');
-    $(this).hide();
-    $(this).prev().show();
+    // console.log('test');
+
+    var first = $().SPServices.SPGetCurrentUser({
+                    fieldName: "FirstName",
+                    debug: false
+                });
+    var last = $().SPServices.SPGetCurrentUser({
+                   fieldName: "LastName",
+                   debug: false
+               });
+
+    var user_name = first + "_" + last + " ";
+    // console.log(user_name);
+    var itemStatus;
+
+    var itemID = $(this).attr('id');
+
+    var fieldsToRead = "<ViewFields>" +
+      "<FieldRef Name='Title' />" +
+      "<FieldRef Name='Path' />" +
+      "<FieldRef Name='Department' />" +
+      "<FieldRef Name='ReportType' />" +
+      "<FieldRef Name='listItemId' />" +
+      "<FieldRef Name='PublishDate' />" +
+      "<FieldRef Name='ID' />" +
+      "<FieldRef Name='Status' />" +
+      "</ViewFields>";
+
+
+    $().SPServices({
+        operation: "GetListItems",
+        async: false,
+        listName: "TestList",
+        ID: itemID,
+        CAMLViewFields: fieldsToRead,
+        CAMLQuery: "<Query><Where><Eq><FieldRef Name='ID'/><Value Type='Number'>" + itemID + "</Value></Eq></Where></Query>",
+        completefunc: function (xData, Status) {
+          $(xData.responseXML).SPFilterNode("z:row").each(function() {
+            thisID = ($(this).attr("ows_ID"));
+            // if(thisID === itemID){
+              itemStatus = ($(this).attr("ows_Status"));
+              console.log(itemStatus);
+            // }
+
+
+          });
+        }
+      });
+
+
+
+        // console.log(itemID);
+        $().SPServices({
+              operation: "UpdateListItems",
+              async: false,
+              batchCmd: "Update",
+              listName: "TestList",
+              ID: itemID,
+              valuepairs: [["Status", user_name + itemStatus]],
+              completefunc: function(xData, Status) {
+                // console.log("completed");
+                itemRequested();
+
+              }
+          });
+      function itemRequested(){
+        $('#' + itemID).hide();
+        $('#' + itemID).prev().show();
+      }
+
 
 
   });
@@ -391,12 +461,12 @@ $(document).ready(function() {
     //icon view
     var item = $('.item_title');
     var itemCount = item.length;
-    console.log(itemCount);
+    // console.log(itemCount);
     // var row_count = $('.report_row').length;
 
       for (var i = 1; i < itemCount + 1; i++) {
         var itemText = $('.active_report_1:nth-child(' + i + ')').text();
-        console.log(itemText);
+        // console.log(itemText);
         var itemTextFinal = itemText.toLowerCase();
         var rowContaines = itemTextFinal.indexOf(searchFinal) > -1;
         if (rowContaines !== true) {
@@ -437,12 +507,12 @@ $(document).ready(function() {
     //icon view
     var item = $('.item_title');
     var itemCount = item.length;
-    console.log(itemCount);
+    // console.log(itemCount);
     // var row_count = $('.report_row').length;
 
       for (var i = 1; i < itemCount + 1; i++) {
         var itemText = $('.active_report_1:nth-child(' + i + ')').text();
-        console.log(itemText);
+        // console.log(itemText);
         var itemTextFinal = itemText.toLowerCase();
         var rowContaines = itemTextFinal.indexOf(searchFinal) > -1;
         if (rowContaines !== true) {
@@ -500,7 +570,7 @@ $(document).ready(function() {
     for (var i = 1; i < row_count; i++) {
       for (var j = 1; j < itemCount; j++) {
         var itemText = $('.active_report_' + i + ':nth-child(' + j + ')').text();
-        console.log(itemText);
+        // console.log(itemText);
         var itemTextFinal = itemText.toLowerCase();
         var rowContaines = itemTextFinal.indexOf(searchFinal) > -1;
         if (rowContaines !== true) {
@@ -589,10 +659,11 @@ $(document).ready(function() {
 
   $('.my_reports_button, .footer_my').on('click', function(){
     $('.main_wrapper').scrollTop(0);
-    $('.my_reports_button').text('Loading...');
+    $('.my_reports_button, .footer_my h2').text('Loading...');
     $('.gen_info h2').text('My Reports');
     $('.icon_box_box').slideDown(100);
     $('.inner_icon_box, .table-responsive tbody').empty();
+    $('.inner_icon_box, .table-responsive tbody').html("<div class='loadingThis'>Loading...<br><i style='opacity:0.1;'>Gathering Reports</i></div>");
     $('.merchandising_dept, .operations_dept').removeClass('selected_item');
     setTimeout(function(){
       GetReports();
@@ -616,6 +687,7 @@ $(document).ready(function() {
       "<FieldRef Name='ReportType' />" +
       "<FieldRef Name='listItemId' />" +
       "<FieldRef Name='PublishDate' />" +
+      "<FieldRef Name='ID' />" +
       "</ViewFields>";
     $().SPServices({
       operation: method,
@@ -643,7 +715,7 @@ $(document).ready(function() {
           }
           else{
             numOfDepartments ++;
-            console.log(report_type + ' ' + title + ' ' + numOfDepartments);
+            // console.log(report_type + ' ' + title + ' ' + numOfDepartments);
             lowercaseTitle = title.toLowerCase();
             lowercaseTitle = lowercaseTitle.replace(/\s/g, '');
             uppercaseTitle = title.replace(/\s/g, '');
@@ -711,6 +783,8 @@ $(document).ready(function() {
       "<FieldRef Name='ReportType' />" +
       "<FieldRef Name='listItemId' />" +
       "<FieldRef Name='PublishDate' />" +
+      "<FieldRef Name='ID' />" +
+      "<FieldRef Name='Status' />" +
       "</ViewFields>";
     $().SPServices({
       operation: method,
@@ -727,14 +801,16 @@ $(document).ready(function() {
           var report_type = ($(this).attr("ows_ReportType")); //report type
           var pub_date = ($(this).attr("ows_PublishDate")); //pub date
           var listItemId = ($(this).attr("ows_listItemId")); //listItemId
+          var itemID = ($(this).attr("ows_ID")); //listItemId
+          var itemStatus = ($(this).attr("ows_Status")); //listItemId
 
-          displayList(name, department, report_type, listItemId, report_type, pub_date, path);
+          displayList(name, department, report_type, listItemId, report_type, pub_date, path, itemID, itemStatus);
         });
       }
     });
   }
 
-  function displayList(name, department, report_type, listItemId, report_type, pub_date, path) {
+  function displayList(name, department, report_type, listItemId, report_type, pub_date, path, itemID, itemStatus) {
 
 
 
@@ -763,49 +839,51 @@ $(document).ready(function() {
 
 
 
-    // var str = path;
-    // var lastThree = str.substr(str.length - 3);
-    // lastThree = lastThree.toLowerCase();
-    // alert(lastThree);
+    var str = path;
+    var lastThree = str.substr(str.length - 3);
+    lastThree = lastThree.toLowerCase();
+    console.log(lastThree);
 
     // path = path.substring(path.indexOf(" ") + 1);
     // path = "https://thegolubcorporation.sharepoint.com/" + path;
 
 
-    // if(lastThree === "csv")
-    // {
-    //   $('.table-responsive tbody').append('<tr><td style="text-align:center;"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="csv" /></td><td class="report_btn" id="' + attachmentFileUrls + '">' + name + '</td><td class="list_department">' + department + '</td><td>' + report_type + '</td><td class="share_btn">Share</td></tr>');
-    //
-    // }
-    // else if(lastThree === "pdf")
-    // {
-      $('.table-responsive tbody').append('<tr><td style="text-align:center;"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></td><td class="report_btn" id="' + path + '">' + name + '</td><td class="list_department">' + department + '</td><td>' + report_type + '</td><td class="share_btn">Share</td></tr>');
+    if(lastThree === "csv")
+    {
+      $('.table-responsive tbody').append('<tr class="this_title_wrap"><td style="text-align:center;"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="pdf" /></td><td class="this_title"><a href="' + path + '" target="blank"><div class="reports_open"><div>' + name + '</div></div></a></td><td class="list_department">' + department + '</td><td>' + report_type + '</td><td class=""><div class="reports_share"><div><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div></td></tr>');
 
-    // }
+    }
+    else if(lastThree === "pdf")
+    {
+      $('.table-responsive tbody').append('<tr class="this_title_wrap"><td style="text-align:center;"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></td><td class="this_title"><a href="' + path + '" target="blank"><div class="reports_open"><div>' + name + '</div></div></a></td><td class="list_department">' + department + '</td><td>' + report_type + '</td><td class=""><div class="reports_share"><div><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div></td></tr>');
+
+    }
 
 
-    // if(lastThree === "csv")
-    // {
-    //   //build grid - icon view
-    //
-    //
-    //     $('.report_row').append('<div class="main_select active_report active_report_1 report_1"><div class=""><div class="item_title" data-type="' + department + '"><p class="report_name">' + name + '</p><p class="report_dep">' + department + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="csv" /></div><div><p class="report_desc">' + report_type + '</p></div><a href="' + attachmentFileUrls + '" target="blank"><div class="reports_open"><div>Open</div></div></a><div class="reports_share"><div><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div></div></div></div>');
-    //
-    // }
-    // else if(lastThree === "pdf")
-    // {
+    if(lastThree === "csv")
+    {
+      //build grid - icon view
+
+
+        $('.report_row').append('<div class="main_select active_report active_report_1 report_1"><div class=""><div class="item_title this_title_wrap" data-type="' + department + '"><p class="report_name this_title">' + name + '</p><p class="report_dep">' + department + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="pdf" /></div><div><p class="report_desc">' + report_type + '</p></div><a href="' + path + '" target="blank"><div class="reports_open"><div>Open</div></div></a><div class="reports_share"><div><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div></div></div></div>');
+
+    }
+    else if(lastThree === "pdf")
+    {
       //build grid - icon view
 // col-sm-6 col-md-3
 
 
-        $('.report_row').append('<div class="main_select active_report active_report_1 report_1"><div class=""><div class="item_title" data-type="' + department + '"><p class="report_name">' + name + '</p><p class="report_dep">' + department + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></div><div><p class="report_desc">' + report_type + '</p></div><a href="' + path + '" target="blank"><div class="reports_open"><div>Open</div></div></a><div class="reports_share"><div><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div></div></div></div>');
+        $('.report_row').append('<div class="main_select active_report active_report_1 report_1"><div class=""><div class="item_title this_title_wrap" data-type="' + department + '"><p class="report_name this_title">' + name + '</p><p class="report_dep">' + department + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></div><div><p class="report_desc">' + report_type + '</p></div><a href="' + path + '" target="blank"><div class="reports_open"><div>Open</div></div></a><div class="reports_share"><div><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div></div></div></div>');
 
-    // }
+    }
 
     $(document).ready(function()
         {
             $("#reports_table").tablesorter();
-            $('.my_reports_button').text('My Reports');
+
+            $('.my_reports_button, .footer_my h2').text('My Reports');
+            $('.loadingThis').hide();
             $('nav').removeClass('open_nav');
             $('.menu_options').slideUp();
             $('.menu_active').show();
@@ -833,6 +911,7 @@ $(document).ready(function() {
     $('.gen_info h2').text(newTitle);
     $('.' + thisDepartment).text('Loading...');
     $('.inner_icon_box, .table-responsive tbody').empty();
+    $('.inner_icon_box, .table-responsive tbody').html("<div class='loadingThis'>Loading...<br><i style='opacity:0.1;'>Gathering Reports</i></div>");
 
     setTimeout(function(){
       GetReportsUnfiltered();
@@ -847,10 +926,12 @@ $(document).ready(function() {
           "<FieldRef Name='ReportType' />" +
           "<FieldRef Name='listItemId' />" +
           "<FieldRef Name='PublishDate' />" +
+          "<FieldRef Name='Status' />" +
+          "<FieldRef Name='ID' />" +
           "</ViewFields>";
         $().SPServices({
           operation: method,
-          async: false,
+          async: true,
           listName: list,
           CAMLViewFields: fieldsToRead,
           CAMLQuery: query,
@@ -861,15 +942,17 @@ $(document).ready(function() {
               var report_type = ($(this).attr("ows_ReportType")); //report type
               var path = ($(this).attr("ows_Path")); //created
               var pub_date = ($(this).attr("ows_PublishDate")); //pub date
+              var status = ($(this).attr("ows_Status")); //pub date
+              var itemID = ($(this).attr("ows_ID")); //pub date
 
               var listItemId = ($(this).attr("ows_listItemId")); //listItemId
-              displayListUnfiltered(name, department, report_type, listItemId, report_type);
+              displayListUnfiltered(name, department, report_type, listItemId, report_type, status, itemID, path);
             });
           }
         });
       }
 
-      function displayListUnfiltered(name, department, report_type, listItemId, report_type) {
+      function displayListUnfiltered(name, department, report_type, listItemId, report_type, status, itemID, path) {
         //get attachments
         // var list = "TestList";
         // var method = "GetAttachmentCollection";
@@ -892,20 +975,20 @@ $(document).ready(function() {
         // https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png
         var checkThisDept = department.toLowerCase();
         checkThisDept = checkThisDept.replace(/\s/g, '');
-        console.log(checkThisDept + ' ' + thisDepartment);
+        // console.log(checkThisDept + ' ' + thisDepartment);
         if(checkThisDept === thisDepartment)
         {
-            // var str = attachmentFileUrls[0];
+            // var str = path;
             // var lastThree = str.substr(str.length - 3);
             // lastThree = lastThree.toLowerCase();
-            // alert(lastThree);
+            // console.log(lastThree);
             // if(lastThree === "csv")
             // {
             //   $('.table-responsive tbody').append('<tr><td style="text-align:center;"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="csv" /></td><td class="report_btn" id="">' + name + '</td><td class="list_department">' + department + '</td><td>' + report_type + '</td><td class="share_btn">Request Access</td></tr>');
             // }
             // else if(lastThree === "pdf")
             // {
-              $('.table-responsive tbody').append('<tr><td style="text-align:center;"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></td><td class="report_btn" id="">' + name + '</td><td class="list_department">' + department + '</td><td>' + report_type + '</td><td class="share_btn">Request Access</td></tr>');
+              $('.table-responsive tbody').append('<tr class="this_title_wrap"><td style="text-align:center;"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></td><td class="this_title" id="">' + name + '</td><td class="list_department">' + department + '</td><td>' + report_type + '</td><td class=""><div class="reports_request"><div class="request_wrap"><div class="request_sent ' + itemID + '_sent">Request Sent!</div><div id= "' + itemID + '" class="request_access ' + itemID + '_request"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Request Access</div></div></div></td></tr>');
             // }
             // if(lastThree === "csv")
             // {
@@ -915,7 +998,31 @@ $(document).ready(function() {
             // else if(lastThree === "pdf")
             // {
               //build grid - icon view
-                $('.report_row').append('<div class="main_select active_report active_report_1 report_1"><div class=""><div class="item_title" data-type="' + department + '"><p class="report_name">' + name + '</p><p class="report_dep">' + department + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></div><div><p class="report_desc">' + report_type + '</p></div></a><div class="reports_request"><div class="request_wrap"><div class="request_sent">Request Sent!</div><div class="request_access"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Request Access</div></div></div></div></div></div>');
+                $('.report_row').append('<div class="main_select active_report active_report_1 report_1"><div class=""><div class="item_title this_title_wrap" data-type="' + department + '"><p class="report_name this_title">' + name + '</p><p class="report_dep">' + department + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></div><div><p class="report_desc">' + report_type + '</p></div></a><div class="reports_request"><div class="request_wrap"><div class="request_sent ' + itemID + '_sent">Request Sent!</div><div id= "' + itemID + '" class="request_access ' + itemID + '_request"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Request Access</div></div></div></div></div></div>');
+
+                var first = $().SPServices.SPGetCurrentUser({
+                                fieldName: "FirstName",
+                                debug: false
+                            });
+                var last = $().SPServices.SPGetCurrentUser({
+                               fieldName: "LastName",
+                               debug: false
+                           });
+
+                var user_name = first + "_" + last;
+                console.log(user_name);
+                console.log(status);
+                var statusContaines = status.indexOf(user_name) > -1;
+                console.log(statusContaines);
+                if(statusContaines === true){
+                  $('.' + itemID + '_request').hide();
+                  $('.' + itemID + '_sent').show();
+
+                }else{
+                  $('.' + itemID + '_request').show();
+                  $('.' + itemID + '_sent').hide();
+
+                }
             // }
             $(document).ready(function()
             {
@@ -926,6 +1033,7 @@ $(document).ready(function() {
                 $('.menu_options').slideUp();
                 $('.menu_active').show();
                 $('.menu_close').removeClass('menu_close_open');
+                $('.loadingThis').hide();
 
 
                 $('.menu_button span').removeClass('rotate_item');
