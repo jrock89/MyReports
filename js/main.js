@@ -1052,4 +1052,72 @@ $(document).ready(function() {
 
 
 
+  // var $wrapper = $('.table-responsive');
+  //
+  // function startScrolling()
+  // {
+  //     var leftPos = $wrapper.scrollLeft();
+  //     $wrapper.animate({scrollLeft: leftPos + 200}, 800);
+  // }
+  //
+  // function stopScrolling()
+  // {
+  //   console.log('test');
+  //     // stop increasing scroll position
+  //     $wrapper.stop();
+  // }
+  //
+  // $('.scroll_right').mousedown(startScrolling).mouseup(stopScrolling);
+
+
+  $('.scroll_down').on({
+      'mousedown touchstart': function () {
+          $(".main_wrapper").animate({
+              scrollTop: $(".main_wrapper")[0].scrollHeight
+          }, 2000);
+      },
+      'mouseup touchend': function () {
+          $(".main_wrapper").stop(true);
+      }
+  });
+
+
+  $('.scroll_right').on({
+      'mousedown touchstart': function () {
+        var leftPos = $('.table-responsive').scrollLeft();
+          $(".table-responsive").animate({
+              scrollLeft: leftPos + 200}, 300);
+
+      },
+      'mouseup touchend': function () {
+          $(".table-responsive").stop(true);
+      }
+  });
+
+
+  $('.scroll_up').on({
+      'mousedown touchstart': function () {
+          
+              $(".main_wrapper").animate({scrollTop: 0}, 2000);
+
+      },
+      'mouseup touchend': function () {
+          $(".main_wrapper").stop(true);
+      }
+  });
+
+
+  $('.scroll_left').on({
+      'mousedown touchstart': function () {
+        var leftPos = $('.table-responsive').scrollLeft();
+          $(".table-responsive").animate({
+              scrollLeft: leftPos - 200}, 300);
+
+      },
+      'mouseup touchend': function () {
+          $(".table-responsive").stop(true);
+      }
+  });
+
+
 });

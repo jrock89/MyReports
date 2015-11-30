@@ -573,7 +573,7 @@ text-align: center;
   margin: 0;
 }
 .main_wrapper .row {
-  padding: 0 5px !important;
+  padding: 0 5px;
 }
 .col-md-4 {
   color: #fff;
@@ -736,6 +736,7 @@ a {
   width: 100%;
 }
 .footer{
+  margin-top: 15px;
   padding: 45px;
   background:#251f21;
 
@@ -781,7 +782,115 @@ a {
 }
 
 
+.scroll_right, .scroll_down, .scroll_left, .scroll_up{
+  display: none;
+}
+
 @media only screen and (max-width: 720px) {
+
+  .my_reports_bar{
+    margin-right: 8px !important;
+margin-top: 25px !important;
+margin-left: 25px !important;
+  }
+
+  .icon_box_box{
+    margin-right: 8px !important;
+margin-left: 25px !important;
+  }
+  .rep_cat{
+    margin-right: 8px !important;
+margin-left: 25px !important;
+  }
+  .table_row{
+    margin-right: 8px !important;
+margin-left: 25px !important;
+  }
+
+/*
+  .table-responsive{
+    border-radius: 0 !important;
+    padding: 0 !important;
+    margin-top: 0 !important;
+  }*/
+
+  /*.table_row, .table_row .col-xs-12{
+    padding: 0 0 !important;
+    margin:0 0 !important;
+  }*/
+
+  .scroll_right, .scroll_down, .scroll_left, .scroll_up{
+    display: block;
+    background: #251F21;
+  }
+  .scroll_up{
+    position: fixed;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    color: #fff;
+    top:70px;
+    left:0;
+    z-index: 99;
+    font-size: 20px;
+  }
+  .scroll_down{
+    position: fixed;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    color: #fff;
+    bottom:0;
+    left:0;
+    z-index: 99;
+    font-size: 20px;
+  }
+  .scroll_right{
+    position: fixed;
+        width: 40px;
+        height: 100%;
+        /* padding-top: 30%; */
+        font-size: 20px;
+        /* line-height: 463px; */
+        text-align: center;
+        color: #fff;
+        bottom: 0;
+        right: 0;
+        padding-top: 50%;
+        z-index: 99;
+  }
+  .scroll_right span{
+    margin-top: -10px;
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    /* position: absolute; */
+    /* right: 10px; */
+  }
+  .scroll_left{
+    position: fixed;
+        width: 40px;
+        height: 100%;
+        /* padding-top: 30%; */
+        font-size: 20px;
+        /* line-height: 463px; */
+        text-align: center;
+        color: #fff;
+        bottom: 0;
+        left: 0;
+        padding-top: 50%;
+        z-index: 99;
+  }
+  .scroll_left span{
+    margin-top: -10px;
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    /* position: absolute; */
+    /* left: 10px; */
+  }
 
   .menu_button span{
     top:0;
@@ -996,7 +1105,7 @@ td img {
   padding: 0 10px 10px 10px;
 }
 .rep_cat {
-  padding: 15px !important;
+  /*padding: 15px !important;*/
   /*display: none;*/
 }
 .inner_rep_cat, .inner_rep_det, .inner_rep_gro, .inner_rep_ico, .inner_rep_req {
