@@ -467,12 +467,15 @@ h2 {
 .share_input_submit:hover{
   opacity: 0.7;
 }
-.share_box_inner, .request_box_inner{
+.share_box_inner, .request_box_inner, .share_accepted{
   display: none;
   padding: 20px;
     background: #D9D9D9;
     margin: 40px;
     border-bottom: 3px solid #AFAFAF;
+}
+.share_box_inner input{
+  padding: 20px !important;
 }
 
 .request_sent{
@@ -774,11 +777,54 @@ a {
   color: #63ba49 !important;
 }
 
+.arrow-left {
+  width: 0;
+  height: 0;
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+  /* margin-left: -34px; */
+  z-index: 9999999999999;
+  position: absolute;
+  left: -20px;
+  top: 26px;
+  /* background: red; */
+  border-right: 20px solid #D93B3B;
+}
+
+.search_callout{
+  position: fixed;
+  top: 118px;
+  width: auto;
+  height: auto;
+  background: #D93B3B;
+  left: 210px;
+  font-size: 21px;
+  text-align: center;
+  color: #f2f2f2;
+  z-index: 3;
+  padding: 25px !important;
+  -webkit-transition: all 0.1s ease-in-out;
+  -moz-transition: all 0.1s ease-in-out;
+  -o-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
+  border: none;
+   display: none;
+}
+
 .loadingThis{
   position: absolute;
   width: 100%;
   text-align: center;
   font-size: 32px;
+  color: #fff;
+}
+.loadingThisList{
+  position: relative;
+  width: 100%;
+  text-align: center;
+  font-size: 32px;
+  color: #fff;
+  padding: 20px;
 }
 
 
@@ -786,7 +832,22 @@ a {
   display: none;
 }
 
+.share_accepted{
+  color: #000 !important;
+  text-align: center;
+}
+
 @media only screen and (max-width: 720px) {
+
+  .table-responsive{
+    padding: 20px 50px 10px 50px !important;
+  }
+  .footer_bar{
+    margin-bottom: 55px;
+  }
+  .footer{
+    margin-top: -35px;
+  }
 
   .my_reports_bar{
     margin-right: 8px !important;
@@ -794,18 +855,18 @@ margin-top: 25px !important;
 margin-left: 25px !important;
   }
 
-  .icon_box_box{
+  /*.icon_box_box{
     margin-right: 8px !important;
 margin-left: 25px !important;
   }
   .rep_cat{
     margin-right: 8px !important;
 margin-left: 25px !important;
-  }
-  .table_row{
+  }*/
+  /*.table_row{
     margin-right: 8px !important;
 margin-left: 25px !important;
-  }
+  }*/
 
 /*
   .table-responsive{
@@ -848,18 +909,18 @@ margin-left: 25px !important;
     font-size: 20px;
   }
   .scroll_right{
-    position: fixed;
-        width: 40px;
-        height: 100%;
-        /* padding-top: 30%; */
-        font-size: 20px;
-        /* line-height: 463px; */
-        text-align: center;
-        color: #fff;
-        bottom: 0;
-        right: 0;
-        padding-top: 50%;
-        z-index: 99;
+    position: absolute;
+    width: 40px;
+    height: 100%;
+    /* padding-top: 30%; */
+    font-size: 20px;
+    /* line-height: 463px; */
+    text-align: center;
+    color: #fff;
+    bottom: 15px;
+    right: 10px;
+    padding-top: 50%;
+    z-index: 1;
   }
   .scroll_right span{
     margin-top: -10px;
@@ -870,7 +931,7 @@ margin-left: 25px !important;
     /* right: 10px; */
   }
   .scroll_left{
-    position: fixed;
+    position: absolute;
         width: 40px;
         height: 100%;
         /* padding-top: 30%; */
@@ -878,10 +939,10 @@ margin-left: 25px !important;
         /* line-height: 463px; */
         text-align: center;
         color: #fff;
-        bottom: 0;
-        left: 0;
+        bottom: 15px;
+        left: 10px;
         padding-top: 50%;
-        z-index: 99;
+        z-index: 1;
   }
   .scroll_left span{
     margin-top: -10px;
@@ -905,7 +966,7 @@ margin-left: 25px !important;
       padding: 20px;
   }
 
-  .share_box_inner, .request_box_inner {
+  .share_box_inner, .request_box_inner, .share_accepted {
       display: none;
       padding: 20px;
       background: #D9D9D9;
@@ -1038,7 +1099,10 @@ td img {
 }
 
 
-
+.table-responsive{
+  min-height: 300px;
+  padding: 20px 42px 10px 42px;
+}
 
 .inner_icon_box .report_row {
   /* Just in case there are inline attributes */
@@ -1287,6 +1351,7 @@ margin: 0;
   padding: 0 !important;
 }
 .table-responsive {
+
   /*display: none;*/
   border-radius: 3px;
   margin-bottom: 20px;

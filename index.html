@@ -45,6 +45,9 @@ Date: 10/28/2015
         <!-- share report details (enter email of recipient) -->
         <div class="share_box_inner">
         </div>
+        <div class="share_accepted">
+          This report has been shared with <i class="the_users_name">[NAME]</i>.
+        </div>
         <div class="request_box_inner">
         </div>
       </div>
@@ -58,10 +61,15 @@ Date: 10/28/2015
     <!-- nav search input -->
     <div class="input_goes_here"></div>
 
+    <div class="search_callout">
+      <div class="arrow-left"></div>
+      Click here to search and<br>locate specific reports<br>on this page.
+    </div>
+
     <!-- main left nav bar -->
     <nav>
       <!-- go home button -->
-      <a href="https://thegolubcorporation.sharepoint.com/sites/MYReports/SitePages/MyReportsDev.aspx"><div class="brand_box">
+      <a href="https://thegolubcorporation.sharepoint.com/sites/MYReports/SitePages/MyReportsHome.aspx"><div class="brand_box">
         <img class="brand_link" src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/brand.gif" alt="" />
       </div></a>
 
@@ -119,7 +127,7 @@ Date: 10/28/2015
 
       <!-- PAGE CONTENT BEGIN -->
       <!-- page title | information box -->
-      <div class="row">
+      <div class="row" class="my_reports_bar">
         <div class="col-sm-12 gen_info">
           <div class="">
             <h2>My Reports</h2>
@@ -180,7 +188,7 @@ Date: 10/28/2015
             <table id="reports_table" summary="" class="table table-bordered table-hover">
 
               <thead>
-                <tr>
+                <tr class="table_top">
                   <th style="text-align:center;">Thumbnail</th>
                   <th id="report_btn_sort">Report</th>
                   <th>Department</th>

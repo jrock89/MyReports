@@ -98,7 +98,7 @@ $(document).ready(function() {
       var itemCount = item.length + 1;
       // console.log(itemCount);
         for (var i = 1; i < itemCount; i++) {
-          var itemText = $('.active_report:nth-child(' + i + ')').text();
+          var itemText = $('.active_report:nth-child(' + i + ') .report_desc').text();
           // console.log(itemText);
           var itemTextFinal = itemText;
           var rowContaines = itemTextFinal.indexOf(theItems) > -1;
@@ -149,7 +149,7 @@ $(document).ready(function() {
       var theItems = theDept;
       var listCount = $('#reports_table tr').length;
       for(var i = 2; i < listCount + 1; i++ ){
-        var checkThis = $('tbody tr:nth(' + i + ') td:nth(1)').text();
+        var checkThis = $('tbody tr:nth(' + i + ')').text();
         var rowContaines = checkThis.indexOf(theItems) > -1;
         if (rowContaines !== true) {
           $('tbody tr:nth(' + i + ')').hide();
@@ -259,6 +259,7 @@ $(document).ready(function() {
 
   // icon view button
   $('.inner_rep_ico').on('click', function(){
+    $('.gen_info').css('padding', '15px 10px 0px 10px', '!important');
     $('.cats').hide();
     $('.table-responsive, .report_sheet').hide();
     $('.inner_icon_box').show();
@@ -272,6 +273,7 @@ $(document).ready(function() {
 
   // group view button - sorts by report name
   $('.inner_rep_gro').on('click', function(){
+    $('.gen_info').css('padding', '55px 10px 0px 10px', '!important');
     $('.inner_rep_gro span').toggleClass('rotate_item_full');
     // $("#report_btn_sort").click();
     $('.cats').hide();
@@ -325,6 +327,7 @@ $(document).ready(function() {
 
   //search toggle
   $('.search').on('click', function() {
+    $('.search_callout').hide();
     $('.search_input').toggleClass('search_open').focus().val('');
     $('.search_input_submit').toggleClass('search_sub_open');
     $('.overlay_2').toggle();
@@ -335,16 +338,126 @@ $(document).ready(function() {
   $(document).on('click', '.reports_share', function(){
     $('.request_box_inner').hide();
     var shareTitle = $(this).closest('.this_title_wrap').find('.this_title').text();
-
+    var theID = $(this).attr('id');
+    $('.share_accepted').hide();
     $('.share_title').text(shareTitle);
     $('.overlay_share').fadeIn();
     $('.share_box, .share_box_inner').fadeIn();
-    $('.share_box_inner').html('<div class="row"><div class="col-md-6 share_info">Enter the email address of the user you wish to share this report with, then hit submit.</div><div class="col-md-6"><form  onkeypress="return event.keyCode != 13"><input  class="share_input" style="" id="share_input" name="emailname" type="email" placeholder="Email Address" class="form-control"><div class="share_input_submit">Submit</div></form></div></div>');
+    $('.share_box_inner').html('<div class="row"><div class="col-md-6 share_info">Enter the full name of the user you wish to share this report with, then hit submit.</div><div class="col-md-6"><form  onkeypress="return event.keyCode != 13"><input  class="share_input" style="" id="share_input" name="emailname" type="text" placeholder="Users Full Name" class="form-control"><div class="share_input_submit" id="' + theID + '">Submit</div></form></div></div>');
   });
 
 
+  //share reports buttons
+  $(document).on('click', '.share_input_submit', function(){
 
-  //share report button
+
+
+    var users_name = $('.share_input').val();
+
+    if(users_name != ''){
+      console.log(users_name);
+      $('.the_users_name').text(users_name);
+      $('.share_accepted').slideDown();
+      $('.share_input').val('');
+    }else{
+      $('.share_input').css('background', 'rgba(240, 0, 0, 0.5)');
+      $('.share_input').css('color', '#f2f2f2');
+    }
+
+
+
+
+
+    users_name = users_name.replace(/\s+/g, '_');
+
+
+    console.log(users_name);
+
+
+    var itemStatus;
+
+    var itemID = $(this).attr('id');
+
+    var fieldsToRead = "<ViewFields>" +
+      "<FieldRef Name='Title' />" +
+      "<FieldRef Name='Path' />" +
+      "<FieldRef Name='Department' />" +
+      "<FieldRef Name='ReportType' />" +
+      "<FieldRef Name='listItemId' />" +
+      "<FieldRef Name='PublishDate' />" +
+      "<FieldRef Name='ID' />" +
+      "<FieldRef Name='Status' />" +
+      "</ViewFields>";
+
+
+    $().SPServices({
+        operation: "GetListItems",
+        async: false,
+        listName: "TestList",
+        ID: itemID,
+        CAMLViewFields: fieldsToRead,
+        CAMLQuery: "<Query><Where><Eq><FieldRef Name='ID'/><Value Type='Number'>" + itemID + "</Value></Eq></Where></Query>",
+        completefunc: function (xData, Status) {
+          $(xData.responseXML).SPFilterNode("z:row").each(function() {
+            thisID = ($(this).attr("ows_ID"));
+            // if(thisID === itemID){
+              itemStatus = ($(this).attr("ows_Status"));
+
+            // }
+
+
+          });
+        }
+      });
+
+
+        console.log(itemStatus);
+        itemStatus = itemStatus.toLowerCase();
+        // itemStatus = itemStatus.replace(/ /g,"");
+
+
+
+
+
+
+        var containes = itemStatus.indexOf(users_name) > -1;
+        if (containes === true) {
+
+          itemStatus = itemStatus.replace(users_name + ' ', '');
+            console.log(itemStatus);
+
+          $().SPServices({
+                operation: "UpdateListItems",
+                async: false,
+                batchCmd: "Update",
+                listName: "TestList",
+                ID: itemID,
+                valuepairs: [["Status", itemStatus]],
+                completefunc: function(xData, Status) {
+
+                  console.log('worked');
+                  console.log(itemStatus);
+
+                }
+            });
+
+        }else{
+          console.log('did not contain');
+        }
+
+
+
+
+
+  });
+
+  $(document).on('click', '.share_input', function(){
+    $('.share_input').css('background', '#fff');
+    $('.share_input').css('color', '#000');
+  });
+
+
+  //request report button
   $(document).on('click', '.request_access', function(){
     // $('.share_box_inner').hide();
     // var shareTitle = $(this).closest('.item_title').find('.report_name').text();
@@ -363,7 +476,7 @@ $(document).ready(function() {
                });
 
     var user_name = first + "_" + last + " ";
-    // console.log(user_name);
+    console.log(user_name);
     var itemStatus;
 
     var itemID = $(this).attr('id');
@@ -401,8 +514,8 @@ $(document).ready(function() {
       });
 
 
-
-        // console.log(itemID);
+        console.log(itemStatus);
+        console.log(itemID);
         $().SPServices({
               operation: "UpdateListItems",
               async: false,
@@ -417,8 +530,8 @@ $(document).ready(function() {
               }
           });
       function itemRequested(){
-        $('#' + itemID).hide();
-        $('#' + itemID).prev().show();
+        $('.' + itemID + '_request').hide();
+        $('.' + itemID+ '_sent').show();
       }
 
 
@@ -479,7 +592,7 @@ $(document).ready(function() {
     //table view detail view
     var listCount = $('#reports_table tr').length;
     for(var i = 2; i < listCount + 1; i++ ){
-      var checkThis = $('tbody tr:nth(' + i + ') td:nth(1)').text();
+      var checkThis = $('tbody tr:nth(' + i + ')').text();
       var checkThisFinal = checkThis.toLowerCase();
       var rowContaines = checkThisFinal.indexOf(searchFinal) > -1;
       if (rowContaines !== true) {
@@ -663,7 +776,8 @@ $(document).ready(function() {
     $('.gen_info h2').text('My Reports');
     $('.icon_box_box').slideDown(100);
     $('.inner_icon_box, .table-responsive tbody').empty();
-    $('.inner_icon_box, .table-responsive tbody').html("<div class='loadingThis'>Loading...<br><i style='opacity:0.1;'>Gathering Reports</i></div>");
+    $('.inner_icon_box').html("<div class='loadingThis'>Loading...<br><i style='opacity:0.1;'>Gathering Reports</i></div>");
+    $('.table-responsive').append("<div class='loadingThisList'>Loading...<br><i style='opacity:0.1;'>Gathering Reports</i></div>");
     $('.merchandising_dept, .operations_dept').removeClass('selected_item');
     setTimeout(function(){
       GetReports();
@@ -850,12 +964,12 @@ $(document).ready(function() {
 
     if(lastThree === "csv")
     {
-      $('.table-responsive tbody').append('<tr class="this_title_wrap"><td style="text-align:center;"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="pdf" /></td><td class="this_title"><a href="' + path + '" target="blank"><div class="reports_open"><div>' + name + '</div></div></a></td><td class="list_department">' + department + '</td><td>' + report_type + '</td><td class=""><div class="reports_share"><div><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div></td></tr>');
+      $('.table-responsive tbody').append('<tr class="this_title_wrap"><td style="text-align:center;"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="pdf" /></td><td class="this_title"><a href="' + path + '" target="blank"><div class="reports_open"><div>' + name + '</div></div></a></td><td class="list_department">' + department + '</td><td>' + report_type + '</td><td class=""><div class="reports_share" id="' + itemID + '"><div><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div></td></tr>');
 
     }
     else if(lastThree === "pdf")
     {
-      $('.table-responsive tbody').append('<tr class="this_title_wrap"><td style="text-align:center;"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></td><td class="this_title"><a href="' + path + '" target="blank"><div class="reports_open"><div>' + name + '</div></div></a></td><td class="list_department">' + department + '</td><td>' + report_type + '</td><td class=""><div class="reports_share"><div><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div></td></tr>');
+      $('.table-responsive tbody').append('<tr class="this_title_wrap"><td style="text-align:center;"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></td><td class="this_title"><a href="' + path + '" target="blank"><div class="reports_open"><div>' + name + '</div></div></a></td><td class="list_department">' + department + '</td><td>' + report_type + '</td><td class=""><div class="reports_share" id="' + itemID + '"><div><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div></td></tr>');
 
     }
 
@@ -874,16 +988,16 @@ $(document).ready(function() {
 // col-sm-6 col-md-3
 
 
-        $('.report_row').append('<div class="main_select active_report active_report_1 report_1"><div class=""><div class="item_title this_title_wrap" data-type="' + department + '"><p class="report_name this_title">' + name + '</p><p class="report_dep">' + department + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></div><div><p class="report_desc">' + report_type + '</p></div><a href="' + path + '" target="blank"><div class="reports_open"><div>Open</div></div></a><div class="reports_share"><div><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div></div></div></div>');
+        $('.report_row').append('<div class="main_select active_report active_report_1 report_1"><div class=""><div class="item_title this_title_wrap" data-type="' + department + '"><p class="report_name this_title">' + name + '</p><p class="report_dep">' + department + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></div><div><p class="report_desc">' + report_type + '</p></div><a href="' + path + '" target="blank"><div class="reports_open"><div>Open</div></div></a><div class="reports_share" id="' + itemID + '"><div><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div></div></div></div>');
 
     }
 
     $(document).ready(function()
         {
-            $("#reports_table").tablesorter();
+            // $("#reports_table").tablesorter();
 
             $('.my_reports_button, .footer_my h2').text('My Reports');
-            $('.loadingThis').hide();
+            $('.loadingThis, .loadingThisList').hide();
             $('nav').removeClass('open_nav');
             $('.menu_options').slideUp();
             $('.menu_active').show();
@@ -911,7 +1025,8 @@ $(document).ready(function() {
     $('.gen_info h2').text(newTitle);
     $('.' + thisDepartment).text('Loading...');
     $('.inner_icon_box, .table-responsive tbody').empty();
-    $('.inner_icon_box, .table-responsive tbody').html("<div class='loadingThis'>Loading...<br><i style='opacity:0.1;'>Gathering Reports</i></div>");
+    $('.inner_icon_box').html("<div class='loadingThis'>Loading...<br><i style='opacity:0.1;'>Gathering Reports</i></div>");
+    $('.table-responsive').append("<div class='loadingThisList'>Loading...<br><i style='opacity:0.1;'>Gathering Reports</i></div>");
 
     setTimeout(function(){
       GetReportsUnfiltered();
@@ -1026,14 +1141,14 @@ $(document).ready(function() {
             // }
             $(document).ready(function()
             {
-                $("#reports_table").tablesorter();
+                // $("#reports_table").tablesorter();
                 var newTitle = thisDepartment.charAt(0).toUpperCase() + thisDepartment.slice(1);
                 $('.' + thisDepartment).text(newTitle);
                 $('nav').removeClass('open_nav');
                 $('.menu_options').slideUp();
                 $('.menu_active').show();
                 $('.menu_close').removeClass('menu_close_open');
-                $('.loadingThis').hide();
+                $('.loadingThis, .loadingThisList').hide();
 
 
                 $('.menu_button span').removeClass('rotate_item');
@@ -1069,7 +1184,7 @@ $(document).ready(function() {
   //
   // $('.scroll_right').mousedown(startScrolling).mouseup(stopScrolling);
 
-
+// scroll down
   $('.scroll_down').on({
       'mousedown touchstart': function () {
           $(".main_wrapper").animate({
@@ -1097,7 +1212,7 @@ $(document).ready(function() {
 
   $('.scroll_up').on({
       'mousedown touchstart': function () {
-          
+
               $(".main_wrapper").animate({scrollTop: 0}, 2000);
 
       },
@@ -1117,6 +1232,26 @@ $(document).ready(function() {
       'mouseup touchend': function () {
           $(".table-responsive").stop(true);
       }
+  });
+
+
+
+
+
+
+  $('.table_top').on('click', function(){
+    $('.search_callout').show();
+
+    // setTimeout( function(){
+    //   $('.search_callout').fadeOut();
+    // }, 4000)
+  });
+
+  $('.search_callout, .reports_share, .reports_open, nav, .rep_cat, .icon_box_box, .reports_request, .request_sent').on({
+    'mouseenter click': function () {
+      $('.search_callout').hide();
+    }
+
   });
 
 
