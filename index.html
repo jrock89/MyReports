@@ -8,13 +8,15 @@ Date: 10/28/2015
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/css/style.css">
+    <link rel="stylesheet" href="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/Dev/css/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="shortcut icon" type="image/png" href="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/faviconm32.png"/>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <title></title>
   </head>
   <body>
+
 
     <!-- loader -->
     <div class="loader">
@@ -37,6 +39,24 @@ Date: 10/28/2015
 
     <!-- box for sharing of reports and request access if needed   -->
     <div class="row share_box">
+      <div class="col-xs-12">
+        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        <div class="jumbotron">
+          <h2 class="share_title"></h2>
+        </div>
+        <!-- share report details (enter email of recipient) -->
+        <div class="share_box_inner">
+        </div>
+        <div class="share_accepted">
+          This report has been shared with <i class="the_users_name">[NAME]</i>.
+        </div>
+        <div class="request_box_inner">
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row shared_with_box">
       <div class="col-xs-12">
         <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
         <div class="jumbotron">
@@ -170,15 +190,15 @@ Date: 10/28/2015
       <div class="row table_row">
         <div class="col-xs-12">
           <div class="table-responsive">
-            <div class="scroll_right">
+            <!-- <div class="scroll_right">
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            </div>
+            </div> -->
             <div class="scroll_down">
                 <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
             </div>
-            <div class="scroll_left">
+            <!-- <div class="scroll_left">
                 <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            </div>
+            </div> -->
             <div class="scroll_up">
                 <span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span>
             </div>
@@ -191,9 +211,11 @@ Date: 10/28/2015
                 <tr class="table_top">
                   <th style="text-align:center;">Thumbnail</th>
                   <th id="report_btn_sort">Report</th>
+                  <th>Report Owner</th>
                   <th>Department</th>
                   <th>Description</th>
                   <th>Sharing Status</th>
+                  <th class="th_shared_with">Shared With</th>
                 </tr>
               </thead>
               <tbody>
@@ -277,10 +299,11 @@ Date: 10/28/2015
     <!-- MAIN WRAPPER END -->
 
     <!-- scripts -->
-    <script type="text/javascript" src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/js/jqueryLib.js"></script>
-    <script type="text/javascript" src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/js/jquery.SPServices.js"></script>
-		<script type="text/javascript" src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/js/main.js"></script>
+    <script type="text/javascript" src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/Dev/js/jqueryLib.js"></script>
+    <script type="text/javascript" src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/Dev/js/jquery.SPServices.js"></script>
+		<script type="text/javascript" src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/Dev/js/main.js"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/js/jquery.tablesorter.js"></script>
+    <script type="text/javascript" src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/Dev/js/jquery.tablesorter.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/3.3.2/masonry.pkgd.min.js"></script>
   </body>
 </html>

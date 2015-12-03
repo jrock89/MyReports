@@ -3,6 +3,14 @@
 
 $(document).ready(function() {
 
+
+  // $('.grid').masonry({
+  //   // options...
+  //   itemSelector: '.grid-item',
+  //   columnWidth: 200
+  // });
+
+
   // window ready hide loader
   $(window).load(function() {
     $('.loader').hide();
@@ -36,7 +44,6 @@ $(document).ready(function() {
       $('.the_list').slideUp();
   });
 
-
   $(document).on('click', '.cat_choice', function(){
     $(this).find('.the_list').slideToggle();
   });
@@ -56,7 +63,7 @@ $(document).ready(function() {
       $('.mobile_icon_nav_bar span').removeClass('rotate_item');
     }
 
-    countDisplayedReports();
+    // countDisplayedReports();
   });
 
   //list items
@@ -85,7 +92,7 @@ $(document).ready(function() {
       // console.log(theItems);
       var listCount = $('#reports_table tr').length;
       for(var i = 2; i < listCount + 1; i++ ){
-        var checkThis = $('tbody tr:nth(' + i + ') td:nth(3)').text();
+        var checkThis = $('tbody tr:nth(' + i + ') td:nth(4)').text();
         // console.log(checkThis);
         var rowContaines = checkThis.indexOf(theItems) > -1;
         // console.log(rowContaines);
@@ -114,7 +121,7 @@ $(document).ready(function() {
     //  var merchSize = $('.active_report:visible').size();
 
 
-    countDisplayedReports();
+    // countDisplayedReports();
 
   });
 
@@ -175,7 +182,7 @@ $(document).ready(function() {
     //  var merchSize = $('.active_report:visible').size();
 
 
-    countDisplayedReports();
+    // countDisplayedReports();
 
   });
 
@@ -183,51 +190,51 @@ $(document).ready(function() {
 
 
   function countDisplayedReports(){
-
-    //count number of visible reports
-    var reportsCount = $('.active_report:visible').size();
-    // console.log(reportsCount);
-
-    var windowWidth = window.innerWidth;;
-
-    //if window width greater than 1200
-    if(windowWidth > 1200)
-    {
-      //if mod 4 = 0
-      if(reportsCount % 4 === 0){
-        $('.inner_icon_box').css('-webkit-column-count', '4', '!important');
-      }else if(reportsCount % 3 === 0){
-        $('.inner_icon_box').css('-webkit-column-count', '3', '!important');
-      }else if(reportsCount % 2 === 0){
-        $('.inner_icon_box').css('-webkit-column-count', '2', '!important');
-      }else if(reportsCount % 1 === 0){
-        $('.inner_icon_box').css('-webkit-column-count', '1', '!important');
-      }
-
-    }else if(windowWidth < 1200){
-
-
-      //if mod 4 = 0
-      if(reportsCount % 4 === 0){
-        $('.inner_icon_box').css('-webkit-column-count', '4', '!important');
-      }else if(reportsCount % 3 === 0){
-        $('.inner_icon_box').css('-webkit-column-count', '3', '!important');
-      }else if(reportsCount % 2 === 0){
-        $('.inner_icon_box').css('-webkit-column-count', '2', '!important');
-      }else if(reportsCount % 1 === 0){
-        $('.inner_icon_box').css('-webkit-column-count', '1', '!important');
-      }
-
-    }else if(windowWidth < 800){
-      if(reportsCount % 2 === 0){
-        $('.inner_icon_box').css('-webkit-column-count', '2', '!important');
-      }else if(reportsCount % 1 === 0){
-        $('.inner_icon_box').css('-webkit-column-count', '1', '!important');
-      }
-
-    }else{
-      $('.inner_icon_box').css('-webkit-column-count', '1', '!important');
-    }
+    //
+    // //count number of visible reports
+    // var reportsCount = $('.active_report:visible').size();
+    // // console.log(reportsCount);
+    //
+    // var windowWidth = window.innerWidth;;
+    //
+    // //if window width greater than 1200
+    // if(windowWidth > 1200)
+    // {
+    //   //if mod 4 = 0
+    //   if(reportsCount % 4 === 0){
+    //     $('.inner_icon_box').css('-webkit-column-count', '4', '!important');
+    //   }else if(reportsCount % 3 === 0){
+    //     $('.inner_icon_box').css('-webkit-column-count', '3', '!important');
+    //   }else if(reportsCount % 2 === 0){
+    //     $('.inner_icon_box').css('-webkit-column-count', '2', '!important');
+    //   }else if(reportsCount % 1 === 0){
+    //     $('.inner_icon_box').css('-webkit-column-count', '1', '!important');
+    //   }
+    //
+    // }else if(windowWidth < 1200){
+    //
+    //
+    //   //if mod 4 = 0
+    //   if(reportsCount % 4 === 0){
+    //     $('.inner_icon_box').css('-webkit-column-count', '4', '!important');
+    //   }else if(reportsCount % 3 === 0){
+    //     $('.inner_icon_box').css('-webkit-column-count', '3', '!important');
+    //   }else if(reportsCount % 2 === 0){
+    //     $('.inner_icon_box').css('-webkit-column-count', '2', '!important');
+    //   }else if(reportsCount % 1 === 0){
+    //     $('.inner_icon_box').css('-webkit-column-count', '1', '!important');
+    //   }
+    //
+    // }else if(windowWidth < 800){
+    //   if(reportsCount % 2 === 0){
+    //     $('.inner_icon_box').css('-webkit-column-count', '2', '!important');
+    //   }else if(reportsCount % 1 === 0){
+    //     $('.inner_icon_box').css('-webkit-column-count', '1', '!important');
+    //   }
+    //
+    // }else{
+    //   $('.inner_icon_box').css('-webkit-column-count', '1', '!important');
+    // }
 
   }
 
@@ -259,6 +266,11 @@ $(document).ready(function() {
 
   // icon view button
   $('.inner_rep_ico').on('click', function(){
+
+    if(window.innerWidth < 720){
+        $('.gen_info').css('margin-top', '0', '!important');
+    }
+
     $('.gen_info').css('padding', '15px 10px 0px 10px', '!important');
     $('.cats').hide();
     $('.table-responsive, .report_sheet').hide();
@@ -273,6 +285,11 @@ $(document).ready(function() {
 
   // group view button - sorts by report name
   $('.inner_rep_gro').on('click', function(){
+
+    if(window.innerWidth < 720){
+        $('.gen_info').css('margin-top', '45px', '!important');
+    }
+
     $('.gen_info').css('padding', '55px 10px 0px 10px', '!important');
     $('.inner_rep_gro span').toggleClass('rotate_item_full');
     // $("#report_btn_sort").click();
@@ -289,20 +306,8 @@ $(document).ready(function() {
   //report button - open report
   $(document).on('click', '.report_btn', function(){
     theDocument = $(this).attr('id');
-    // console.log(theDocument);
-    // window.location.href = theDocument;
     window.open(theDocument, '_blank');
-    // $.ajax({
-    //     url: theCSV,
-    //     type:'get',
-    //     success:function(data){
-    //         $('.report_sheet').html(data);
-    //     }
-    // })
-    // $('.cats').hide();
-    // $('.table-responsive').hide();
-    // $('.inner_icon_box').hide();
-    // $('.report_sheet').show();
+
   });
 
   // force form tags into sharepoint
@@ -459,12 +464,8 @@ $(document).ready(function() {
 
   //request report button
   $(document).on('click', '.request_access', function(){
-    // $('.share_box_inner').hide();
-    // var shareTitle = $(this).closest('.item_title').find('.report_name').text();
-    // $('.share_title').text(shareTitle);
-    // $('.overlay_share').fadeIn();
-    // $('.share_box, .request_box_inner').fadeIn();
-    // console.log('test');
+
+
 
     var first = $().SPServices.SPGetCurrentUser({
                     fieldName: "FirstName",
@@ -771,6 +772,7 @@ $(document).ready(function() {
   });
 
   $('.my_reports_button, .footer_my').on('click', function(){
+    $('.th_shared_with').show();
     $('.main_wrapper').scrollTop(0);
     $('.my_reports_button, .footer_my h2').text('Loading...');
     $('.gen_info h2').text('My Reports');
@@ -899,6 +901,7 @@ $(document).ready(function() {
       "<FieldRef Name='PublishDate' />" +
       "<FieldRef Name='ID' />" +
       "<FieldRef Name='Status' />" +
+      "<FieldRef Name='Owner' />" +
       "</ViewFields>";
     $().SPServices({
       operation: method,
@@ -917,14 +920,16 @@ $(document).ready(function() {
           var listItemId = ($(this).attr("ows_listItemId")); //listItemId
           var itemID = ($(this).attr("ows_ID")); //listItemId
           var itemStatus = ($(this).attr("ows_Status")); //listItemId
+          var owner = ($(this).attr("ows_Owner")); //listItemId
+          console.log(owner);
 
-          displayList(name, department, report_type, listItemId, report_type, pub_date, path, itemID, itemStatus);
+          displayList(name, department, report_type, listItemId, report_type, pub_date, path, itemID, itemStatus, owner);
         });
       }
     });
   }
 
-  function displayList(name, department, report_type, listItemId, report_type, pub_date, path, itemID, itemStatus) {
+  function displayList(name, department, report_type, listItemId, report_type, pub_date, path, itemID, itemStatus, owner) {
 
 
 
@@ -937,7 +942,7 @@ $(document).ready(function() {
         CAMLViewFields: "<ViewFields Properties='True' />",
         CAMLQueryOptions: "<QueryOptions><Folder>" + folder + "</Folder><ViewAttributes Scope='RecursiveAll'></ViewAttributes></QueryOptions>",
         CAMLRowLimit: "1",
-        CAMLQuery: "<Query><Where><Neq><FieldRef Name='ID'/><Value Type='Number'>0</Value></Neq></Where><OrderBy><FieldRef Name='ReportDate'/></OrderBy></Query>",
+        CAMLQuery: "<Query><Where><Neq><FieldRef Name='ID'/><Value Type='Number'>0</Value></Neq></Where><OrderBy><FieldRef Name='ReportDate' Ascending='False'/></OrderBy></Query>",
         completefunc: function (xData, Status) {
             $(xData.responseXML).SPFilterNode("z:row").each(function () {
                 path = "https://thegolubcorporation.sharepoint.com/"+$(this).attr("ows_FileRef").split(';#')[1];
@@ -948,8 +953,6 @@ $(document).ready(function() {
         }
     });
 
-    //build table- detail view
-    // https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png
 
 
 
@@ -958,37 +961,17 @@ $(document).ready(function() {
     lastThree = lastThree.toLowerCase();
     console.log(lastThree);
 
-    // path = path.substring(path.indexOf(" ") + 1);
-    // path = "https://thegolubcorporation.sharepoint.com/" + path;
 
 
-    // if(lastThree === "csv")
-    // {
-    //   $('.table-responsive tbody').append('<tr class="this_title_wrap"><td style="text-align:center;"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="pdf" /></td><td class="this_title"><a href="' + path + '" target="blank"><div class="reports_open"><div>' + name + '</div></div></a></td><td class="list_department">' + department + '</td><td>' + report_type + '</td><td class=""><div class="reports_share" id="' + itemID + '"><div><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div></td></tr>');
-    //
-    // }
-    // else if(lastThree === "pdf")
-    // {
-      $('.table-responsive tbody').append('<tr class="this_title_wrap"><td style="text-align:center;"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></td><td class="this_title"><a href="' + path + '" target="blank"><div class="reports_open"><div>' + name + '</div></div></a></td><td class="list_department">' + department + '</td><td>' + report_type + '</td><td class=""><div class="reports_share" id="' + itemID + '"><div><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div></td></tr>');
-
-    // }
-
-    //
-    // if(lastThree === "csv")
-    // {
-      //build grid - icon view
+        var pictureName = owner.replace(/\s/g, '').toLowerCase();
+        var ownersName = owner;
+        var myPicture = 'https://thegolubcorporation-my.sharepoint.com/User%20Photos/Profile%20Pictures/' + pictureName + '_golub_com_MThumb.jpg';
 
 
-        // $('.report_row').append('<div class="main_select active_report active_report_1 report_1"><div class=""><div class="item_title this_title_wrap" data-type="' + department + '"><p class="report_name this_title">' + name + '</p><p class="report_dep">' + department + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="pdf" /></div><div><p class="report_desc">' + report_type + '</p></div><a href="' + path + '" target="blank"><div class="reports_open"><div>Open</div></div></a><div class="reports_share"><div><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div></div></div></div>');
-
-    // }
-    // else if(lastThree === "pdf")
-    // {
-      //build grid - icon view
-// col-sm-6 col-md-3
+        $('.table-responsive tbody').append('<tr class="this_title_wrap"><td style="text-align:center;"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></td><td class="this_title"><a href="' + path + '" target="blank"><div class="reports_open"><div>' + name + '</div></div></a></td><td>' + owner + '</td><td class="list_department">' + department + '</td><td>' + report_type + '</td><td class=""><div class="reports_share" id="' + itemID + '"><div><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div></td><td><div class="reports_shared_with" id="' + itemID + '"><div><i class="left_icon fa fa-users"></i> Recipients</div></div></td></tr>');
 
 
-        $('.report_row').append('<div class="main_select active_report active_report_1 report_1"><div class=""><div class="item_title this_title_wrap" data-type="' + department + '"><p class="report_name this_title">' + name + '</p><p class="report_dep">' + department + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></div><div><p class="report_desc">' + report_type + '</p></div><a href="' + path + '" target="blank"><div class="reports_open"><div>Open</div></div></a><div class="reports_share" id="' + itemID + '"><div><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div></div></div></div>');
+        $('.report_row').append('<div class="col-sm-6 col-lg-3 main_select active_report active_report_1 report_1"><div class=""><div class="item_title this_title_wrap" data-type="' + department + '"><div class="report_owner"><div class="reports_user_img"><img src="' + myPicture + '"></div> <div class="owner_p"><p>Report Owner:<br><span class="the_owner">' + ownersName + '</span></p></div></div><p class="report_name this_title">' + name + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></div><div><p class="report_dep">' + department + '</p><p class="report_desc">' + report_type + '</p></div><a href="' + path + '" target="blank"><div class="reports_open"><div><i class="left_icon fa fa-folder-open"></i> Open</div></div></a><div class="reports_share" id="' + itemID + '"><div><span class="left_icon glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div><div class="reports_shared_with" id="' + itemID + '"><div><i class="left_icon fa fa-users"></i> Recipients</div></div></div></div></div>');
 
     // }
 
@@ -1007,7 +990,7 @@ $(document).ready(function() {
             $('.social_contents').slideUp(100);
             $('.social_box span').removeClass('rotate_item');
             $('.social_box').removeClass('active_menu');
-            countDisplayedReports();
+            // countDisplayedReports();
         }
     );
 
@@ -1017,6 +1000,7 @@ $(document).ready(function() {
 
   //Reports catalog build
   $('.active_dept_link').on('click', function(){
+    $('.th_shared_with').hide();
     $('.main_wrapper').scrollTop(0);
     $('.icon_box_box').slideUp(100);
     $(this).removeClass('active_dept_link');
@@ -1043,6 +1027,7 @@ $(document).ready(function() {
           "<FieldRef Name='PublishDate' />" +
           "<FieldRef Name='Status' />" +
           "<FieldRef Name='ID' />" +
+          "<FieldRef Name='Owner' />" +
           "</ViewFields>";
         $().SPServices({
           operation: method,
@@ -1059,61 +1044,37 @@ $(document).ready(function() {
               var pub_date = ($(this).attr("ows_PublishDate")); //pub date
               var status = ($(this).attr("ows_Status")); //pub date
               var itemID = ($(this).attr("ows_ID")); //pub date
+              var owner = ($(this).attr("ows_Owner")); //pub date
 
               var listItemId = ($(this).attr("ows_listItemId")); //listItemId
-              displayListUnfiltered(name, department, report_type, listItemId, report_type, status, itemID, path);
+              displayListUnfiltered(name, department, report_type, listItemId, report_type, status, itemID, path, owner);
             });
           }
         });
       }
 
-      function displayListUnfiltered(name, department, report_type, listItemId, report_type, status, itemID, path) {
-        //get attachments
-        // var list = "TestList";
-        // var method = "GetAttachmentCollection";
-        // var attachmentFileUrls = [];
-        // $().SPServices({
-        //   operation: method,
-        //   async: false,
-        //   listName: list,
-        //   ID: listItemId,
-        //   completefunc: function(xData, Status) {
-        //     $(xData.responseXML).find("Attachment").each(function() {
-        //       var url = $(this).text();
-        //       attachmentFileUrls.push(url);
-        //       console.log(attachmentFileUrls);
-        //     });
-        //   }
-        // });
+      function displayListUnfiltered(name, department, report_type, listItemId, report_type, status, itemID, path, owner) {
 
-        //build table- detail view
-        // https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png
         var checkThisDept = department.toLowerCase();
         checkThisDept = checkThisDept.replace(/\s/g, '');
-        // console.log(checkThisDept + ' ' + thisDepartment);
         if(checkThisDept === thisDepartment)
         {
             // var str = path;
             // var lastThree = str.substr(str.length - 3);
             // lastThree = lastThree.toLowerCase();
-            // console.log(lastThree);
-            // if(lastThree === "csv")
-            // {
-            //   $('.table-responsive tbody').append('<tr><td style="text-align:center;"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="csv" /></td><td class="report_btn" id="">' + name + '</td><td class="list_department">' + department + '</td><td>' + report_type + '</td><td class="share_btn">Request Access</td></tr>');
-            // }
-            // else if(lastThree === "pdf")
-            // {
-              $('.table-responsive tbody').append('<tr class="this_title_wrap"><td style="text-align:center;"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></td><td class="this_title" id="">' + name + '</td><td class="list_department">' + department + '</td><td>' + report_type + '</td><td class=""><div class="reports_request"><div class="request_wrap"><div class="request_sent ' + itemID + '_sent">Request Sent!</div><div id= "' + itemID + '" class="request_access ' + itemID + '_request"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Request Access</div></div></div></td></tr>');
-            // }
-            // if(lastThree === "csv")
-            // {
-            //   //build grid - icon view
-            //     $('.report_row').append('<div class="main_select active_report active_report_1 report_1"><div class=""><div class="item_title" data-type="' + department + '"><p class="report_name">' + name + '</p><p class="report_dep">' + department + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="csv" /></div><div><p class="report_desc">' + report_type + '</p></div></a><div class="reports_request"><div class="request_wrap"><div class="request_sent">Request Sent!</div><div class="request_access"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Request Access</div></div></div></div></div></div>');
-            // }
-            // else if(lastThree === "pdf")
-            // {
-              //build grid - icon view
-                $('.report_row').append('<div class="main_select active_report active_report_1 report_1"><div class=""><div class="item_title this_title_wrap" data-type="' + department + '"><p class="report_name this_title">' + name + '</p><p class="report_dep">' + department + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></div><div><p class="report_desc">' + report_type + '</p></div></a><div class="reports_request"><div class="request_wrap"><div class="request_sent ' + itemID + '_sent">Request Sent!</div><div id= "' + itemID + '" class="request_access ' + itemID + '_request"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Request Access</div></div></div></div></div></div>');
+
+
+              var pictureName = owner.replace(/\s/g, '').toLowerCase();
+              var ownersName = owner;
+              var myPicture = 'https://thegolubcorporation-my.sharepoint.com/User%20Photos/Profile%20Pictures/' + pictureName + '_golub_com_MThumb.jpg';
+
+
+              $('.table-responsive tbody').append('<tr class="this_title_wrap"><td style="text-align:center;"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></td><td class="this_title" id="">' + name + '</td><td>' + owner + '</td><td class="list_department">' + department + '</td><td>' + report_type + '</td><td class=""><div class="reports_request"><div class="request_wrap"><div class="request_sent ' + itemID + '_sent">Request Sent!</div><div id= "' + itemID + '" class="request_access ' + itemID + '_request"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Request Access</div></div></div></td></tr>');
+
+
+
+
+                $('.report_row').append('<div class="col-sm-6 col-lg-3 main_select active_report active_report_1 report_1"><div class=""><div class="item_title this_title_wrap" data-type="' + department + '"><div class="report_owner"><div class="reports_user_img"><img src="' + myPicture + '"></div> <div class="owner_p"><p>Report Owner:<br><span class="the_owner">' + ownersName + '</span></p></div></div><p class="report_name this_title">' + name + '</p><p class="report_dep">' + department + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></div><div><p class="report_desc">' + report_type + '</p></div></a><div class="reports_request"><div class="request_wrap"><div class="request_sent ' + itemID + '_sent">Request Sent!</div><div id= "' + itemID + '" class="request_access ' + itemID + '_request"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Request Access</div></div></div></div></div></div>');
 
                 var first = $().SPServices.SPGetCurrentUser({
                                 fieldName: "FirstName",
@@ -1138,7 +1099,6 @@ $(document).ready(function() {
                   $('.' + itemID + '_sent').hide();
 
                 }
-            // }
             $(document).ready(function()
             {
                 // $("#reports_table").tablesorter();
@@ -1156,7 +1116,7 @@ $(document).ready(function() {
                 $('.social_contents').slideUp(100);
                 $('.social_box span').removeClass('rotate_item');
                 $('.social_box').removeClass('active_menu');
-                countDisplayedReports();
+                // countDisplayedReports();
             }
             );
         }
@@ -1165,26 +1125,7 @@ $(document).ready(function() {
   });
 
 
-
-
-  // var $wrapper = $('.table-responsive');
-  //
-  // function startScrolling()
-  // {
-  //     var leftPos = $wrapper.scrollLeft();
-  //     $wrapper.animate({scrollLeft: leftPos + 200}, 800);
-  // }
-  //
-  // function stopScrolling()
-  // {
-  //   console.log('test');
-  //     // stop increasing scroll position
-  //     $wrapper.stop();
-  // }
-  //
-  // $('.scroll_right').mousedown(startScrolling).mouseup(stopScrolling);
-
-// scroll down
+// following code for scroll buttons on mobile list view
   $('.scroll_down').on({
       'mousedown touchstart': function () {
           $(".main_wrapper").animate({
@@ -1195,63 +1136,46 @@ $(document).ready(function() {
           $(".main_wrapper").stop(true);
       }
   });
-
-
   $('.scroll_right').on({
       'mousedown touchstart': function () {
         var leftPos = $('.table-responsive').scrollLeft();
           $(".table-responsive").animate({
               scrollLeft: leftPos + 200}, 300);
-
       },
       'mouseup touchend': function () {
           $(".table-responsive").stop(true);
       }
   });
-
-
   $('.scroll_up').on({
       'mousedown touchstart': function () {
-
               $(".main_wrapper").animate({scrollTop: 0}, 2000);
-
       },
       'mouseup touchend': function () {
           $(".main_wrapper").stop(true);
       }
   });
-
-
   $('.scroll_left').on({
       'mousedown touchstart': function () {
         var leftPos = $('.table-responsive').scrollLeft();
           $(".table-responsive").animate({
               scrollLeft: leftPos - 200}, 300);
-
       },
       'mouseup touchend': function () {
           $(".table-responsive").stop(true);
       }
   });
 
-
-
-
-
-
+  //click to sort table search callout
   $('.table_top').on('click', function(){
     $('.search_callout').show();
 
-    // setTimeout( function(){
-    //   $('.search_callout').fadeOut();
-    // }, 4000)
   });
 
+  //hide search callout
   $('.search_callout, .reports_share, .reports_open, nav, .rep_cat, .icon_box_box, .reports_request, .request_sent').on({
     'mouseenter click': function () {
       $('.search_callout').hide();
     }
-
   });
 
 
