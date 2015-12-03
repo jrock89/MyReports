@@ -962,35 +962,35 @@ $(document).ready(function() {
     // path = "https://thegolubcorporation.sharepoint.com/" + path;
 
 
-    if(lastThree === "csv")
-    {
-      $('.table-responsive tbody').append('<tr class="this_title_wrap"><td style="text-align:center;"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="pdf" /></td><td class="this_title"><a href="' + path + '" target="blank"><div class="reports_open"><div>' + name + '</div></div></a></td><td class="list_department">' + department + '</td><td>' + report_type + '</td><td class=""><div class="reports_share" id="' + itemID + '"><div><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div></td></tr>');
-
-    }
-    else if(lastThree === "pdf")
-    {
+    // if(lastThree === "csv")
+    // {
+    //   $('.table-responsive tbody').append('<tr class="this_title_wrap"><td style="text-align:center;"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="pdf" /></td><td class="this_title"><a href="' + path + '" target="blank"><div class="reports_open"><div>' + name + '</div></div></a></td><td class="list_department">' + department + '</td><td>' + report_type + '</td><td class=""><div class="reports_share" id="' + itemID + '"><div><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div></td></tr>');
+    //
+    // }
+    // else if(lastThree === "pdf")
+    // {
       $('.table-responsive tbody').append('<tr class="this_title_wrap"><td style="text-align:center;"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></td><td class="this_title"><a href="' + path + '" target="blank"><div class="reports_open"><div>' + name + '</div></div></a></td><td class="list_department">' + department + '</td><td>' + report_type + '</td><td class=""><div class="reports_share" id="' + itemID + '"><div><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div></td></tr>');
 
-    }
+    // }
 
-
-    if(lastThree === "csv")
-    {
+    //
+    // if(lastThree === "csv")
+    // {
       //build grid - icon view
 
 
-        $('.report_row').append('<div class="main_select active_report active_report_1 report_1"><div class=""><div class="item_title this_title_wrap" data-type="' + department + '"><p class="report_name this_title">' + name + '</p><p class="report_dep">' + department + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="pdf" /></div><div><p class="report_desc">' + report_type + '</p></div><a href="' + path + '" target="blank"><div class="reports_open"><div>Open</div></div></a><div class="reports_share"><div><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div></div></div></div>');
+        // $('.report_row').append('<div class="main_select active_report active_report_1 report_1"><div class=""><div class="item_title this_title_wrap" data-type="' + department + '"><p class="report_name this_title">' + name + '</p><p class="report_dep">' + department + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/csv.png" alt="pdf" /></div><div><p class="report_desc">' + report_type + '</p></div><a href="' + path + '" target="blank"><div class="reports_open"><div>Open</div></div></a><div class="reports_share"><div><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div></div></div></div>');
 
-    }
-    else if(lastThree === "pdf")
-    {
+    // }
+    // else if(lastThree === "pdf")
+    // {
       //build grid - icon view
 // col-sm-6 col-md-3
 
 
         $('.report_row').append('<div class="main_select active_report active_report_1 report_1"><div class=""><div class="item_title this_title_wrap" data-type="' + department + '"><p class="report_name this_title">' + name + '</p><p class="report_dep">' + department + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></div><div><p class="report_desc">' + report_type + '</p></div><a href="' + path + '" target="blank"><div class="reports_open"><div>Open</div></div></a><div class="reports_share" id="' + itemID + '"><div><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div></div></div></div>');
 
-    }
+    // }
 
     $(document).ready(function()
         {
