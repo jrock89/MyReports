@@ -467,7 +467,7 @@ h2 {
 .share_input_submit:hover{
   opacity: 0.7;
 }
-.share_box_inner, .request_box_inner, .share_accepted{
+.share_box_inner, .request_box_inner, .share_accepted, .shared_with_box{
   display: none;
   padding: 20px;
     background: #D9D9D9;
@@ -490,20 +490,20 @@ h2 {
     padding: 0 !important;
     text-align: center !important;
 }
-.share_box .jumbotron{
+.share_box .jumbotron, .shared_with_box .jumbotron{
   padding: 20px 20px !important;
     color: #251F21;
     background: tran;
     margin: 40px;
     padding: 20px;
 }
-.share_box h2{
+.share_box h2, .shared_with_box h2{
   padding: 0 !important;
 margin: 0 !important;
 color: #251F21 !important;
 text-align: center;
 }
-.share_box {
+.share_box, .shared_with_box{
   z-index: 6;
       color: #fff;
       background: #fff;
@@ -1010,7 +1010,7 @@ margin-left: 25px !important;
   }
 
 
-  .share_box .jumbotron {
+  .share_box .jumbotron, .shared_with_box .jumbotron {
       /* padding: 20px 20px !important; */
       color: #251F21;
       background: tran;
@@ -1018,7 +1018,7 @@ margin-left: 25px !important;
       padding: 20px;
   }
 
-  .share_box_inner, .request_box_inner, .share_accepted {
+  .share_box_inner, .request_box_inner, .share_accepted, .shared_box_inner {
       display: none;
       padding: 20px;
       background: #D9D9D9;
@@ -1026,7 +1026,7 @@ margin-left: 25px !important;
       border-bottom: 3px solid #AFAFAF;
   }
 
-  .share_box {
+  .share_box, .shared_with_box {
 
     width: 94%;
     left: 3%;

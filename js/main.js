@@ -336,7 +336,7 @@ $(document).ready(function() {
     $('.search_input').toggleClass('search_open').focus().val('');
     $('.search_input_submit').toggleClass('search_sub_open');
     $('.overlay_2').toggle();
-    $('.share_box').hide();
+    $('.share_box, .shared_with_box').hide();
   });
 
   //share report button icon
@@ -545,18 +545,21 @@ $(document).ready(function() {
     $('.search_input').removeClass('search_open').focus().val('');
     $('.search_input_submit').removeClass('search_sub_open');
     $('.overlay_2, .overlay_share').hide();
-    $('.share_box').hide();
+    $('.share_box, .shared_with_box').hide();
   });
 
   // share button - open share options
   $(document).on('click', '.share_btn', function(){
     $('.overlay_2, .share_box').toggle();
   });
+  $(document).on('click', '.reports_shared_with', function(){
+    $('.overlay_2, .shared_with_box').toggle();
+  });
 
   //close share box
-  $('.share_box span').on('click', function() {
+  $('.share_box span, .shared_with_box span').on('click', function() {
     $('.overlay_share, .overlay_2').hide();
-    $('.share_box').hide();
+    $('.share_box, .shared_with_box').hide();
   });
 
   //search input - submit
@@ -824,10 +827,13 @@ $(document).ready(function() {
 
 
 
+          var titleContaines = departmentRepeat.indexOf(title) > -1;
 
 
-          if(departmentRepeat === title){
-
+          if(titleContaines === true){
+            lowercaseTitle = title.toLowerCase();
+            lowercaseTitle = lowercaseTitle.replace(/\s/g, '');
+            uppercaseTitle = title.replace(/\s/g, '');
           }
           else{
             numOfDepartments ++;
@@ -846,20 +852,25 @@ $(document).ready(function() {
           }
 
 
-          if(typeRepeat === report_type){
+                    console.log(typeRepeat);
+                    console.log(report_type);
+          var typeContaines = typeRepeat.indexOf(report_type) > -1;
+          if(typeContaines === true){
 
           }
           else{
+              console.log('in');
             var typeClass = report_type;
             typeClass = typeClass.replace(/\s/g, '');
 
             $('.' + lowercaseTitle + '_list ul').append("<li class='type_choice " + typeClass + "_list_item'>" + report_type + "</li>");
           }
 
-          typeRepeat = report_type;
+          typeRepeat = typeRepeat + ' ' + report_type;
 
-          departmentRepeat = title;
+          departmentRepeat = departmentRepeat + ' ' + title;
         });
+        console.log(numOfDepartments);
 
         $('.icon_box_nav_bar .row').append('<div class="all_dept selected_item">All</div>');
 
