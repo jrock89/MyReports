@@ -4,11 +4,19 @@
 $(document).ready(function() {
 
 
-  // $('.grid').masonry({
-  //   // options...
-  //   itemSelector: '.grid-item',
-  //   columnWidth: 200
-  // });
+
+  $("#my_people_picker").spPeoplePicker();
+        //      $("#anotherPeoplePickerDiv").spPeoplePicker();
+              //
+              //
+              // $("#pp1").click(function(){
+              //     alert($("#peoplePickerDiv").getUserInfo());
+              //     return false;
+              // });
+              // $("#pp2").click(function(){
+              //     alert($("#anotherPeoplePickerDiv").getUserInfo());
+              //     return false;
+              // });
 
 
   // window ready hide loader
@@ -16,32 +24,16 @@ $(document).ready(function() {
     $('.loader').hide();
   });
 
-  // grab todays date
-  var today = new Date();
-  var dd = today.getDate();
-  var mm = today.getMonth() + 1;
-  var yyyy = today.getFullYear();
-  if (dd < 10) {
-    dd = '0' + dd
-  }
-  if (mm < 10) {
-    mm = '0' + mm
-  }
-  today = mm + '/' + dd + '/' + yyyy;
-  //build title with todays date
-  $('title').text("My Reports | " + today);
-
-
+  //animate logo
   $('.brand_link').on('mouseover', function(){
     $('.brand_link').attr('src', 'https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/brand.gif');
   });
-
 
   // chooose department button on mobile
   $('.mobile_icon_nav_bar').on('click', function(){
     $('.icon_box_nav_bar').slideToggle();
     $('.mobile_icon_nav_bar span').toggleClass('rotate_item');
-      $('.the_list').slideUp();
+    $('.the_list').slideUp();
   });
 
   $(document).on('click', '.cat_choice', function(){
@@ -52,91 +44,15 @@ $(document).ready(function() {
     $(this).find('.the_list').slideUp();
   });
 
-  $(document).on('click', '.all_dept', function(){
-    $('.cat_choice, .type_choice, .all_list').removeClass('selected_item');
-    $('.all_dept').addClass('selected_item');
-    $('tbody tr, .active_report').show();
 
-    if(window.innerWidth < 721)
-    {
-      $('.icon_box_nav_bar').slideToggle();
-      $('.mobile_icon_nav_bar span').removeClass('rotate_item');
-    }
-
-    // countDisplayedReports();
-  });
-
-  //list items
-  $(document).on('click', '.type_choice', function(){
-    var theDept = $(this).text();
-    theDeptClass = theDept.replace(/\s/g, '');
-    var theDeptLower = theDeptClass;
-    // console.log(theDeptLower);
-
-    if(window.innerWidth < 721)
-    {
-      $('.icon_box_nav_bar').slideToggle();
-      $('.mobile_icon_nav_bar span').removeClass('rotate_item');
-    }
-
-    $('.all_dept').removeClass('selected_item');
-    $('.type_choice, .all_list').removeClass('selected_item');
-    $('.' + theDeptLower + '_list_item').toggleClass('selected_item');
-
-    $('tbody tr, .active_report').show();
-    if($('.' + theDeptLower + '_list_item').hasClass('selected_item') === false)
-    {
-      $('tbody tr, .active_report').show();
-    }else {
-      var theItems = theDept;
-      // console.log(theItems);
-      var listCount = $('#reports_table tr').length;
-      for(var i = 2; i < listCount + 1; i++ ){
-        var checkThis = $('tbody tr:nth(' + i + ') td:nth(4)').text();
-        // console.log(checkThis);
-        var rowContaines = checkThis.indexOf(theItems) > -1;
-        // console.log(rowContaines);
-        if (rowContaines !== true) {
-          $('tbody tr:nth(' + i + ')').hide();
-        }
-      }
-
-      var item = $('.active_report');
-      var itemCount = item.length + 1;
-      // console.log(itemCount);
-        for (var i = 1; i < itemCount; i++) {
-          var itemText = $('.active_report:nth-child(' + i + ') .report_desc').text();
-          // console.log(itemText);
-          var itemTextFinal = itemText;
-          var rowContaines = itemTextFinal.indexOf(theItems) > -1;
-          if (rowContaines !== true) {
-            $('.active_report:nth-child(' + i + ')').hide();
-          }
-          else {}
-        }
-    }
-
-
-     //
-    //  var merchSize = $('.active_report:visible').size();
-
-
-    // countDisplayedReports();
-
-  });
-
-
-
-
-
-
-  //merchandising department button
   $(document).on('click', '.all_list', function(){
+    $('.reset_search').hide();
     var theDept = $(this).attr('id');
-    theDeptClass = theDept.replace(/\s/g, '');
-    var theDeptLower = theDeptClass.toLowerCase();
 
-    // console.log(theDept);
+    var theDeptClass = theDept.replace(/-/g, '');
+    var theDeptLower = theDeptClass.toLowerCase();
+    var theDeptTitle = theDept.replace(/-/g, ' ');
+    console.log(theDeptTitle);
 
     if(window.innerWidth < 721)
     {
@@ -146,95 +62,169 @@ $(document).ready(function() {
 
     $('.all_dept').removeClass('selected_item');
     $('.all_list, .type_choice').removeClass('selected_item');
-    $('.' + theDeptLower + '_all').toggleClass('selected_item');
 
-    $('tbody tr, .active_report').show();
-    if($('.' + theDeptLower + '_all').hasClass('selected_item') === false)
-    {
-      $('tbody tr, .active_report').show();
-    }else {
-      var theItems = theDept;
-      var listCount = $('#reports_table tr').length;
-      for(var i = 2; i < listCount + 1; i++ ){
-        var checkThis = $('tbody tr:nth(' + i + ')').text();
-        var rowContaines = checkThis.indexOf(theItems) > -1;
-        if (rowContaines !== true) {
-          $('tbody tr:nth(' + i + ')').hide();
-        }
-      }
-      var item = $('.active_report');
-      var itemCount = item.length + 1;
-      // console.log(itemCount);
-        for (var i = 1; i < itemCount; i++) {
-          var itemText = $('.active_report:nth-child(' + i + ')').text();
-          // console.log(itemText);
-          var itemTextFinal = itemText;
-          // console.log(itemTextFinal);
-          // console.log(theItems);
-          var rowContaines = itemTextFinal.indexOf(theItems) > -1;
-          if (rowContaines !== true) {
-            $('.active_report:nth-child(' + i + ')').hide();
-          }
-          else {}
-        }
-    }
-     //
-    //  var merchSize = $('.active_report:visible').size();
+    $('.load_more_box').hide();
+    console.log(theDeptLower);
+    $('.cat_choice').removeClass('selected_item');
+    $('.'+theDeptLower+'_dept').addClass('selected_item');
+    $('.reset_search').hide();
+    $('.th_shared_with').show();
+    $('.main_wrapper').scrollTop(0);
+    $('.my_reports_button, .footer_my h2').text('Loading...');
+    $('.gen_info h2').text('My Reports');
+    $('.icon_box_box').slideDown(100);
+    $('.inner_icon_box, .table-responsive tbody').empty();
+    $('.inner_icon_box').html("<div class='loadingThis'>Loading...<br><i style='opacity:0.1;'>Gathering Reports</i></div>");
+    $('.table-responsive').append("<div class='loadingThisList'>Loading...<br><i style='opacity:0.1;'>Gathering Reports</i></div>");
 
-
-    // countDisplayedReports();
+    setTimeout(function(){
+      GetReportsFiltered('1133', theDeptTitle);
+    },200);
 
   });
+
+
+  function GetReportsFiltered(position, theDeptTitle) {
+    $('.load_more_box').show();
+    var list = "TestList";
+    var method = "GetListItems";
+    var id = position;
+    var query = "<Query>" +
+                "<Where>" +
+                  "<And>" +
+                  "<Eq>" +
+                  "<FieldRef Name='Department'/><Value Type='Text'>"+theDeptTitle+"</Value>" +
+                "</Eq>" +
+                "<Gt>" +
+                "<FieldRef Name='ID'/><Value Type='Number'>"+id+"</Value>" +
+              "</Gt>" +
+                "</And>" +
+                "</Where>" +
+                "<OrderBy>" +
+                  "<FieldRef Name='Title'/>" +
+                "</OrderBy>" +
+              "</Query>";
+
+    var fieldsToRead = "<ViewFields>" +
+      "<FieldRef Name='Title' />" +
+      "<FieldRef Name='Path' />" +
+      "<FieldRef Name='Department' />" +
+      "<FieldRef Name='ReportType' />" +
+      "<FieldRef Name='listItemId' />" +
+      "<FieldRef Name='PublishDate' />" +
+      "<FieldRef Name='ID' />" +
+      "<FieldRef Name='Status' />" +
+      "<FieldRef Name='Owner' />" +
+      "<FieldRef Name='Recipients' />" +
+      "</ViewFields>";
+    $().SPServices({
+      operation: method,
+      async: false,
+      listName: list,
+      CAMLViewFields: fieldsToRead,
+      CAMLQuery: query,
+      CAMLRowLimit: "10",
+      completefunc: function(xData, Status) {
+          $('.load_more_box').show();
+        $('.load_more_reports').text('Load More Reports');
+        $(xData.responseXML).SPFilterNode("z:row").each(function() {
+
+          var name = ($(this).attr("ows_Title")); //name
+          var path = ($(this).attr("ows_Path")); //path
+          var department = ($(this).attr("ows_Department")); //department
+          var report_type = ($(this).attr("ows_ReportType")); //report type
+          var pub_date = ($(this).attr("ows_PublishDate")); //pub date
+          var listItemId = ($(this).attr("ows_listItemId")); //listItemId
+          var itemID = ($(this).attr("ows_ID")); //listItemId
+          var itemStatus = ($(this).attr("ows_Status")); //listItemId
+          var owner = ($(this).attr("ows_Owner")); //listItemId
+          var itemRecipients = ($(this).attr("ows_Recipients")); //Recipients
+// console.log(itemRecipients);
+          // console.log(owner);
+          $('.load_more_reports').attr('id', itemID);
+          displayList(name, department, report_type, listItemId, report_type, pub_date, path, itemID, itemStatus, owner, itemRecipients);
+
+        });
+      }
+    });
+  }
+
+
+
+
+
+
+
+    function GetReportsFilteredByType(position, theDeptType) {
+      $('.load_more_box').show();
+      var list = "TestList";
+      var method = "GetListItems";
+      var id = position;
+      var query = "<Query>" +
+                  "<Where>" +
+                    "<And>" +
+                    "<Eq>" +
+                    "<FieldRef Name='ReportType'/><Value Type='Text'>"+theDeptType+"</Value>" +
+                  "</Eq>" +
+                  "<Gt>" +
+                  "<FieldRef Name='ID'/><Value Type='Number'>"+id+"</Value>" +
+                "</Gt>" +
+                  "</And>" +
+                  "</Where>" +
+                  "<OrderBy>" +
+                    "<FieldRef Name='Title'/>" +
+                  "</OrderBy>" +
+                "</Query>";
+
+      var fieldsToRead = "<ViewFields>" +
+        "<FieldRef Name='Title' />" +
+        "<FieldRef Name='Path' />" +
+        "<FieldRef Name='Department' />" +
+        "<FieldRef Name='ReportType' />" +
+        "<FieldRef Name='listItemId' />" +
+        "<FieldRef Name='PublishDate' />" +
+        "<FieldRef Name='ID' />" +
+        "<FieldRef Name='Status' />" +
+        "<FieldRef Name='Owner' />" +
+        "<FieldRef Name='Recipients' />" +
+        "</ViewFields>";
+      $().SPServices({
+        operation: method,
+        async: false,
+        listName: list,
+        CAMLViewFields: fieldsToRead,
+        CAMLQuery: query,
+        CAMLRowLimit: "10",
+        completefunc: function(xData, Status) {
+            $('.load_more_box').show();
+          $('.load_more_reports').text('Load More Reports');
+          $(xData.responseXML).SPFilterNode("z:row").each(function() {
+
+            var name = ($(this).attr("ows_Title")); //name
+            var path = ($(this).attr("ows_Path")); //path
+            var department = ($(this).attr("ows_Department")); //department
+            var report_type = ($(this).attr("ows_ReportType")); //report type
+            var pub_date = ($(this).attr("ows_PublishDate")); //pub date
+            var listItemId = ($(this).attr("ows_listItemId")); //listItemId
+            var itemID = ($(this).attr("ows_ID")); //listItemId
+            var itemStatus = ($(this).attr("ows_Status")); //listItemId
+            var owner = ($(this).attr("ows_Owner")); //listItemId
+            var itemRecipients = ($(this).attr("ows_Recipients")); //Recipients
+  // console.log(itemRecipients);
+            // console.log(owner);
+            $('.load_more_reports').attr('id', itemID);
+            displayList(name, department, report_type, listItemId, report_type, pub_date, path, itemID, itemStatus, owner, itemRecipients);
+
+          });
+        }
+      });
+    }
 
 
 
 
   function countDisplayedReports(){
-    //
-    // //count number of visible reports
-    // var reportsCount = $('.active_report:visible').size();
-    // // console.log(reportsCount);
-    //
-    // var windowWidth = window.innerWidth;;
-    //
-    // //if window width greater than 1200
-    // if(windowWidth > 1200)
-    // {
-    //   //if mod 4 = 0
-    //   if(reportsCount % 4 === 0){
-    //     $('.inner_icon_box').css('-webkit-column-count', '4', '!important');
-    //   }else if(reportsCount % 3 === 0){
-    //     $('.inner_icon_box').css('-webkit-column-count', '3', '!important');
-    //   }else if(reportsCount % 2 === 0){
-    //     $('.inner_icon_box').css('-webkit-column-count', '2', '!important');
-    //   }else if(reportsCount % 1 === 0){
-    //     $('.inner_icon_box').css('-webkit-column-count', '1', '!important');
-    //   }
-    //
-    // }else if(windowWidth < 1200){
-    //
-    //
-    //   //if mod 4 = 0
-    //   if(reportsCount % 4 === 0){
-    //     $('.inner_icon_box').css('-webkit-column-count', '4', '!important');
-    //   }else if(reportsCount % 3 === 0){
-    //     $('.inner_icon_box').css('-webkit-column-count', '3', '!important');
-    //   }else if(reportsCount % 2 === 0){
-    //     $('.inner_icon_box').css('-webkit-column-count', '2', '!important');
-    //   }else if(reportsCount % 1 === 0){
-    //     $('.inner_icon_box').css('-webkit-column-count', '1', '!important');
-    //   }
-    //
-    // }else if(windowWidth < 800){
-    //   if(reportsCount % 2 === 0){
-    //     $('.inner_icon_box').css('-webkit-column-count', '2', '!important');
-    //   }else if(reportsCount % 1 === 0){
-    //     $('.inner_icon_box').css('-webkit-column-count', '1', '!important');
-    //   }
-    //
-    // }else{
-    //   $('.inner_icon_box').css('-webkit-column-count', '1', '!important');
-    // }
+
 
   }
 
@@ -339,18 +329,242 @@ $(document).ready(function() {
     $('.share_box, .shared_with_box').hide();
   });
 
+
+
   //share report button icon
-  $(document).on('click', '.reports_share', function(){
-    $('.request_box_inner').hide();
-    var shareTitle = $(this).closest('.this_title_wrap').find('.this_title').text();
-    var theID = $(this).attr('id');
-    $('.share_accepted').hide();
-    $('.share_title').text(shareTitle);
-    $('.overlay_share').fadeIn();
-    $('.share_box, .share_box_inner').fadeIn();
-    $('.share_box_inner').html('<div class="row"><div class="col-md-6 share_info">Enter the full name of the user you wish to share this report with, then hit submit.</div><div class="col-md-6"><form  onkeypress="return event.keyCode != 13"><input  class="share_input" style="" id="share_input" name="emailname" type="text" placeholder="Users Full Name" class="form-control"><div class="share_input_submit" id="' + theID + '">Submit</div></form></div></div>');
+  $(document).on('click', '.open_share_dialog', function(){
+    var theId = $(this).attr('data-id');
+    $('.share_this_one').hide();
+    $('.share_overlay, .share_this_one_'+theId).show();
+
+    // $.ajax({
+    // 	url: 'https://thegolubcorporation.sharepoint.com/sites/MYReports/_layouts/15/aclinv.aspx?forSharing=1&mbypass=1&List=%7BF1C1A511%2DFB4B%2D4D41%2DB56E%2DB289EF7BC771%7D&obj={F1C1A511-FB4B-4D41-B56E-B289EF7BC771},767,DOCUMENT","groupId":0,"useSimplifiedRoles":true',
+    // 	type: 'POST',
+    // 	dataType: 'json',
+    // 	success: function() {
+    // 		console.log('cool');
+    // 	}
+    // });
+
+
+    // $('.request_box_inner').hide();
+    // var shareTitle = $(this).closest('.this_title_wrap').find('.this_title').text();
+    // var theID = $(this).attr('id');
+    // $('.share_accepted').hide();
+    // $('.share_title').text(shareTitle);
+    // $('.overlay_share').fadeIn();
+    // $('.share_box, .share_box_inner').fadeIn();
+    // $('.share_box_inner').html('<div class="row"><div class="col-md-6 share_info">Enter the full name of the user you wish to share this report with, then hit submit.</div><div class="col-md-6"><form  onkeypress="return event.keyCode != 13"><input  class="share_input" style="" id="share_input" name="emailname" type="text" placeholder="Users Full Name" class="form-control"><div class="share_input_submit" id="' + theID + '">Submit</div></form></div></div>');
+  });
+  $(document).on('click', '#cancel_report_share, .share_overlay', function(){
+    // $('.share_this_one').hide();
+
+    $('.share_this_one, .share_overlay').hide();
   });
 
+
+
+
+  // edit box open
+  $(document).on('click', '.right_icon', function(){
+    $('.edit_box, .overlay_share').fadeIn();
+    var reportID = $(this).closest("div").attr("data-id");
+    var reportName = $(this).closest("div").attr("data-title");
+    $('.edit_box .owner_input_btn, .edit_box .description_input_btn').attr('data-id', reportID);
+    $('.edit_title').text(reportName);
+  });
+
+  $(document).on('click', '.owner_input_btn', function(){
+
+    var itemID = $(this).attr('data-id');
+    var newOwnerName = $('.edit_owner_input').val();
+
+    newOwnerName = newOwnerName.split(' ');
+    newOwnerName = newOwnerName[0].charAt(0).toUpperCase() + newOwnerName[0].slice(1) + ' ' + newOwnerName[1].charAt(0).toUpperCase() + newOwnerName[1].slice(1);
+
+
+      $().SPServices({
+            operation: "UpdateListItems",
+            async: false,
+            batchCmd: "Update",
+            listName: "TestList",
+            ID: itemID,
+            valuepairs: [["Owner", newOwnerName]],
+            completefunc: function(xData, Status) {
+              var noSpaceOwnerName = newOwnerName.replace(/\s/g,'');
+              console.log(noSpaceOwnerName);
+              $('.the_owner_'+itemID).text(newOwnerName);
+              $('.user_img_'+itemID+' img').attr('src','https://thegolubcorporation-my.sharepoint.com/User%20Photos/Profile%20Pictures/'+noSpaceOwnerName+'_golub_com_MThumb.jpg');
+
+
+              $('.sip_'+itemID).attr('href', 'sip:'+noSpaceOwnerName+'@golub.com');
+
+              $('.right_icon_box_'+itemID).hide();
+
+
+              $('.edit_owner_input').val('');
+              $('.owner_input_btn').text('Owner has been updated to '+newOwnerName+'!');
+              setTimeout(function(){
+                $('.owner_input_btn').text('Update Owner');
+                $('.edit_box').hide();
+                $('.overlay_share').fadeOut();
+              },3000);
+            }
+        });
+
+
+  });
+
+
+
+  $(document).on('click', '.description_input_btn', function(){
+
+    var itemID = $(this).attr('data-id');
+    var description = $('.edit_description_input').val();
+
+
+
+      $().SPServices({
+            operation: "UpdateListItems",
+            async: false,
+            batchCmd: "Update",
+            listName: "TestList",
+            ID: itemID,
+            valuepairs: [["Description", description]],
+            completefunc: function(xData, Status) {
+                $('.edit_description_input').val('');
+                $('.description_input_btn').text('Description has been updated to "'+description+'"!');
+                setTimeout(function(){
+                  $('.description_input_btn').text('Update Description');
+                },3000);
+
+              $('#item_desc_' + itemID).text(description);
+
+            }
+        });
+
+
+  });
+
+
+  //version button icon
+  $(document).on('click', '.report_version', function(){
+
+    setTimeout(function(){
+      // $('.share_box span, .version_box span, .pdf_preview span, .shared_with_box span').addClass('open_x');
+    }, 1500);
+
+    var shareTitle = $(this).closest('.this_title_wrap').find('.this_title').text();
+    var theID = $(this).attr('id');
+    $('.share_title').text(shareTitle);
+    $('.overlay_share').fadeIn();
+    $('.version_box').fadeIn();
+
+
+    var path = $(this).attr('id');
+    var department = $(this).attr('data-department');
+    console.log(department);
+    $('.version_box_inner').empty();
+
+    var versionIcon;
+    versionIcon = "https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf_icon.png";
+    if(path.indexOf('xlsx') > -1)
+    {
+      versionIcon = "https://s1-odc-15.cdn.office.net:443/start/sc/1666042226_resources\\favicon_excel.ico";
+    }
+
+
+    var folder = path;
+    $().SPServices({
+        operation: "GetListItems",
+        async: false,
+        webURL: "https://thegolubcorporation.sharepoint.com/sites/MYReports/",
+        listName: department,
+        CAMLViewFields: "<ViewFields Properties='true'>" +
+          "<FieldRef Name='ReportDate' />" +
+          "</ViewFields>",
+        CAMLQueryOptions: "<QueryOptions><Folder>" + folder + "</Folder><ViewAttributes Scope='RecursiveAll'></ViewAttributes></QueryOptions>",
+        // CAMLRowLimit: "10",
+        CAMLQuery: "<Query><Where><Neq><FieldRef Name='ID'/><Value Type='Number'>0</Value></Neq></Where><OrderBy><FieldRef Name='ReportDate' Ascending='False'/></OrderBy></Query>",
+        completefunc: function (xData, Status) {
+
+            $(xData.responseXML).SPFilterNode("z:row").each(function () {
+
+                var date = ($(this).attr("ows_ReportDate")); //date
+
+                date = date.split(" ");
+                date = date[0].split("-");
+                var myYear = date[0];
+                var myMonth = date[1];
+                var myDay = date[2];
+                date = myMonth + '/' + myDay + '/' + myYear;
+
+
+                var monthNames = [
+                  "January", "February", "March",
+                  "April", "May", "June", "July",
+                  "August", "September", "October",
+                  "November", "December"
+                ];
+
+
+
+
+
+
+
+
+                var theDate = new Date(date);
+                var weekday = new Array(7);
+                weekday[0]=  "Sunday";
+                weekday[1] = "Monday";
+                weekday[2] = "Tuesday";
+                weekday[3] = "Wednesday";
+                weekday[4] = "Thursday";
+                weekday[5] = "Friday";
+                weekday[6] = "Saturday";
+
+                var theDayOfWeek = weekday[theDate.getDay()];
+
+
+
+                var day = theDate.getDate();
+
+                var monthIndex = theDate.getMonth();
+                var year = theDate.getFullYear();
+                // console.log(theDate.getDay());
+                var formattedDate = theDayOfWeek + ' ' + monthNames[monthIndex] + ' ' + day + ', ' + year;
+
+                path = "https://thegolubcorporation.sharepoint.com/"+$(this).attr("ows_FileRef").split(';#')[1];
+
+                var name = $('.version_box .share_title').text();
+
+
+
+                $('.version_box_inner').append('<div class="row each_version"><div class="col-xs-10">' + formattedDate + '</div><a target="blank" href="' + path + '"><div class="col-xs-2"><img src="'+ versionIcon +'"></div></a></div><br>');
+
+                var calenderViewData = $('.version_calender_view').attr('data-info');
+
+                var pathForInfo = path.replace(/\s/g, '%20');
+                console.log(pathForInfo);
+                $('.version_calender_view').attr('data-info', calenderViewData + ', ' + monthNames[monthIndex] + ' ' + day + ' ' + pathForInfo)
+            });
+        }
+    });
+
+  buildCalender(curMonth, '', '');
+
+
+    // $('.share_box_inner').html('<div class="row"><div class="col-md-6 share_info">Enter the full name of the user you wish to share this report with, then hit submit.</div><div class="col-md-6"><form  onkeypress="return event.keyCode != 13"><input  class="share_input" style="" id="share_input" name="emailname" type="text" placeholder="Users Full Name" class="form-control"><div class="share_input_submit" id="' + theID + '">Submit</div></form></div></div>');
+  });
+
+
+  // $(document).on('mouseover', '.each_version col-xs-2', function(){
+  //   $('.each_version i').css('text-shadow', '0 0 transparent');
+  // });
+  // $(document).on('mouseover', '.each_version col-xs-2', function(){
+  //   $('.each_version i').css('text-shadow', '0 0 transparent');
+  // });
 
   //share reports buttons
   $(document).on('click', '.share_input_submit', function(){
@@ -360,7 +574,7 @@ $(document).ready(function() {
     var users_name = $('.share_input').val();
 
     if(users_name != ''){
-      console.log(users_name);
+      // console.log(users_name);
       $('.the_users_name').text(users_name);
       $('.share_accepted').slideDown();
       $('.share_input').val('');
@@ -376,7 +590,7 @@ $(document).ready(function() {
     users_name = users_name.replace(/\s+/g, '_');
 
 
-    console.log(users_name);
+    // console.log(users_name);
 
 
     var itemStatus;
@@ -416,7 +630,7 @@ $(document).ready(function() {
       });
 
 
-        console.log(itemStatus);
+        // console.log(itemStatus);
         itemStatus = itemStatus.toLowerCase();
         // itemStatus = itemStatus.replace(/ /g,"");
 
@@ -429,7 +643,7 @@ $(document).ready(function() {
         if (containes === true) {
 
           itemStatus = itemStatus.replace(users_name + ' ', '');
-            console.log(itemStatus);
+            // console.log(itemStatus);
 
           $().SPServices({
                 operation: "UpdateListItems",
@@ -440,14 +654,14 @@ $(document).ready(function() {
                 valuepairs: [["Status", itemStatus]],
                 completefunc: function(xData, Status) {
 
-                  console.log('worked');
-                  console.log(itemStatus);
+                  // console.log('worked');
+                  // console.log(itemStatus);
 
                 }
             });
 
         }else{
-          console.log('did not contain');
+          // console.log('did not contain');
         }
 
 
@@ -477,7 +691,7 @@ $(document).ready(function() {
                });
 
     var user_name = first + "_" + last + " ";
-    console.log(user_name);
+    // console.log(user_name);
     var itemStatus;
 
     var itemID = $(this).attr('id');
@@ -506,7 +720,7 @@ $(document).ready(function() {
             thisID = ($(this).attr("ows_ID"));
             // if(thisID === itemID){
               itemStatus = ($(this).attr("ows_Status"));
-              console.log(itemStatus);
+              // console.log(itemStatus);
             // }
 
 
@@ -515,8 +729,8 @@ $(document).ready(function() {
       });
 
 
-        console.log(itemStatus);
-        console.log(itemID);
+        // console.log(itemStatus);
+        // console.log(itemID);
         $().SPServices({
               operation: "UpdateListItems",
               async: false,
@@ -544,8 +758,11 @@ $(document).ready(function() {
   $('.overlay_2, .overlay_share').on('click', function() {
     $('.search_input').removeClass('search_open').focus().val('');
     $('.search_input_submit').removeClass('search_sub_open');
-    $('.overlay_2, .overlay_share').hide();
-    $('.share_box, .shared_with_box').hide();
+    $('.overlay_2, .overlay_share, .pdf_preview, .edit_box').hide();
+    $('.share_box, .shared_with_box, .version_box').hide();
+    // $('.share_box span, .version_box span, .pdf_preview span, .shared_with_box span').removeClass('open_x');
+    $('.pdf_preview iframe').attr('src', '');
+      $('.version_calender_view').attr('data-info','');
   });
 
   // share button - open share options
@@ -553,13 +770,96 @@ $(document).ready(function() {
     $('.overlay_2, .share_box').toggle();
   });
   $(document).on('click', '.reports_shared_with', function(){
-    $('.overlay_2, .shared_with_box').toggle();
+
+
+    setTimeout(function(){
+      // $('.share_box span, .version_box span, .pdf_preview span, .shared_with_box span').addClass('open_x');
+      $('.shared_with_box').scrollTop(0);
+    }, 200);
+
+
+    var recipientsTitle = $(this).closest('.this_title_wrap').find('.this_title').text();
+    var theRecipients = $(this).attr('data-recipients');
+    console.log(theRecipients);
+
+    $('.shared_title').empty();
+    $('.shared_title').text('Recipients of ' + recipientsTitle);
+    $('.overlay_share, .shared_with_box').toggle();
+    $('.shared_box_inner').empty();
+
+    if(typeof theRecipients === 'undefined' || theRecipients === ''){
+      $('.shared_title').empty();
+      $('.shared_title').text('Recipients of ' + recipientsTitle);
+      $('.overlay_share, .shared_with_box').toggle();
+      $('.shared_box_inner').empty();
+      $('.shared_box_inner').append('<div class="recipient_wrapper col-sm-12" style="color:#000;">This report has no Recipients.</div>');
+
+    }
+    else{
+      theRecipients = theRecipients.split("#");
+      console.log(theRecipients);
+
+      RecipientsLength = theRecipients.length;
+      var myDublicateCheck = '';
+      for(i = 1;i <= RecipientsLength; i = i + 2){
+
+        theRecipientsName = theRecipients[i].split(',');
+
+
+        // theRecipientsLink = theRecipients.replace(/\s/g, '');
+        // console.log(theRecipientsName[0]);
+
+        var thisContaines = theRecipientsName[0].indexOf('System') > -1;
+
+        // console.log(thisContaines);
+
+        if(thisContaines === false)
+        {
+
+          var checkForDups = myDublicateCheck.indexOf(theRecipientsName[0]) > -1;
+          if(checkForDups === false){
+            myDublicateCheck = myDublicateCheck + ', ' + theRecipientsName[0];
+            theRecipientsName = theRecipientsName[1] + ' ' + theRecipientsName[0];
+            theRecipientsName = theRecipientsName.replace(";", "");
+            var theRecipientsLink = theRecipientsName.replace(/\s/g, '');
+            var pChopEmail = theRecipientsLink + '@golub.com';
+            $('.shared_box_inner').append('<div class="recipient_wrapper col-sm-12"><div class="inner_recipient row"><div class="col-xs-2"><img src="https://outlook.office365.com/owa/service.svc/s/GetPersonaPhoto?email='+theRecipientsLink+'@golub.com&UA=0&size=HR64x64&sc=1450356241799"></div><div class="col-xs-4"><h1 class="recipient_name">'+theRecipientsName+'</h1></div><div class="col-xs-6"><div class="row the_actions"><div class="col-xs-3"><a href="sip:'+theRecipientsLink+'@golub.com"><i class="fa fa-comment"></i></a></div><div class="col-xs-3"><a href="sip:'+theRecipientsLink+'@golub.com"><i class="fa fa-phone"></i></a></div><div class="col-xs-3"><a href="sip:'+theRecipientsLink+'@golub.com"><i class="fa fa-video-camera"></i></a></div><div class="col-xs-3"><a href="mailto:'+pChopEmail+'"><i class="fa fa-envelope"></i></a></div></div></div></div></div></div>');
+
+
+
+          }
+
+        }
+
+
+
+
+      }
+
+
+
+  // https://thegolubcorporation-my.sharepoint.com/_layouts/15/me.aspx?p=jesserock%40golub.com&u=175a0f0d-9e07-4c57-a70a-1a6c466b92db&v=profile
+
+
+
+
+    }
+
+
+    // $('.shared_box_inner').append('<div class="recipient_wrapper col-sm-12"><div class="inner_recipient row"><div class="col-xs-3"><img src="https://outlook.office365.com/owa/service.svc/s/GetPersonaPhoto?email=BrianFranko@golub.com&UA=0&size=HR64x64&sc=1450356241799"></div><div class="col-xs-9"><h1 class="recipient_name">Brian Franko</h1></div></div></div></div>');
+    // $('.shared_box_inner').append('<div class="recipient_wrapper col-sm-12"><div class="inner_recipient row"><div class="col-xs-3"><img src="https://outlook.office365.com/owa/service.svc/s/GetPersonaPhoto?email=NicholasPrusko@golub.com&UA=0&size=HR64x64&sc=1450356241799"></div><div class="col-xs-9"><h1 class="recipient_name">Nicholas Prusko</h1></div></div></div></div>');
+    // $('.shared_box_inner').append('<div class="recipient_wrapper col-sm-12"><div class="inner_recipient row"><div class="col-xs-3"><img src="https://outlook.office365.com/owa/service.svc/s/GetPersonaPhoto?email=TracyNolan@golub.com&UA=0&size=HR64x64&sc=1450356241799"></div><div class="col-xs-9"><h1 class="recipient_name">Tracy Nolan</h1></div></div></div></div>');
+    // $('.shared_box_inner').append('<div class="col-md-6 col-lg-3"><div class="inner_recipient row"><div class="col-sm-3"><img src="https://outlook.office365.com/owa/service.svc/s/GetPersonaPhoto?email=JesseRock@golub.com&UA=0&size=HR64x64&sc=1450356241799"></div><div class="col-sm-9"><h1 class="recipient_name"></h1></div></div></div></div>');
   });
 
   //close share box
-  $('.share_box span, .shared_with_box span').on('click', function() {
-    $('.overlay_share, .overlay_2').hide();
-    $('.share_box, .shared_with_box').hide();
+  $('.share_box span, .shared_with_box span, .version_box span, .pdf_preview span, .edit_box span').on('click', function() {
+    $('.overlay_share, .overlay_2, .edit_box').hide();
+    $('.share_box, .shared_with_box, .version_box, .pdf_preview').hide();
+    // $('.share_box span, .version_box span, .pdf_preview span, .shared_with_box span').removeClass('open_x');
+
+      $('.pdf_preview iframe').attr('src', '');
+      $('.version_calender_view').attr('data-info','');
   });
 
   //search input - submit
@@ -575,34 +875,53 @@ $(document).ready(function() {
     $('.search_input_submit').removeClass('search_sub_open');
     $('.overlay_2').fadeOut();
 
-    //icon view
-    var item = $('.item_title');
-    var itemCount = item.length;
-    // console.log(itemCount);
-    // var row_count = $('.report_row').length;
-
-      for (var i = 1; i < itemCount + 1; i++) {
-        var itemText = $('.active_report_1:nth-child(' + i + ')').text();
-        // console.log(itemText);
-        var itemTextFinal = itemText.toLowerCase();
-        var rowContaines = itemTextFinal.indexOf(searchFinal) > -1;
-        if (rowContaines !== true) {
-          $('.active_report_1:nth-child(' + i + ')').hide();
-        }
-        else {}
-      }
 
 
-    //table view detail view
-    var listCount = $('#reports_table tr').length;
-    for(var i = 2; i < listCount + 1; i++ ){
-      var checkThis = $('tbody tr:nth(' + i + ')').text();
-      var checkThisFinal = checkThis.toLowerCase();
-      var rowContaines = checkThisFinal.indexOf(searchFinal) > -1;
-      if (rowContaines !== true) {
-        $('tbody tr:nth(' + i + ')').hide();
-      }
-    }
+
+    var queryText = "<QueryPacket xmlns='urn:Microsoft.Search.Query' Revision='1000'>"
+    queryText += "<Query>"
+    queryText += "<Context>"
+    queryText += "<QueryText language='en-US' type='STRING'>"
+    queryText += search;
+    queryText += "</QueryText>"
+    queryText += "</Context>"
+    queryText += "</Query>"
+    queryText += "</QueryPacket>";
+
+    var title, url = "";
+
+            $().SPServices({
+                operation: "Query",
+                queryXml: queryText,
+                completefunc: function(xData, Status) {
+                    $(xData.responseXML).find("QueryResult").each(function() {
+                        //let's see what the response looks like
+                        $("#result").text($(this).text());
+                    });
+                }
+            });
+
+
+    // var item = $('.item_title');
+    // var itemCount = item.length;
+    //   for (var i = 1; i < itemCount + 1; i++) {
+    //     var itemText = $('.active_report_1:nth-child(' + i + ')').text();
+    //     var itemTextFinal = itemText.toLowerCase();
+    //     var rowContaines = itemTextFinal.indexOf(searchFinal) > -1;
+    //     if (rowContaines !== true) {
+    //       $('.active_report_1:nth-child(' + i + ')').hide();
+    //     }
+    //     else {}
+    //   }
+    // var listCount = $('#reports_table tr').length;
+    // for(var i = 2; i < listCount + 1; i++ ){
+    //   var checkThis = $('tbody tr:nth(' + i + ')').text();
+    //   var checkThisFinal = checkThis.toLowerCase();
+    //   var rowContaines = checkThisFinal.indexOf(searchFinal) > -1;
+    //   if (rowContaines !== true) {
+    //     $('tbody tr:nth(' + i + ')').hide();
+    //   }
+    // }
     return false;
   });
 
@@ -671,31 +990,68 @@ $(document).ready(function() {
   });
 
 
-
-  //mobile search input
+  //search input - submit
   var search;
-  $('.mob_search_input_submit').on('click', function() {
+  $('.search_input_submit').on('click', function() {
+    $('tbody tr').show();
     $('#search_input').blur();
     $('.reset_search').show();
     $('.active_report').show();
-    search = $('.mob_search_input').val();
+    search = $('.search_input').val();
     searchFinal = search.toLowerCase();
-    $('.mob_search_input').removeClass('search_open').focus().val('');
-    var item = $('.item_title');
-    var itemCount = item.length;
-    var row_count = $('.report_row').length;
-    for (var i = 1; i < row_count; i++) {
-      for (var j = 1; j < itemCount; j++) {
-        var itemText = $('.active_report_' + i + ':nth-child(' + j + ')').text();
-        // console.log(itemText);
-        var itemTextFinal = itemText.toLowerCase();
-        var rowContaines = itemTextFinal.indexOf(searchFinal) > -1;
-        if (rowContaines !== true) {
-          $('.active_report_' + i + ':nth-child(' + j + ')').hide();
-        }
-        else {}
-      }
-    }
+    $('.search_input').removeClass('search_open').focus().val('');
+    $('.search_input_submit').removeClass('search_sub_open');
+    $('.overlay_2').fadeOut();
+
+
+  var queryText = "<QueryPacket xmlns='urn:Microsoft.Search.Query' Revision='1000'>"
+  queryText += "<Query>"
+  queryText += "<Range><Count>10</Count></Range>";
+  queryText += "<Context>"
+  queryText += "<QueryText language='en-US' type='STRING'>";
+  queryText += search;
+  queryText += "</QueryText>"
+  queryText += "</Context>"
+  queryText += "</Query>"
+  queryText += "</QueryPacket>";
+
+
+
+
+   $().SPServices({
+            operation: "Query",
+            queryXml: queryText,
+            completefunc: function(xData, Status) {
+                $(xData.responseXML).find("QueryResult").each(function() {
+                  console.log(xData.responseText);
+                });
+            }
+        });
+
+
+
+
+
+    // var item = $('.item_title');
+    // var itemCount = item.length;
+    //   for (var i = 1; i < itemCount + 1; i++) {
+    //     var itemText = $('.active_report_1:nth-child(' + i + ')').text();
+    //     var itemTextFinal = itemText.toLowerCase();
+    //     var rowContaines = itemTextFinal.indexOf(searchFinal) > -1;
+    //     if (rowContaines !== true) {
+    //       $('.active_report_1:nth-child(' + i + ')').hide();
+    //     }
+    //     else {}
+    //   }
+    // var listCount = $('#reports_table tr').length;
+    // for(var i = 2; i < listCount + 1; i++ ){
+    //   var checkThis = $('tbody tr:nth(' + i + ')').text();
+    //   var checkThisFinal = checkThis.toLowerCase();
+    //   var rowContaines = checkThisFinal.indexOf(searchFinal) > -1;
+    //   if (rowContaines !== true) {
+    //     $('tbody tr:nth(' + i + ')').hide();
+    //   }
+    // }
     return false;
   });
 
@@ -775,6 +1131,25 @@ $(document).ready(function() {
   });
 
   $('.my_reports_button, .footer_my').on('click', function(){
+    $('.reset_search').hide();
+    $('.th_shared_with').show();
+    $('.main_wrapper').scrollTop(0);
+    $('.my_reports_button, .footer_my h2').text('Loading...');
+    $('.gen_info h2').text('My Reports');
+    $('.icon_box_box').slideDown(100);
+    $('.inner_icon_box, .table-responsive tbody').empty();
+    $('.inner_icon_box').html("<div class='loadingThis'>Loading...<br><i style='opacity:0.1;'>Gathering Reports</i></div>");
+    $('.table-responsive').append("<div class='loadingThisList'>Loading...<br><i style='opacity:0.1;'>Gathering Reports</i></div>");
+    $('.merchandising_dept, .operations_dept').removeClass('selected_item');
+    setTimeout(function(){
+      GetReports();
+    }, 150);
+  });
+
+  $(document).on('click','.all_dept', function(){
+      $('.load_more_box').hide();
+    $('.all_dept').addClass('selected_item');
+    $('.reset_search').hide();
     $('.th_shared_with').show();
     $('.main_wrapper').scrollTop(0);
     $('.my_reports_button, .footer_my h2').text('Loading...');
@@ -826,21 +1201,22 @@ $(document).ready(function() {
 
 
 
-
+          try{
           var titleContaines = departmentRepeat.indexOf(title) > -1;
 
-
+          lowercaseTitle = title.toLowerCase();
+          console.log(lowercaseTitle);
           if(titleContaines === true){
-            lowercaseTitle = title.toLowerCase();
+
             lowercaseTitle = lowercaseTitle.replace(/\s/g, '');
             uppercaseTitle = title.replace(/\s/g, '');
           }
           else{
             numOfDepartments ++;
             // console.log(report_type + ' ' + title + ' ' + numOfDepartments);
-            lowercaseTitle = title.toLowerCase();
-            lowercaseTitle = lowercaseTitle.replace(/\s/g, '');
-            uppercaseTitle = title.replace(/\s/g, '');
+
+            lowercaseTitle = lowercaseTitle.replace(/\s/g, '-');
+            uppercaseTitle = title.replace(/\s/g, '-');
 
             // UNREACHABLE CLASS TO DIM OUT AN OPTION
 
@@ -852,14 +1228,14 @@ $(document).ready(function() {
           }
 
 
-                    console.log(typeRepeat);
-                    console.log(report_type);
+                    // console.log(typeRepeat);
+                    // console.log(report_type);
           var typeContaines = typeRepeat.indexOf(report_type) > -1;
           if(typeContaines === true){
 
           }
           else{
-              console.log('in');
+              // console.log('in');
             var typeClass = report_type;
             typeClass = typeClass.replace(/\s/g, '');
 
@@ -869,8 +1245,10 @@ $(document).ready(function() {
           typeRepeat = typeRepeat + ' ' + report_type;
 
           departmentRepeat = departmentRepeat + ' ' + title;
+        }
+        catch(err){}
         });
-        console.log(numOfDepartments);
+        // console.log(numOfDepartments);
 
         $('.icon_box_nav_bar .row').append('<div class="all_dept selected_item">All</div>');
 
@@ -896,13 +1274,66 @@ $(document).ready(function() {
 
 
 
+$(document).on('mouseover', '.report_img img, .report_img object', function(){
+  var theNewPath = $(this).closest('.this_title_wrap').find('.report_img').attr('id');
+  theNewPath = theNewPath + "#toolbar=0&navpanes=0&scrollbar=0";
+  $('.pdf_preview iframe').attr('src', theNewPath);
+  $(this).closest('.this_title_wrap').find('.pdf_preview').show();
+});
+
+$(document).on('mouseleave', '.report_img img, .report_img object', function(){
+  $('.pdf_preview').hide();
+});
+
+
+
+
+
+
+  $(document).on('mouseover', '.reports_description', function(){
+    $(this).closest('.active_report').find('.desc_float').toggle();
+  });
+
+  $(document).on('mouseleave', '.reports_description', function(){
+    $(this).closest('.active_report').find('.desc_float').hide();
+  });
+
+
+  $('.load_more_reports').on('click', function(){
+    var position = $(this).attr('id');
+    console.log(position);
+    $('.load_more_reports').text('Loading...');
+    console.log('loading more reports');
+    setTimeout(function(){
+
+      GetReports(position);
+    }, 100);
+
+  });
+
+
+
+
   //get reports list callback
-  GetReports();
+  GetReports('1133');
   //get reports function / sp services call
-  function GetReports() {
+  function GetReports(position) {
+    $('.load_more_box').show();
     var list = "TestList";
     var method = "GetListItems";
-    var query;
+    var id = position;
+    // console.log(id);
+    var query = "<Query>" +
+                "<Where>" +
+                  "<Gt>" +
+                  "<FieldRef Name='ID'/><Value Type='Number'>"+id+"</Value>" +
+                "</Gt>" +
+                "</Where>" +
+                "<OrderBy>" +
+                  "<FieldRef Name='Form_x0020_Groups'/>" +
+                "</OrderBy>" +
+              "</Query>";
+
     var fieldsToRead = "<ViewFields>" +
       "<FieldRef Name='Title' />" +
       "<FieldRef Name='Path' />" +
@@ -913,6 +1344,8 @@ $(document).ready(function() {
       "<FieldRef Name='ID' />" +
       "<FieldRef Name='Status' />" +
       "<FieldRef Name='Owner' />" +
+      "<FieldRef Name='Recipients' />" +
+      "<FieldRef Name='Description' />" +
       "</ViewFields>";
     $().SPServices({
       operation: method,
@@ -920,7 +1353,10 @@ $(document).ready(function() {
       listName: list,
       CAMLViewFields: fieldsToRead,
       CAMLQuery: query,
+      CAMLRowLimit: "10",
       completefunc: function(xData, Status) {
+          $('.load_more_box').show();
+        $('.load_more_reports').text('Load More Reports');
         $(xData.responseXML).SPFilterNode("z:row").each(function() {
 
           var name = ($(this).attr("ows_Title")); //name
@@ -932,24 +1368,34 @@ $(document).ready(function() {
           var itemID = ($(this).attr("ows_ID")); //listItemId
           var itemStatus = ($(this).attr("ows_Status")); //listItemId
           var owner = ($(this).attr("ows_Owner")); //listItemId
-          console.log(owner);
+          var itemRecipients = ($(this).attr("ows_Recipients")); //Recipients
+          var itemDescription = ($(this).attr("ows_Description")); //description
+          // console.log(itemDescription);
+          // console.log(itemRecipients);
+          // console.log(owner);
+          $('.load_more_reports').attr('id', itemID);
+          displayList(name, department, report_type, listItemId, report_type, pub_date, path, itemID, itemStatus, owner, itemRecipients, itemDescription);
 
-          displayList(name, department, report_type, listItemId, report_type, pub_date, path, itemID, itemStatus, owner);
         });
       }
     });
   }
 
-  function displayList(name, department, report_type, listItemId, report_type, pub_date, path, itemID, itemStatus, owner) {
+  function displayList(name, department, report_type, listItemId, report_type, pub_date, path, itemID, itemStatus, owner, itemRecipients, itemDescription) {
 
 
+    if(typeof itemDescription === 'undefined' || itemDescription === ''){
+      itemDescription = "No description provided, contact owner to update description.";
+    }
+    // console.log(itemDescription);
 
+    var thePath = path;
     var folder = path;
     $().SPServices({
         operation: "GetListItems",
         async: false,
         webURL: "https://thegolubcorporation.sharepoint.com/sites/MYReports/",
-        listName: "Documents",
+        listName: department,
         CAMLViewFields: "<ViewFields Properties='True' />",
         CAMLQueryOptions: "<QueryOptions><Folder>" + folder + "</Folder><ViewAttributes Scope='RecursiveAll'></ViewAttributes></QueryOptions>",
         CAMLRowLimit: "1",
@@ -959,32 +1405,73 @@ $(document).ready(function() {
                 path = "https://thegolubcorporation.sharepoint.com/"+$(this).attr("ows_FileRef").split(';#')[1];
                 var name = $(this).attr("ows_FileLeafRef").split(';#')[1];
                 name = name.split('.')[0];
-                // console.log(path);
             });
         }
     });
 
+    // var str = path;
+    // var lastThree = str.substr(str.length - 3);
+    // lastThree = lastThree.toLowerCase();
+    var reportImg;
+    reportImg = "https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf_icon.png";
+    if(path.indexOf('xlsx') > -1)
+    {
+      path = path + "?d=w6588b1b59ce14bc2bfb2d2050a09a479";
+      reportImg = "https://s1-odc-15.cdn.office.net:443/start/sc/1666042226_resources\\favicon_excel.ico";
+    }
 
 
+    var pictureName = owner.replace(/\s/g, '').toLowerCase();
+    var ownersName = owner;
+    var myPicture = 'https://thegolubcorporation-my.sharepoint.com/User%20Photos/Profile%20Pictures/' + pictureName + '_golub_com_MThumb.jpg';
+    var theUsersLink = pictureName;
 
-    var str = path;
-    var lastThree = str.substr(str.length - 3);
-    lastThree = lastThree.toLowerCase();
-    console.log(lastThree);
-
-
-
-        var pictureName = owner.replace(/\s/g, '').toLowerCase();
-        var ownersName = owner;
-        var myPicture = 'https://thegolubcorporation-my.sharepoint.com/User%20Photos/Profile%20Pictures/' + pictureName + '_golub_com_MThumb.jpg';
+    var pChopEmail = pictureName + '@pricechopper.com';
+    var golubEmail = pictureName + '@golub.com';
 
 
-        $('.table-responsive tbody').append('<tr class="this_title_wrap"><td style="text-align:center;"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></td><td class="this_title"><a href="' + path + '" target="blank"><div class="reports_open"><div>' + name + '</div></div></a></td><td>' + owner + '</td><td class="list_department">' + department + '</td><td>' + report_type + '</td><td class=""><div class="reports_share" id="' + itemID + '"><div><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div></td><td><div class="reports_shared_with" id="' + itemID + '"><div><i class="left_icon fa fa-users"></i> Recipients</div></div></td></tr>');
+    $('.table-responsive tbody').append('<tr class="this_title_wrap"><td class="report_img report_img_list"  id="' + path + '" style="text-align:center;"><img src="'+reportImg+'" alt="pdf" /></td><td class="this_title"><a href="' + path + '" target="blank"><div class="reports_open"><div>' + name + '</div></div></a></td><td><div class="report_version report_version_list" id="' + thePath + '" data-department="' + department + '"><a href="#" data-toggle="tooltip" title="History"><i class="fa fa-folder-o"></i></a></div></td><td><a href="sip:'+theUsersLink+'@golub.com"><span class="the_owner">' + owner + '</span></a></td><td class="list_department">' + department + '</td><td>' + itemDescription + '</td><td class=""><div class="reports_share" id="' + itemID + '"><div class="open_share_dialog" data-id="'+itemID+'">Share</div></div></td><td><div class="reports_shared_with" id="' + owner + '" data-recipients="' + itemRecipients + '"><div>Recipients</div></div></td></tr>');
+
+    $('.report_row').append('<div class="col-lg-15 main_select active_report active_report_1 report_1"><div class="icon_box right_icon_box_'+ itemID + '" data-id="'+ itemID + '" data-title="' + name + '"></div><div class=""><div class="item_title this_title_wrap" data-type="' + department + '"><div class="report_owner publish_content row"><div class="col-xs-3"><div class="reports_user_img publish_box user_img_'+ itemID + '"><img src="' + myPicture + '"></div></div><div class="col-xs-9"><div class="owner_p row"><p><span class="the_owner the_owner_'+ itemID + '">' + ownersName + '</span></p></div><div class="row the_actions"><div class="col-xs-3"><a class="sip_'+ itemID + '" href="sip:'+theUsersLink+'@golub.com"><i class="fa fa-comment"></i></a></div><div class="col-xs-3"><a class="sip_'+ itemID + '" href="sip:'+theUsersLink+'@golub.com"><i class="fa fa-phone"></i></a></div><div class="col-xs-3"><a class="sip_'+ itemID + '" href="sip:'+theUsersLink+'@golub.com"><i class="fa fa-video-camera"></i></a></div><div class="col-xs-3"><a href="mailto:'+pChopEmail+'"><i class="fa fa-envelope"></i></a></div></div></div></div><p class="report_name this_title">' + name + '</p><div class="report_version" id="' + thePath + '" data-department="' + department + '"><a href="#" data-toggle="tooltip" title="History"><i class="fa fa-folder-o"></i></a></div><div class="report_img" id="' + path + '"><img src="'+reportImg+'" alt="pdf" /><br><i>Hover for preview.</i><div class="pdf_preview"><iframe src="" download></iframe></div></div><div><p class="report_dep">' + department + '</p><p class="report_desc">' + report_type + '</p></div><a href="' + path + '" target="blank"><div class="reports_open"><div><i class="left_icon fa fa-folder-open"></i> Open</div></div></a><div class="reports_description"><div class="desc_float"><div class="arrow-bottom"></div><p id="item_desc_'+itemID+'">'+itemDescription+'</p></div><div><i class="left_icon fa fa-commenting"></i> Description</div></div><div class="reports_share" id="' + itemID + '"><div class="open_share_dialog" data-id="'+itemID+'"><span class="left_icon glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div><div class="reports_shared_with" id="' + owner + '" data-recipients="' + itemRecipients + '"><div><i class="left_icon fa fa-users"></i> Recipients</div></div></div></div></div>');
+
+    // itemRecipients = itemRecipients.replace(/#/g, '').replace(/;/g, '').replace(/[0-9]/g, '');
+    itemRecipients = itemRecipients.replace(/;/g, '');
+    itemRecipients = itemRecipients.split("#");
+
+    // console.log(itemRecipients);
+  var theseRecipients = '';
 
 
-        $('.report_row').append('<div class="col-sm-6 col-lg-3 main_select active_report active_report_1 report_1"><div class=""><div class="item_title this_title_wrap" data-type="' + department + '"><div class="report_owner"><div class="reports_user_img"><img src="' + myPicture + '"></div> <div class="owner_p"><p>Report Owner:<br><span class="the_owner">' + ownersName + '</span></p></div></div><p class="report_name this_title">' + name + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></div><div><p class="report_dep">' + department + '</p><p class="report_desc">' + report_type + '</p></div><a href="' + path + '" target="blank"><div class="reports_open"><div><i class="left_icon fa fa-folder-open"></i> Open</div></div></a><div class="reports_share" id="' + itemID + '"><div><span class="left_icon glyphicon glyphicon-share" aria-hidden="true"></span> Share</div></div><div class="reports_shared_with" id="' + itemID + '"><div><i class="left_icon fa fa-users"></i> Recipients</div></div></div></div></div>');
+// https://thegolubcorporation-my.sharepoint.com/_layouts/15/me.aspx?u=40f8b45f-ee26-4d80-b23a-d5088bb9bd50&p=jesserock%40golub.com&v=work
+    $('body').prepend('<div class="share_this_one share_this_one_'+itemID+'"><h2 class="share_this_one_h2">Share \''+name+'\'</h2><p class="share_this_one_p"><i class="left_icon fa fa-users"></i> Shared with <span class="theseRecipients theseRecipients_'+itemID+'"></span></p><h1 class="share_this_one_h1">Invite People</h1><input type="text" style="padding:10px;width:100%;" placeholder="Enter names or email addresses.."><div id="my_people_picker"></div><br><br><select style="padding:10px;width:100%;"><option>Can edit</option><option>Can view</option></select><br><br><textarea placeholder="Include a personal message with this invitation (optional)." style="padding:10px;width:100%;"></textarea><br><br><div id="cancel_report_share">Cancel</div><div id="share_report">Share</div></div>');
 
-    // }
+    for(var i = 1;i < itemRecipients.length ;i = i + 2){
+      // var theseRecipients = itemRecipients[i].split(',');
+      var linkName = itemRecipients[i];
+      linkName = linkName.split(", ");
+      linkName = linkName[1] + linkName[0];
+      $('.theseRecipients_'+itemID).append('<a href="https://thegolubcorporation-my.sharepoint.com/_layouts/15/me.aspx?u=40f8b45f-ee26-4d80-b23a-d5088bb9bd50&p='+linkName+'%40golub.com&v=work" target="blank"><div class="theseRecipientsWrap">[' + itemRecipients[i] + ']</div></a>');
+      // theseRecipients = theseRecipients + ' | '+ itemRecipients[i];
+    }
+// <div class="arrow-bottom"></div>
+    var first = $().SPServices.SPGetCurrentUser({
+                    fieldName: "FirstName",
+                    debug: false
+                });
+    var last = $().SPServices.SPGetCurrentUser({
+                   fieldName: "LastName",
+                   debug: false
+               });
+
+    var checkName = first + ' ' + last;
+    checkName = checkName.toUpperCase();
+
+    console.log(ownersName.toUpperCase());
+    console.log(checkName);
+    if(ownersName.toUpperCase() === checkName){
+      $('.right_icon_box_' + itemID).html('<i class="right_icon fa fa-edit"></i>');
+    }
+
 
     $(document).ready(function()
         {
@@ -1009,14 +1496,253 @@ $(document).ready(function() {
   }
   // sp services end
 
+
+
+
+  $('.load_more_reports_catalog').on('click', function(){
+    var position = $(this).attr('id');
+    // console.log(position);
+    $('.load_more_reports_catalog').text('Loading...');
+    var thisDepartment = $(this).attr('data-department');
+    setTimeout(function(){
+
+
+      GetReportsUnfiltered(position, thisDepartment);
+    }, 100);
+
+  });
+
+
+  function GetReportsUnfiltered(position, thisDepartment) {
+
+    var myCounter = 0;
+
+    var deptCounter = 0;
+
+    var list = "TestList";
+    var method = "GetListItems";
+      var id = position;
+    // console.log(thisDepartment);
+    var query = "<Query>" +
+                "<Where>" +
+                  "<And>" +
+                  "<Eq>" +
+                  "<FieldRef Name='Department'/><Value Type='Text'>"+thisDepartment+"</Value>" +
+                "</Eq>" +
+                "<Gt>" +
+                "<FieldRef Name='ID'/><Value Type='Number'>"+id+"</Value>" +
+              "</Gt>" +
+                "</And>" +
+                "</Where>" +
+
+                "<OrderBy>" +
+                  "<FieldRef Name='Title'/>" +
+                "</OrderBy>" +
+              "</Query>";
+
+
+    var fieldsToRead = "<ViewFields>" +
+      "<FieldRef Name='Title' />" +
+      "<FieldRef Name='Path' />" +
+      "<FieldRef Name='Department' />" +
+      "<FieldRef Name='ReportType' />" +
+      "<FieldRef Name='listItemId' />" +
+      "<FieldRef Name='PublishDate' />" +
+      "<FieldRef Name='Status' />" +
+      "<FieldRef Name='ID' />" +
+      "<FieldRef Name='Owner' />" +
+      "<FieldRef Name='Description' />" +
+      "</ViewFields>";
+    $().SPServices({
+      operation: method,
+      async: true,
+      listName: list,
+      CAMLViewFields: fieldsToRead,
+      CAMLQuery: query,
+      CAMLRowLimit: "10",
+      completefunc: function(xData, Status) {
+        $('.load_more_reports_catalog').text('Load More Reports');
+        $(xData.responseXML).SPFilterNode("z:row").each(function() {
+          var name = ($(this).attr("ows_Title")); //name
+          var department = ($(this).attr("ows_Department")); //Department
+          var report_type = ($(this).attr("ows_ReportType")); //report type
+          var path = ($(this).attr("ows_Path")); //created
+          var pub_date = ($(this).attr("ows_PublishDate")); //pub date
+          var status = ($(this).attr("ows_Status")); //pub date
+          var itemID = ($(this).attr("ows_ID")); //pub date
+          var owner = ($(this).attr("ows_Owner")); //pub date
+          var itemDescription = ($(this).attr("ows_Description"));
+$('.load_more_reports_catalog').attr('id', itemID);
+$('.load_more_reports_catalog').attr('data-department', department);
+
+
+                      var checkIt = department.replace(/\s/g, '');
+                      checkIt = checkIt.toLowerCase();
+                      // console.log(checkIt);
+                      // console.log(thisDepartment);
+                      if(checkIt === thisDepartment){
+                        deptCounter++;
+                      }
+          var listItemId = ($(this).attr("ows_listItemId")); //listItemId
+          myCounter++;
+          displayListUnfiltered(name, department, report_type, listItemId, report_type, status, itemID, path, owner, thisDepartment);
+  console.log(myCounter);
+          if(myCounter >= 12){
+              $('.load_more_reports_catalog').show();
+          }
+        });
+
+
+
+        // if(deptCounter === 0)
+        // {
+        //   GetReportsUnfiltered();
+        //   return;
+        // }
+
+      }
+    });
+  }
+
+
+
+  function displayListUnfiltered(name, department, report_type, listItemId, report_type, status, itemID, path, owner, thisDepartment, itemDescription) {
+
+
+
+    if(typeof itemDescription === 'undefined' || itemDescription === ''){
+      itemDescription = "No description provided, contact owner to update description.";
+    }
+
+    var checkThisDept = department.toLowerCase();
+    checkThisDept = checkThisDept.replace(/\s/g, '');
+    thisDepartment = thisDepartment.toLowerCase();
+      thisDepartment = thisDepartment.replace(/\s/g, '');
+    console.log(checkThisDept);
+    console.log(thisDepartment);
+    if(checkThisDept === thisDepartment)
+    {
+        // var str = path;
+        // var lastThree = str.substr(str.length - 3);
+        // lastThree = lastThree.toLowerCase();
+
+
+
+        var reportImg;
+        reportImg = "https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf_icon.png";
+        if(path.indexOf('xlsx') > -1)
+        {
+          path = path + "?d=w6588b1b59ce14bc2bfb2d2050a09a479";
+          reportImg = "https://s1-odc-15.cdn.office.net:443/start/sc/1666042226_resources\\favicon_excel.ico";
+        }
+
+          var pictureName = owner.replace(/\s/g, '').toLowerCase();
+          var ownersName = owner;
+          var myPicture = 'https://thegolubcorporation-my.sharepoint.com/User%20Photos/Profile%20Pictures/' + pictureName + '_golub_com_MThumb.jpg';
+
+
+
+          var theUsersLink = pictureName;
+
+          var pChopEmail = pictureName + '@pricechopper.com';
+          var golubEmail = pictureName + '@golub.com';
+
+
+
+
+
+          $('.table-responsive tbody').append('<tr class="this_title_wrap"><td class="pdf_td" style="text-align:center;"><img src="'+reportImg+'" alt="pdf" /></td><td class="this_title" id="">' + name + '</td><td>' + owner + '</td><td class="list_department">' + department + '</td><td>' + itemDescription + '</td><td class=""><div class="reports_request"><div class="request_wrap"><div class="request_sent ' + itemID + '_sent">Request Sent!</div><div id= "' + itemID + '" class="request_access ' + itemID + '_request"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Request Access</div></div></div></td></tr>');
+
+
+
+          // $('.table-responsive tbody').append('<tr class="this_title_wrap"><td class="report_img report_img_list"  id="' + path + '" style="text-align:center;"><img src="'+reportImg+'" alt="pdf" /></td><td class="this_title"><a href="' + path + '" target="blank"><div class="reports_open"><div>' + name + '</div></div></a></td><td><div class="report_version report_version_list" id="' + thePath + '" data-department="' + department + '"><a href="#" data-toggle="tooltip" title="History"><i class="fa fa-folder-o"></i></a></div></td><td><a href="sip:'+theUsersLink+'@golub.com"><span class="the_owner">' + owner + '</span></a></td><td class="list_department">' + department + '</td><td>' + report_type + '</td><td class=""><div class="reports_share" id="' + itemID + '"><div class="open_share_dialog" data-id="'+itemID+'">Share</div></div></td><td><div class="reports_shared_with" id="' + owner + '" data-recipients="' + itemRecipients + '"><div>Recipients</div></div></td></tr>');
+
+
+
+            $('.report_row').append('<div class="col-lg-15 main_select active_report active_report_1 report_1"><div class="icon_box right_icon_box_'+ itemID + '" data-id="'+ itemID + '" data-title="' + name + '"></div><div class=""><div class="item_title this_title_wrap" data-type="' + department + '"><div class="report_owner publish_content row"><div class="col-xs-3"><div class="reports_user_img publish_box"><img src="' + myPicture + '"></div></div><div class="col-xs-9"><div class="owner_p row"><p><span class="the_owner">' + ownersName + '</span></p></div><div class="row the_actions"><div class="col-xs-3"><a href="sip:'+theUsersLink+'@golub.com"><i class="fa fa-comment"></i></a></div><div class="col-xs-3"><a href="sip:'+theUsersLink+'@golub.com"><i class="fa fa-phone"></i></a></div><div class="col-xs-3"><a href="sip:'+theUsersLink+'@golub.com"><i class="fa fa-video-camera"></i></a></div><div class="col-xs-3"><a href="mailto:'+pChopEmail+'"><i class="fa fa-envelope"></i></a></div></div></div></div><p class="report_name this_title">' + name + '</p><p class="report_dep">' + department + '</p><div class="desc_float"><div class="arrow-bottom"></div><p id="item_desc_'+itemID+'">'+itemDescription+'</p></div><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></div><div><p class="report_desc">' + report_type + '</p></div></a><div class="reports_description"><div class="desc_float"><div class="arrow-bottom"></div><p>Here is a test description for this report.  This reports is about this for this department and created by this person. TEST DATA</p></div><div><i class="left_icon fa fa-commenting"></i> Description </div></div><div class="reports_request"><div class="request_wrap"><div class="request_sent ' + itemID + '_sent">Request Sent!</div><div id= "' + itemID + '" class="request_access ' + itemID + '_request"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Request Access</div></div></div></div></div></div>');
+
+            var first = $().SPServices.SPGetCurrentUser({
+                            fieldName: "FirstName",
+                            debug: false
+                        });
+            var last = $().SPServices.SPGetCurrentUser({
+                           fieldName: "LastName",
+                           debug: false
+                       });
+
+            var checkName = first + ' ' + last;
+            checkName = checkName.toUpperCase();
+
+            console.log(ownersName.toUpperCase());
+            console.log(checkName);
+            if(ownersName.toUpperCase() === checkName){
+              $('.right_icon_box_' + itemID).html('<i class="right_icon fa fa-edit"></i>');
+            }
+
+
+
+            var user_name = first + "_" + last;
+            // console.log(user_name);
+            // console.log(status);
+            var statusContaines = status.indexOf(user_name) > -1;
+            // console.log(statusContaines);
+            if(statusContaines === true){
+              $('.' + itemID + '_request').hide();
+              $('.' + itemID + '_sent').show();
+
+            }else{
+              $('.' + itemID + '_request').show();
+              $('.' + itemID + '_sent').hide();
+
+            }
+        $(document).ready(function()
+        {
+            // $("#reports_table").tablesorter();
+            var newTitle = thisDepartment.charAt(0).toUpperCase() + thisDepartment.slice(1);
+            $('.' + thisDepartment).text(newTitle);
+            $('nav').removeClass('open_nav');
+            $('.menu_options').slideUp();
+            $('.menu_active').show();
+            $('.menu_close').removeClass('menu_close_open');
+            $('.loadingThis, .loadingThisList').hide();
+
+
+            $('.menu_button span').removeClass('rotate_item');
+            $('.menu_button').removeClass('active_menu');
+            $('.social_contents').slideUp(100);
+            $('.social_box span').removeClass('rotate_item');
+            $('.social_box').removeClass('active_menu');
+            // countDisplayedReports();
+        }
+        );
+    }
+    // $('.load_more_reports_catalog').show();
+  }
   //Reports catalog build
   $('.active_dept_link').on('click', function(){
+      $('.load_more_reports').hide();
+      $('.load_more_reports_catalog').hide();
+
+    $('.reset_search').hide();
     $('.th_shared_with').hide();
     $('.main_wrapper').scrollTop(0);
     $('.icon_box_box').slideUp(100);
     $(this).removeClass('active_dept_link');
     var thisDepartment = $(this).attr('class');
     var newTitle = thisDepartment.charAt(0).toUpperCase() + thisDepartment.slice(1);
+    newTitle = newTitle.replace(/-/g, ' ');
+    newTitle = newTitle.split(" ");
+
+    if(typeof newTitle[1] === 'undefined')
+    {
+        newTitle = newTitle[0];
+    }else{
+        newTitle = newTitle[0] + ' ' + newTitle[1].charAt(0).toUpperCase() + newTitle[1].slice(1);
+    }
+
+
+    console.log(thisDepartment);
+    console.log(newTitle);
     $('.gen_info h2').text(newTitle);
     $('.' + thisDepartment).text('Loading...');
     $('.inner_icon_box, .table-responsive tbody').empty();
@@ -1024,114 +1750,11 @@ $(document).ready(function() {
     $('.table-responsive').append("<div class='loadingThisList'>Loading...<br><i style='opacity:0.1;'>Gathering Reports</i></div>");
 
     setTimeout(function(){
-      GetReportsUnfiltered();
-      function GetReportsUnfiltered() {
-        var list = "TestList";
-        var method = "GetListItems";
-        var query;
-        var fieldsToRead = "<ViewFields>" +
-          "<FieldRef Name='Title' />" +
-          "<FieldRef Name='Path' />" +
-          "<FieldRef Name='Department' />" +
-          "<FieldRef Name='ReportType' />" +
-          "<FieldRef Name='listItemId' />" +
-          "<FieldRef Name='PublishDate' />" +
-          "<FieldRef Name='Status' />" +
-          "<FieldRef Name='ID' />" +
-          "<FieldRef Name='Owner' />" +
-          "</ViewFields>";
-        $().SPServices({
-          operation: method,
-          async: true,
-          listName: list,
-          CAMLViewFields: fieldsToRead,
-          CAMLQuery: query,
-          completefunc: function(xData, Status) {
-            $(xData.responseXML).SPFilterNode("z:row").each(function() {
-              var name = ($(this).attr("ows_Title")); //name
-              var department = ($(this).attr("ows_Department")); //Department
-              var report_type = ($(this).attr("ows_ReportType")); //report type
-              var path = ($(this).attr("ows_Path")); //created
-              var pub_date = ($(this).attr("ows_PublishDate")); //pub date
-              var status = ($(this).attr("ows_Status")); //pub date
-              var itemID = ($(this).attr("ows_ID")); //pub date
-              var owner = ($(this).attr("ows_Owner")); //pub date
 
-              var listItemId = ($(this).attr("ows_listItemId")); //listItemId
-              displayListUnfiltered(name, department, report_type, listItemId, report_type, status, itemID, path, owner);
-            });
-          }
-        });
-      }
-
-      function displayListUnfiltered(name, department, report_type, listItemId, report_type, status, itemID, path, owner) {
-
-        var checkThisDept = department.toLowerCase();
-        checkThisDept = checkThisDept.replace(/\s/g, '');
-        if(checkThisDept === thisDepartment)
-        {
-            // var str = path;
-            // var lastThree = str.substr(str.length - 3);
-            // lastThree = lastThree.toLowerCase();
-
-
-              var pictureName = owner.replace(/\s/g, '').toLowerCase();
-              var ownersName = owner;
-              var myPicture = 'https://thegolubcorporation-my.sharepoint.com/User%20Photos/Profile%20Pictures/' + pictureName + '_golub_com_MThumb.jpg';
-
-
-              $('.table-responsive tbody').append('<tr class="this_title_wrap"><td style="text-align:center;"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></td><td class="this_title" id="">' + name + '</td><td>' + owner + '</td><td class="list_department">' + department + '</td><td>' + report_type + '</td><td class=""><div class="reports_request"><div class="request_wrap"><div class="request_sent ' + itemID + '_sent">Request Sent!</div><div id= "' + itemID + '" class="request_access ' + itemID + '_request"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Request Access</div></div></div></td></tr>');
+      GetReportsUnfiltered('1133', newTitle);
 
 
 
-
-                $('.report_row').append('<div class="col-sm-6 col-lg-3 main_select active_report active_report_1 report_1"><div class=""><div class="item_title this_title_wrap" data-type="' + department + '"><div class="report_owner"><div class="reports_user_img"><img src="' + myPicture + '"></div> <div class="owner_p"><p>Report Owner:<br><span class="the_owner">' + ownersName + '</span></p></div></div><p class="report_name this_title">' + name + '</p><p class="report_dep">' + department + '</p><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></div><div><p class="report_desc">' + report_type + '</p></div></a><div class="reports_request"><div class="request_wrap"><div class="request_sent ' + itemID + '_sent">Request Sent!</div><div id= "' + itemID + '" class="request_access ' + itemID + '_request"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Request Access</div></div></div></div></div></div>');
-
-                var first = $().SPServices.SPGetCurrentUser({
-                                fieldName: "FirstName",
-                                debug: false
-                            });
-                var last = $().SPServices.SPGetCurrentUser({
-                               fieldName: "LastName",
-                               debug: false
-                           });
-
-                var user_name = first + "_" + last;
-                console.log(user_name);
-                console.log(status);
-                var statusContaines = status.indexOf(user_name) > -1;
-                console.log(statusContaines);
-                if(statusContaines === true){
-                  $('.' + itemID + '_request').hide();
-                  $('.' + itemID + '_sent').show();
-
-                }else{
-                  $('.' + itemID + '_request').show();
-                  $('.' + itemID + '_sent').hide();
-
-                }
-            $(document).ready(function()
-            {
-                // $("#reports_table").tablesorter();
-                var newTitle = thisDepartment.charAt(0).toUpperCase() + thisDepartment.slice(1);
-                $('.' + thisDepartment).text(newTitle);
-                $('nav').removeClass('open_nav');
-                $('.menu_options').slideUp();
-                $('.menu_active').show();
-                $('.menu_close').removeClass('menu_close_open');
-                $('.loadingThis, .loadingThisList').hide();
-
-
-                $('.menu_button span').removeClass('rotate_item');
-                $('.menu_button').removeClass('active_menu');
-                $('.social_contents').slideUp(100);
-                $('.social_box span').removeClass('rotate_item');
-                $('.social_box').removeClass('active_menu');
-                // countDisplayedReports();
-            }
-            );
-        }
-      }
     }, 150);
   });
 
@@ -1188,6 +1811,442 @@ $(document).ready(function() {
       $('.search_callout').hide();
     }
   });
+
+  $('.version_calender_view').on('click', function(){
+    $('.version_box_inner').hide();
+    $('.version_box_inner_2').show();
+    $('.version_calender_view').addClass('version_selected');
+    $('.version_list_view').removeClass('version_selected');
+
+    // buildCalender(curMonth, monthNames[monthIndex], day);
+  });
+  $('.version_list_view').on('click', function(){
+    $('.version_box_inner').show();
+    $('.version_box_inner_2').hide();
+    $('.version_calender_view').removeClass('version_selected');
+    $('.version_list_view').addClass('version_selected');
+  });
+
+
+
+
+
+
+
+
+
+  var curDate = (new Date()).getDate();
+  var curMonth = (new Date()).getMonth();
+  var curYear = (new Date()).getFullYear();
+  var startDay = (new Date(curYear, curMonth, 1)).getDay();
+  var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  var noofdays = ["31", "29", "31", "30", "31", "30", "31", "31", "30", "31", "30", "31"];
+  var prevMonth = noofdays[curMonth - 1];
+
+
+
+
+
+  $('.cal-back').on('click', function(){
+    $('.all-date ul').empty();
+    curMonth = curMonth - 1;
+    if(curMonth === 12){
+      curMonth = 0;
+      curYear = curYear + 1;
+    }
+    if(curMonth === -1){
+      curMonth = 11;
+      curYear = curYear - 1;
+    }
+      buildCalender(curMonth, '', '');
+  });
+  $('.cal-forward').on('click', function(){
+    $('.all-date ul').empty();
+    curMonth = curMonth + 1;
+    if(curMonth === 12){
+      curMonth = 0;
+      curYear = curYear + 1;
+    }
+    if(curMonth === -1){
+      curMonth = 11;
+      curYear = curYear - 1;
+    }
+      buildCalender(curMonth, '', '');
+  });
+
+
+
+  function buildCalender(curMonth, theMonth, theDay){
+
+    jQuery('.all-date ul').empty();
+
+    var myCalenderData = $('.version_calender_view').attr('data-info');
+    myCalenderData = myCalenderData.split(',');
+    // console.log(myCalenderData);
+
+
+
+
+
+    if (curMonth == 11) {
+      prevMonth = noofdays[0]
+    } else if (curMonth == 0) {
+      prevMonth = noofdays[11]
+    };
+    var totalDays = noofdays[curMonth];
+    var counter = 0;
+    var precounter = prevMonth - (startDay - 1);
+    var rightbox = 6;
+    var flag = true;
+
+    jQuery('.curr-month b').text(months[curMonth] + ' ' + curYear);
+
+    for (var i = 0; i < 42; i++) {
+      if (i >= startDay) {
+        counter++;
+        if (counter > totalDays) {
+          counter = 1;
+          flag = false;
+        }
+        if (flag == true) {
+          jQuery('.all-date ul').append('<li class="monthdate" data-day="' + counter + '">' + counter + '</li>');
+        } else {
+          jQuery('.all-date ul').append('<li style="opacity:.8">' + counter + '</li>');
+        }
+      } else {
+        jQuery('.all-date ul').append('<li style="opacity:.8">' + precounter + '</li>');
+        precounter++;
+      }
+
+      if (i == rightbox) {
+        jQuery(jQuery('.all-date ul li')[rightbox]).addClass("b-right");
+        rightbox = rightbox + 7;
+      }
+
+      if (i > 34) {
+        jQuery(jQuery('.all-date ul li')[i]).addClass("b-bottom");
+      }
+
+      if ((jQuery(jQuery('.all-date ul li')[i]).text() == curDate) && (jQuery(jQuery('.all-date ul li')[i]).css('opacity') == 1)) {
+        jQuery(jQuery('.all-date ul li')[i]).css({
+          "background-color": "rgb(37, 31, 33)",
+          "color": "#fff"
+        });
+      }
+    }
+
+
+    // if(theMonth === months[curMonth]){
+
+      var calenderInfoLength = myCalenderData.length;
+      for(var i = 0; i < calenderInfoLength;i++){
+
+        var newCalenderData = myCalenderData[i].split(' ');
+        console.log(newCalenderData);
+        var calenderMonth = newCalenderData[1];
+        var calenderDay = newCalenderData[2];
+        var calenderURL = newCalenderData[3];
+
+        console.log(calenderMonth);
+        console.log(months[curMonth]);
+
+
+        var calenderImg;
+        calenderImg = "https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf_icon.png";
+        // if(calenderURL.indexOf('xlsx') > -1)
+        // {
+        //
+        //   calenderImg = "https://s1-odc-15.cdn.office.net:443/start/sc/1666042226_resources\\favicon_excel.ico";
+        // }
+
+        if(calenderMonth === months[curMonth]){
+          console.log('yep');
+          $('li[data-day="'+ calenderDay +'"]').append('<br><a href="'+calenderURL+'" target="blank"><img src="'+calenderImg+'"></a>');
+        }
+      }
+
+
+    // }
+
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    function GetReportsBySubCats(position, thisDepartment) {
+
+      var deptCounter = 0;
+
+      var list = "TestList";
+      var method = "GetListItems";
+        var id = position;
+      // console.log(thisDepartment);
+      var query = "<Query>" +
+                  "<Where>" +
+                    "<And>" +
+                    "<Eq>" +
+                    "<FieldRef Name='Department'/><Value Type='Text'>"+thisDepartment+"</Value>" +
+                  "</Eq>" +
+                  "<Gt>" +
+                  "<FieldRef Name='ID'/><Value Type='Number'>"+id+"</Value>" +
+                "</Gt>" +
+                  "</And>" +
+                  "</Where>" +
+
+                  "<OrderBy>" +
+                    "<FieldRef Name='Title'/>" +
+                  "</OrderBy>" +
+                "</Query>";
+
+
+      var fieldsToRead = "<ViewFields>" +
+        "<FieldRef Name='Title' />" +
+        "<FieldRef Name='Path' />" +
+        "<FieldRef Name='Department' />" +
+        "<FieldRef Name='ReportType' />" +
+        "<FieldRef Name='listItemId' />" +
+        "<FieldRef Name='PublishDate' />" +
+        "<FieldRef Name='Status' />" +
+        "<FieldRef Name='ID' />" +
+        "<FieldRef Name='Owner' />" +
+        "</ViewFields>";
+      $().SPServices({
+        operation: method,
+        async: true,
+        listName: list,
+        CAMLViewFields: fieldsToRead,
+        CAMLQuery: query,
+        CAMLRowLimit: "10",
+        completefunc: function(xData, Status) {
+          $('.load_more_reports_catalog').text('Load More Reports');
+          $(xData.responseXML).SPFilterNode("z:row").each(function() {
+            var name = ($(this).attr("ows_Title")); //name
+            var department = ($(this).attr("ows_Department")); //Department
+            var report_type = ($(this).attr("ows_ReportType")); //report type
+            var path = ($(this).attr("ows_Path")); //created
+            var pub_date = ($(this).attr("ows_PublishDate")); //pub date
+            var status = ($(this).attr("ows_Status")); //pub date
+            var itemID = ($(this).attr("ows_ID")); //pub date
+            var owner = ($(this).attr("ows_Owner")); //pub date
+  $('.load_more_reports_catalog').attr('id', itemID);
+  $('.load_more_reports_catalog').attr('data-department', department);
+
+
+                        var checkIt = department.replace(/\s/g, '');
+                        checkIt = checkIt.toLowerCase();
+                        // console.log(checkIt);
+                        // console.log(thisDepartment);
+                        if(checkIt === thisDepartment){
+                          deptCounter++;
+                        }
+            var listItemId = ($(this).attr("ows_listItemId")); //listItemId
+            displayListUnfiltered(name, department, report_type, listItemId, report_type, status, itemID, path, owner, thisDepartment);
+          });
+
+
+
+          // if(deptCounter === 0)
+          // {
+          //   GetReportsUnfiltered();
+          //   return;
+          // }
+
+        }
+      });
+    }
+
+
+
+    function displayReportsBySubCat(name, department, report_type, listItemId, report_type, status, itemID, path, owner, thisDepartment) {
+
+      var checkThisDept = department.toLowerCase();
+      checkThisDept = checkThisDept.replace(/\s/g, '');
+      thisDepartment = thisDepartment.toLowerCase();
+        thisDepartment = thisDepartment.replace(/\s/g, '');
+      console.log(checkThisDept);
+      console.log(thisDepartment);
+      if(checkThisDept === thisDepartment)
+      {
+          // var str = path;
+          // var lastThree = str.substr(str.length - 3);
+          // lastThree = lastThree.toLowerCase();
+
+
+            var pictureName = owner.replace(/\s/g, '').toLowerCase();
+            var ownersName = owner;
+            var myPicture = 'https://thegolubcorporation-my.sharepoint.com/User%20Photos/Profile%20Pictures/' + pictureName + '_golub_com_MThumb.jpg';
+
+
+
+            var theUsersLink = pictureName;
+
+            var pChopEmail = pictureName + '@pricechopper.com';
+            var golubEmail = pictureName + '@golub.com';
+
+
+
+
+
+            $('.table-responsive tbody').append('<tr class="this_title_wrap"><td style="text-align:center;"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></td><td class="this_title" id="">' + name + '</td><td>' + owner + '</td><td class="list_department">' + department + '</td><td>' + report_type + '</td><td class=""><div class="reports_request"><div class="request_wrap"><div class="request_sent ' + itemID + '_sent">Request Sent!</div><div id= "' + itemID + '" class="request_access ' + itemID + '_request"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Request Access</div></div></div></td></tr>');
+
+
+
+              $('.report_row').append('<div class="col-lg-15 main_select active_report active_report_1 report_1"><div class=""><div class="item_title this_title_wrap" data-type="' + department + '"><div class="report_owner publish_content row"><div class="col-xs-3"><div class="reports_user_img publish_box"><img src="' + myPicture + '"></div></div><div class="col-xs-9"><div class="owner_p row"><p><span class="the_owner">' + ownersName + '</span></p></div><div class="row the_actions"><div class="col-xs-3"><a href="sip:'+theUsersLink+'@golub.com"><i class="fa fa-comment"></i></a></div><div class="col-xs-3"><a href="sip:'+theUsersLink+'@golub.com"><i class="fa fa-phone"></i></a></div><div class="col-xs-3"><a href="sip:'+theUsersLink+'@golub.com"><i class="fa fa-video-camera"></i></a></div><div class="col-xs-3"><a href="mailto:'+pChopEmail+'"><i class="fa fa-envelope"></i></a></div></div></div></div><p class="report_name this_title">' + name + '</p><p class="report_dep">' + department + '</p><div class="desc_float"><div class="arrow-bottom"></div><p>Here is a test description for this report.  This reports is about this for this department and created by this person. TEST DATA</p></div><div class="report_img"><img src="https://thegolubcorporation.sharepoint.com/sites/MYReports/SiteAssets/MyReports/assets/pdf.png" alt="pdf" /></div><div><p class="report_desc">' + report_type + '</p></div></a><div class="reports_request"><div class="request_wrap"><div class="request_sent ' + itemID + '_sent">Request Sent!</div><div id= "' + itemID + '" class="request_access ' + itemID + '_request"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Request Access</div></div></div></div></div></div>');
+
+              var first = $().SPServices.SPGetCurrentUser({
+                              fieldName: "FirstName",
+                              debug: false
+                          });
+              var last = $().SPServices.SPGetCurrentUser({
+                             fieldName: "LastName",
+                             debug: false
+                         });
+
+              var checkName = first + ' ' + last;
+              checkName = checkName.toUpperCase();
+
+              console.log(ownersName.toUpperCase());
+              console.log(checkName);
+              if(ownersName.toUpperCase() === checkName){
+                $('.right_icon_box_' + itemID).html('<i class="right_icon fa fa-edit"></i>');
+              }
+
+              var user_name = first + "_" + last;
+              // console.log(user_name);
+              // console.log(status);
+              var statusContaines = status.indexOf(user_name) > -1;
+              // console.log(statusContaines);
+              if(statusContaines === true){
+                $('.' + itemID + '_request').hide();
+                $('.' + itemID + '_sent').show();
+
+              }else{
+                $('.' + itemID + '_request').show();
+                $('.' + itemID + '_sent').hide();
+
+              }
+          $(document).ready(function()
+          {
+              // $("#reports_table").tablesorter();
+              var newTitle = thisDepartment.charAt(0).toUpperCase() + thisDepartment.slice(1);
+              $('.' + thisDepartment).text(newTitle);
+              $('nav').removeClass('open_nav');
+              $('.menu_options').slideUp();
+              $('.menu_active').show();
+              $('.menu_close').removeClass('menu_close_open');
+              $('.loadingThis, .loadingThisList').hide();
+
+
+              $('.menu_button span').removeClass('rotate_item');
+              $('.menu_button').removeClass('active_menu');
+              $('.social_contents').slideUp(100);
+              $('.social_box span').removeClass('rotate_item');
+              $('.social_box').removeClass('active_menu');
+              // countDisplayedReports();
+          }
+          );
+      }
+      $('.load_more_reports_catalog').show();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    $(document).on('click', '.type_choice', function(){
+
+
+
+
+
+
+
+
+
+
+
+
+      $('.reset_search').hide();
+      var theDept = $(this).text();
+      var theDeptClass = theDept.replace(/-/g, '');
+      var theDeptLower = theDeptClass.toLowerCase();
+      var theDeptType = theDept.replace(/-/g, ' ');
+      console.log(theDeptType);
+
+      if(window.innerWidth < 721)
+      {
+        $('.icon_box_nav_bar').slideToggle();
+        $('.mobile_icon_nav_bar span').removeClass('rotate_item');
+      }
+
+      $('.all_dept').removeClass('selected_item');
+      $('.all_list, .type_choice').removeClass('selected_item');
+
+      $('.load_more_box').hide();
+      console.log(theDeptLower);
+      $('.cat_choice').removeClass('selected_item');
+      $('.' + theDeptLower + '_list_item').toggleClass('selected_item');
+      $('.reset_search').hide();
+      $('.th_shared_with').show();
+      $('.main_wrapper').scrollTop(0);
+      $('.my_reports_button, .footer_my h2').text('Loading...');
+      $('.gen_info h2').text('My Reports');
+      $('.icon_box_box').slideDown(100);
+      $('.inner_icon_box, .table-responsive tbody').empty();
+      $('.inner_icon_box').html("<div class='loadingThis'>Loading...<br><i style='opacity:0.1;'>Gathering Reports</i></div>");
+      $('.table-responsive').append("<div class='loadingThisList'>Loading...<br><i style='opacity:0.1;'>Gathering Reports</i></div>");
+
+
+
+      setTimeout(function(){
+        GetReportsFilteredByType('1133', theDeptType);
+      },200);
+
+
+
+
+
+
+
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 });
