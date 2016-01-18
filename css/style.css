@@ -795,7 +795,7 @@ box-shadow:         0px 0px 19px 0px rgba(50, 50, 50, 0.75);
       max-height: 90vh;
 }
 .edit_box_inner{
-  padding: 10px;
+  padding: 60px;
 }
 .edit_box h1{
 
@@ -827,11 +827,11 @@ box-shadow:         0px 0px 19px 0px rgba(50, 50, 50, 0.75);
 .share_box span, .version_box span, .pdf_preview span, .shared_with_box span, .edit_box span {
   cursor: pointer;
       position: fixed;
-          border-bottom: 1px solid #A5A5A5;
+          /*border-bottom: 1px solid #A5A5A5;*/
       top: 2vh;
       z-index: 99;
       right: 10%;
-      background: #E3E3E3;
+      /*background: #E3E3E3;*/
       /* height: 40px; */
       font-size: 4vh;
       padding: 1vh;
@@ -1541,6 +1541,9 @@ padding: 15px 0;
 
 
 @media only screen and (max-width: 720px) {
+  .edit_box_inner{
+    padding: 10px;
+  }
 
   .report_name, .reports_open, .reports_description, .reports_share, .reports_shared_with{
     font-size: 16px !important;
