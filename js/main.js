@@ -483,7 +483,7 @@ $(document).ready(function() {
         CAMLViewFields: "<ViewFields Properties='true'>" +
           "<FieldRef Name='ReportDate' />" +
           "</ViewFields>",
-        CAMLQueryOptions: "<QueryOptions><Folder>" + folder + "</Folder><ViewAttributes Scope='RecursiveAll'></ViewAttributes></QueryOptions>",
+        CAMLQueryOptions: "<QueryOptions><Folder>" + folder + "</Folder><ViewAttributes Scope='FilesOnly'></ViewAttributes></QueryOptions>",
         // CAMLRowLimit: "10",
         CAMLQuery: "<Query><Where><Neq><FieldRef Name='ID'/><Value Type='Number'>0</Value></Neq></Where><OrderBy><FieldRef Name='ReportDate' Ascending='False'/></OrderBy></Query>",
         completefunc: function (xData, Status) {
@@ -1205,7 +1205,7 @@ $(document).ready(function() {
           var titleContaines = departmentRepeat.indexOf(title) > -1;
 
           lowercaseTitle = title.toLowerCase();
-          console.log(lowercaseTitle);
+          // console.log(lowercaseTitle);
           if(titleContaines === true){
 
             lowercaseTitle = lowercaseTitle.replace(/\s/g, '');
@@ -1353,6 +1353,7 @@ $(document).on('mouseleave', '.report_img img, .report_img object', function(){
       listName: list,
       CAMLViewFields: fieldsToRead,
       CAMLQuery: query,
+      // viewName: "QueryView",
       CAMLRowLimit: "10",
       completefunc: function(xData, Status) {
           $('.load_more_box').show();
@@ -1397,7 +1398,7 @@ $(document).on('mouseleave', '.report_img img, .report_img object', function(){
         webURL: "https://thegolubcorporation.sharepoint.com/sites/MYReports/",
         listName: department,
         CAMLViewFields: "<ViewFields Properties='True' />",
-        CAMLQueryOptions: "<QueryOptions><Folder>" + folder + "</Folder><ViewAttributes Scope='RecursiveAll'></ViewAttributes></QueryOptions>",
+        CAMLQueryOptions: "<QueryOptions><Folder>" + folder + "</Folder><ViewAttributes Scope='FilesOnly'></ViewAttributes></QueryOptions>",
         CAMLRowLimit: "1",
         CAMLQuery: "<Query><Where><Neq><FieldRef Name='ID'/><Value Type='Number'>0</Value></Neq></Where><OrderBy><FieldRef Name='ReportDate' Ascending='False'/></OrderBy></Query>",
         completefunc: function (xData, Status) {
@@ -1465,9 +1466,9 @@ $(document).on('mouseleave', '.report_img img, .report_img object', function(){
 
     var checkName = first + ' ' + last;
     checkName = checkName.toUpperCase();
-
-    console.log(ownersName.toUpperCase());
-    console.log(checkName);
+    //
+    // console.log(ownersName.toUpperCase());
+    // console.log(checkName);
     if(ownersName.toUpperCase() === checkName){
       $('.right_icon_box_' + itemID).html('<i class="right_icon fa fa-edit"></i>');
     }
@@ -1559,6 +1560,7 @@ $(document).on('mouseleave', '.report_img img, .report_img object', function(){
       listName: list,
       CAMLViewFields: fieldsToRead,
       CAMLQuery: query,
+      // viewName: "QueryView",
       CAMLRowLimit: "10",
       completefunc: function(xData, Status) {
         $('.load_more_reports_catalog').text('Load More Reports');
@@ -1942,13 +1944,13 @@ $('.load_more_reports_catalog').attr('data-department', department);
       for(var i = 0; i < calenderInfoLength;i++){
 
         var newCalenderData = myCalenderData[i].split(' ');
-        console.log(newCalenderData);
+        // console.log(newCalenderData);
         var calenderMonth = newCalenderData[1];
         var calenderDay = newCalenderData[2];
         var calenderURL = newCalenderData[3];
 
-        console.log(calenderMonth);
-        console.log(months[curMonth]);
+        // console.log(calenderMonth);
+        // console.log(months[curMonth]);
 
 
         var calenderImg;
