@@ -5,7 +5,99 @@ $(document).ready(function() {
 
 
 
-  $("#my_people_picker").spPeoplePicker();
+
+  $(document).ready(function () {
+
+      // Specify the unique ID of the DOM element where the
+      // picker will render.
+      initializePeoplePicker('peoplePickerDiv');
+  });
+
+  // Render and initialize the client-side People Picker.
+  function initializePeoplePicker(peoplePickerElementId) {
+
+      // Create a schema to store picker properties, and set the properties.
+      var schema = {};
+      schema['PrincipalAccountType'] = 'User,DL,SecGroup,SPGroup';
+      schema['SearchPrincipalSource'] = 15;
+      schema['ResolvePrincipalSource'] = 15;
+      schema['AllowMultipleValues'] = true;
+      schema['MaximumEntitySuggestions'] = 50;
+      schema['Width'] = '280px';
+
+      // Render and initialize the picker.
+      // Pass the ID of the DOM element that contains the picker, an array of initial
+      // PickerEntity objects to set the picker value, and a schema that defines
+      // picker properties.
+      this.SPClientPeoplePicker_InitStandaloneControlWrapper(peoplePickerElementId, null, schema);
+  }
+
+  // Query the picker for user information.
+  function getUserInfo() {
+
+      // Get the people picker object from the page.
+      var peoplePicker = this.SPClientPeoplePicker.SPClientPeoplePickerDict.peoplePickerDiv_TopSpan;
+
+      // Get information about all users.
+      var users = peoplePicker.GetAllUserInfo();
+      var userInfo = '';
+      for (var i = 0; i < users.length; i++) {
+          var user = users[i];
+          for (var userProperty in user) {
+              userInfo += userProperty + ':  ' + user[userProperty] + '<br>';
+          }
+      }
+      $('#resolvedUsers').html(userInfo);
+
+      // Get user keys.
+      var keys = peoplePicker.GetAllUserKeys();
+      $('#userKeys').html(keys);
+
+      // Get the first user's ID by using the login name.
+      getUserId(users[0].Key);
+  }
+
+  // Get the user ID.
+  function getUserId(loginName) {
+      var context = new SP.ClientContext.get_current();
+      this.user = context.get_web().ensureUser(loginName);
+      context.load(this.user);
+      context.executeQueryAsync(
+           Function.createDelegate(null, ensureUserSuccess),
+           Function.createDelegate(null, onFail)
+      );
+  }
+
+  function ensureUserSuccess() {
+      $('#userId').html(this.user.get_id());
+  }
+
+  function onFail(sender, args) {
+      alert('Query failed. Error: ' + args.get_message());
+  }
+
+
+
+
+
+
+
+
+ //  $("#peoplePickerDiv").spPeoplePicker();
+ // $("#anotherPeoplePickerDiv").spPeoplePicker();
+ //
+ //
+ //         $("#pp1").click(function(){
+ //             alert($("#peoplePickerDiv").getUserInfo());
+ //             return false;
+ //         });
+ //         $("#pp2").click(function(){
+ //             alert($("#anotherPeoplePickerDiv").getUserInfo());
+ //             return false;
+ //         });
+
+
+  // $("#my_people_picker").spPeoplePicker();
         //      $("#anotherPeoplePickerDiv").spPeoplePicker();
               //
               //
@@ -1549,7 +1641,7 @@ $(document).on('mouseleave', '.report_img img, .report_img object', function(){
 
 
 // https://thegolubcorporation-my.sharepoint.com/_layouts/15/me.aspx?u=40f8b45f-ee26-4d80-b23a-d5088bb9bd50&p=jesserock%40golub.com&v=work
-    $('body').prepend('<div class="share_this_one share_this_one_'+itemID+'"><h2 class="share_this_one_h2">Share \''+name+'\'</h2><p class="share_this_one_p"><i class="left_icon fa fa-users"></i> Shared with <span class="theseRecipients theseRecipients_'+itemID+'"></span></p><h1 class="share_this_one_h1">Invite People</h1><input type="text" style="padding:10px;width:100%;" placeholder="Enter names or email addresses.."><div id="my_people_picker"></div><br><br><select style="padding:10px;width:100%;"><option>Can edit</option><option>Can view</option></select><br><br><textarea placeholder="Include a personal message with this invitation (optional)." style="padding:10px;width:100%;"></textarea><br><br><div id="cancel_report_share">Cancel</div><div id="share_report">Share</div></div>');
+    $('body').prepend('<div class="share_this_one share_this_one_'+itemID+'"><h2 class="share_this_one_h2">Share \''+name+'\'</h2><p class="share_this_one_p"><i class="left_icon fa fa-users"></i> Shared with <span class="theseRecipients theseRecipients_'+itemID+'"></span></p><h1 class="share_this_one_h1">Invite People</h1><input type="text" style="padding:10px;width:100%;" placeholder="Enter names or email addresses.."><div id="my_people_picker"></div><br><br><select style="padding:10px;width:100%;"><option>Can edit</option><option>Can view</option></select><br><br><textarea placeholder="Include a personal message with this invitation (optional)." style="padding:10px;width:100%;"></textarea><br><br><div id="cancel_report_share">Cancel</div><div id="share_report">Share</div> <div id="peoplePickerDiv"></div><div><br/><input type="button" value="Get User Info" onclick="getUserInfo()"></input><br/><h1>User info:</h1><p id="resolvedUsers"></p><h1>User keys:</h1><p id="userKeys"></p> <h1>User ID:</h1><p id="userId"></p></div></div>');
 
     for(var i = 1;i < itemRecipients.length ;i = i + 2){
       // var theseRecipients = itemRecipients[i].split(',');
