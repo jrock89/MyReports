@@ -925,7 +925,7 @@ position: relative;
 #reports_table .reports_shared_with{
   width: 150px !important;
 }
-.request_access{
+#reports_table .request_access{
   width: 200px;
 }
 
@@ -1398,7 +1398,7 @@ transition: ease-in-out 0.4s;
   cursor: default;
 }
 
-.load_more_reports, .load_more_reports_catalog{
+.load_more_reports, .load_more_reports_catalog, .load_more_specific{
   text-align: center;
   padding: 20px;
   background: #f2f2f2;
@@ -1414,7 +1414,7 @@ transition: ease-in-out 0.4s;
  .load_more_reports_catalog{
    display: none;
  }
-.load_more_reports:hover,  .load_more_reports_catalog:hover{
+.load_more_reports:hover,  .load_more_reports_catalog:hover, .load_more_specific:hover{
   background: #251f21;
   color: #f2f2f2;
   border: 3px solid #f2f2f2;

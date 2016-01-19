@@ -46,6 +46,7 @@ $(document).ready(function() {
 
 
   $(document).on('click', '.all_list', function(){
+    $('.load_more_reports').addClass('load_more_specific');
     $('.reset_search').hide();
     var theDept = $(this).attr('id');
 
@@ -139,6 +140,8 @@ $(document).ready(function() {
           var itemStatus = ($(this).attr("ows_Status")); //listItemId
           var owner = ($(this).attr("ows_Owner")); //listItemId
           var itemRecipients = ($(this).attr("ows_Recipients")); //Recipients
+          $('.load_more_specific').attr('data-type', report_type);
+          $('.load_more_specific').attr('data-department', department);
 // console.log(itemRecipients);
           // console.log(owner);
           $('.load_more_reports').attr('id', itemID);
@@ -210,6 +213,8 @@ $(document).ready(function() {
             var itemStatus = ($(this).attr("ows_Status")); //listItemId
             var owner = ($(this).attr("ows_Owner")); //listItemId
             var itemRecipients = ($(this).attr("ows_Recipients")); //Recipients
+            $('.load_more_specific').attr('data-type', report_type);
+            $('.load_more_specific').attr('data-department', department);
   // console.log(itemRecipients);
             // console.log(owner);
             $('.load_more_reports').attr('id', itemID);
@@ -1131,6 +1136,9 @@ $(document).ready(function() {
   });
 
   $('.my_reports_button, .footer_my').on('click', function(){
+    $('.load_more_reports').show();
+    $('.load_more_reports_catalog').hide();
+    $('.load_more_reports').removeClass('load_more_specific');
     $('.reset_search').hide();
     $('.th_shared_with').show();
     $('.main_wrapper').scrollTop(0);
@@ -1301,15 +1309,110 @@ $(document).on('mouseleave', '.report_img img, .report_img object', function(){
 
   $('.load_more_reports').on('click', function(){
     var position = $(this).attr('id');
-    console.log(position);
+    // console.log(position);
     $('.load_more_reports').text('Loading...');
-    console.log('loading more reports');
     setTimeout(function(){
+      if($('.load_more_reports').hasClass("load_more_specific") === false){
+
 
       GetReports(position);
+    }
     }, 100);
 
   });
+
+
+
+  $(document).on('click','.load_more_specific', function(){
+    var theDept = $(this).attr('data-department');
+    var theType = $(this).attr('data-type');
+    console.log(theType);
+    console.log(theDept);
+
+    $('.load_more_specific').text('Loading...');
+    setTimeout(function(){
+      if($('.load_more_reports').hasClass("load_more_specific") === true){
+        getMoreReportsFiltered(theDept, theType);
+
+      }
+    }, 100);
+
+
+  });
+
+  function getMoreReportsFiltered(theDept, theType){
+    $('.load_more_box').show();
+    var list = "TestList";
+    var method = "GetListItems";
+    var query = "<Query>" +
+                "<Where>" +
+                  "<And>" +
+                    "<Eq>" +
+                    "<FieldRef Name='Department'/><Value Type='Text'>"+theDept+"</Value></Eq>" +
+                    "<Eq>" +
+                    "<FieldRef Name='ReportType'/><Value Type='Text'>"+theType+"</Value></Eq>" +
+                    "</And>" +
+                //   "<Gt>" +
+                //   "<FieldRef Name='ID'/><Value Type='Number'>"+id+"</Value>" +
+                // "</Gt>" +
+                "</Where>" +
+                "<OrderBy>" +
+                  "<FieldRef Name='Form_x0020_Groups'/>" +
+                "</OrderBy>" +
+              "</Query>";
+
+    var fieldsToRead = "<ViewFields>" +
+      "<FieldRef Name='Title' />" +
+      "<FieldRef Name='Path' />" +
+      "<FieldRef Name='Department' />" +
+      "<FieldRef Name='ReportType' />" +
+      "<FieldRef Name='listItemId' />" +
+      "<FieldRef Name='PublishDate' />" +
+      "<FieldRef Name='ID' />" +
+      "<FieldRef Name='Status' />" +
+      "<FieldRef Name='Owner' />" +
+      "<FieldRef Name='Recipients' />" +
+      "<FieldRef Name='Description' />" +
+      "</ViewFields>";
+    $().SPServices({
+      operation: method,
+      async: false,
+      listName: list,
+      CAMLViewFields: fieldsToRead,
+      CAMLQuery: query,
+      CAMLRowLimit: "10",
+      completefunc: function(xData, Status) {
+          $('.load_more_box').show();
+        $('.load_more_reports').text('Load More Reports');
+        $(xData.responseXML).SPFilterNode("z:row").each(function() {
+
+          var name = ($(this).attr("ows_Title")); //name
+          var path = ($(this).attr("ows_Path")); //path
+          var department = ($(this).attr("ows_Department")); //department
+          var report_type = ($(this).attr("ows_ReportType")); //report type
+          var pub_date = ($(this).attr("ows_PublishDate")); //pub date
+          var listItemId = ($(this).attr("ows_listItemId")); //listItemId
+          var itemID = ($(this).attr("ows_ID")); //listItemId
+          var itemStatus = ($(this).attr("ows_Status")); //listItemId
+          var owner = ($(this).attr("ows_Owner")); //listItemId
+          var itemRecipients = ($(this).attr("ows_Recipients")); //Recipients
+          var itemDescription = ($(this).attr("ows_Description")); //description
+          $('.load_more_reports').attr('id', itemID);
+          $('.load_more_reports').attr('data-type', report_type);
+          $('.load_more_reports').attr('data-department', department);
+
+          displayList(name, department, report_type, listItemId, report_type, pub_date, path, itemID, itemStatus, owner, itemRecipients, itemDescription);
+
+        });
+      }
+    });
+  }
+
+
+
+
+
+
 
 
 
@@ -1322,7 +1425,7 @@ $(document).on('mouseleave', '.report_img img, .report_img object', function(){
     var list = "TestList";
     var method = "GetListItems";
     var id = position;
-    // console.log(id);
+    // console.log(id);d
     var query = "<Query>" +
                 "<Where>" +
                   "<Gt>" +
@@ -1375,6 +1478,8 @@ $(document).on('mouseleave', '.report_img img, .report_img object', function(){
           // console.log(itemRecipients);
           // console.log(owner);
           $('.load_more_reports').attr('id', itemID);
+          $('.load_more_reports').attr('data-type', report_type);
+          $('.load_more_reports').attr('data-department', department);
           displayList(name, department, report_type, listItemId, report_type, pub_date, path, itemID, itemStatus, owner, itemRecipients, itemDescription);
 
         });
@@ -1502,7 +1607,6 @@ $(document).on('mouseleave', '.report_img img, .report_img object', function(){
 
   $('.load_more_reports_catalog').on('click', function(){
     var position = $(this).attr('id');
-    // console.log(position);
     $('.load_more_reports_catalog').text('Loading...');
     var thisDepartment = $(this).attr('data-department');
     setTimeout(function(){
@@ -1574,6 +1678,10 @@ $(document).on('mouseleave', '.report_img img, .report_img object', function(){
           var itemID = ($(this).attr("ows_ID")); //pub date
           var owner = ($(this).attr("ows_Owner")); //pub date
           var itemDescription = ($(this).attr("ows_Description"));
+
+          $('.load_more_reports').attr('data-type', report_type);
+          $('.load_more_reports').attr('data-department', department);
+
 $('.load_more_reports_catalog').attr('id', itemID);
 $('.load_more_reports_catalog').attr('data-department', department);
 
@@ -1723,7 +1831,7 @@ $('.load_more_reports_catalog').attr('data-department', department);
   //Reports catalog build
   $('.active_dept_link').on('click', function(){
       $('.load_more_reports').hide();
-      $('.load_more_reports_catalog').hide();
+      $('.load_more_reports_catalog').show();
 
     $('.reset_search').hide();
     $('.th_shared_with').hide();
@@ -2186,7 +2294,7 @@ $('.load_more_reports_catalog').attr('data-department', department);
 
 
 
-
+$('.load_more_reports').addClass('load_more_specific');
 
 
 
